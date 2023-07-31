@@ -287,6 +287,18 @@ class EmployeesController extends Controller
           $employee->status = $request->input('status');
           $employee->save();    
 
+        EmployeeQualifications::where('employee',$id)->delete();
+
+        $qualification = $request->qualification;
+        if(!is_null($qualification)){
+        foreach($qualification as $qualification){
+            $com = new EmployeeQualifications();
+            $com->employee = $employee->id;
+            $com->qualification = $qualification;
+            $com->save();
+            }
+        }
+
           DB::commit();
   
         return response()->json([
