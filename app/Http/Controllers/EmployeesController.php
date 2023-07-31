@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Employees;
 use Illuminate\Http\Request;
+use App\Models\EmployeeQualifications;
 use DB;
 
 class EmployeesController extends Controller
@@ -225,6 +226,16 @@ class EmployeesController extends Controller
             $employee->img = $request->input('img'); 
             $employee->status = $request->input('status');
             $employee->save();
+
+            $employee_id=$employee->id;
+
+            $qualification = $request->qualification;
+            foreach($qualification as $qualification){
+                $com = new EmployeeQualifications();
+                $com->employee = $employee->id;
+                $com->qualification = $qualification;
+                $com->save();
+            }
   
           DB::commit();
   
