@@ -102,7 +102,7 @@ class EmployeesController extends Controller
                 'e.locker_number',
                 'u.name as created_by',
                 'e.img',
-                'e.status'
+                'e.status',
             )
             ->leftJoin('companies as c', 'c.id', '=', 'e.company')
             ->leftJoin('positions as p', 'p.id', '=', 'e.position')

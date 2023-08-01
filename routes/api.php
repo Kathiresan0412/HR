@@ -8,6 +8,7 @@ use App\Http\Controllers\QualificationsController;
 use App\Http\Controllers\DepartmentsController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\EmployeesController;
+use App\Http\Controllers\AnnouncementController;
 
 /*
 |--------------------------------------------------------------------------
@@ -59,3 +60,9 @@ Route::get ('/employees/{id}', [EmployeesController::class, 'getEmployeeInfo']);
 Route::POST('/employees', [EmployeesController::class, 'saveEmployee']);
 Route::put ('/employees/{id}', [EmployeesController::class, 'updateEmployee']);
 Route::delete ('/employees/{id}', [EmployeesController::class, 'destroy']);
+
+Route::get ('/announcements', [AnnouncementController::class, 'getAllAnnouncement']);
+Route::get ('/announcements/{id}', [AnnouncementController::class, 'getAnnouncementInfo']);
+Route::POST('/announcements', [AnnouncementController::class, 'saveAnnouncement']);
+Route::put ('/announcements/{id}', [AnnouncementController::class, 'updateAnnouncement']);
+Route::delete ('/announcements/{id}', [AnnouncementController::class, 'destroy']);
