@@ -23,9 +23,9 @@ return new class extends Migration
             $table->date('dates');
             $table->integer('days');
             $table->string('reason');
-            $table->string('satus');
-            $table->bigInteger('aproved_by')->unsigned()->index()->nullable();
-            $table->foreign('aproved_by')->references('id')->on('users')->onDelete('set null');
+            $table->string('status');
+            $table->bigInteger('approved_by')->unsigned()->index()->nullable();
+            $table->foreign('approved_by')->references('id')->on('users')->onDelete('set null');
             $table->timestamps();
         });
     }

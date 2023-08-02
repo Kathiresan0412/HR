@@ -65,11 +65,11 @@ class LeaveRequestController extends Controller
     {
         //  try {
         $leave_requests = DB::table('leave_requests as l')
-            ->select('l.id', 'e.bio_code as bio_code', 'e.first_name as employee', 'p.name as position', 'a.name as leave_type', 'l.request_on', 'l.dates', 'l.days', 'l.reason', 'l.satus', 'u.name as approved_by')
+            ->select('l.id', 'e.bio_code as bio_code', 'e.first_name as employee', 'p.name as position', 'a.name as leave_type', 'l.request_on', 'l.dates', 'l.days', 'l.reason', 'l.status', 'u.name as approved_by')
             ->leftJoin('employees as e', 'e.id', '=', 'l.employee')
             ->leftJoin('positions as p', 'p.id', '=', 'l.position')
             ->leftJoin('leave_types as a', 'a.id', '=', 'l.type')
-            ->leftJoin('users as u', 'u.id', '=', 'l.aproved_by');
+            ->leftJoin('users as u', 'u.id', '=', 'l.approved_by');
 
         $search = $request->search;
 
@@ -103,11 +103,11 @@ class LeaveRequestController extends Controller
     {
         //  try {
             $leave_requests = DB::table('leave_requests as l')
-            ->select('l.id', 'e.bio_code as bio_code', 'e.first_name as employee', 'p.name as position', 'a.name as type', 'l.request_on', 'l.dates', 'l.days', 'l.reason', 'l.satus', 'u.name as aproved_by')
+            ->select('l.id', 'e.bio_code as bio_code', 'e.first_name as employee', 'p.name as position', 'a.name as type', 'l.request_on', 'l.dates', 'l.days', 'l.reason', 'l.status', 'u.name as approved_by')
             ->leftJoin('employees as e', 'e.id', '=', 'l.employee')
             ->leftJoin('positions as p', 'p.id', '=', 'l.position')
             ->leftJoin('leave_types as a', 'a.id', '=', 'l.type')
-            ->leftJoin('users as u', 'u.id', '=', 'l.aproved_by')
+            ->leftJoin('users as u', 'u.id', '=', 'l.approved_by')
             ->where('l.id', $id)
             ->first();
 
@@ -132,7 +132,7 @@ class LeaveRequestController extends Controller
                // 'bio_code' => 'required',
                 'employee' => 'required',
                 'position' => 'required',
-                'leave_type' => 'required',
+                'type' => 'required',
                 'request_on' => 'required',
                 'dates' => 'required',
                 'days' => 'required',
@@ -150,8 +150,8 @@ class LeaveRequestController extends Controller
             $leave_request->dates = $request->dates;
             $leave_request->days = $request->days;
             $leave_request->reason = $request->reason;
-            $leave_request->satus = $request->status;
-            $leave_request->aproved_by = $request->approved_by;
+            $leave_request->status = $request->status;
+            $leave_request->approved_by = $request->approved_by;
             $leave_request->created_at = new \DateTime();
             $leave_request->save();
 
@@ -178,7 +178,7 @@ class LeaveRequestController extends Controller
               //  'bio_code' => 'required',
                 'employee' => 'required',
                 'position' => 'required',
-                'leave_type' => 'required',
+                'type' => 'required',
                 'request_on' => 'required',
                 'dates' => 'required',
                 'days' => 'required',
@@ -196,8 +196,8 @@ class LeaveRequestController extends Controller
             $leave_request->dates = $request->dates;
             $leave_request->days = $request->days;
             $leave_request->reason = $request->reason;
-            $leave_request->satus = $request->status;
-            $leave_request->aproved_by = $request->approved_by;
+            $leave_request->status = $request->status;
+            $leave_request->approved_by = $request->approved_by;
             $leave_request->created_at = new \DateTime();
             $leave_request->save();
             DB::commit();

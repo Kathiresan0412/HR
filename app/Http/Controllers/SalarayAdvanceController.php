@@ -155,7 +155,7 @@ class SalarayAdvanceController extends Controller
         DB::beginTransaction();
         try {
             $request->validate([
-                ' bio_code' => 'required',
+              //  ' employee' => 'required',
                 'amount' => 'required',
                 'type' => 'required',
                 'from_date' => 'required',
@@ -164,7 +164,7 @@ class SalarayAdvanceController extends Controller
             ]);
 
             $salary_advances = SalarayAdvance::find($id);
-            $salary_advances->bio_code = $request->bio_code;
+            $salary_advances->employee = $request->employee;
             $salary_advances->amount = $request->amount;
             $salary_advances->type = $request->type;
             $salary_advances->from_date = $request->from_date;
