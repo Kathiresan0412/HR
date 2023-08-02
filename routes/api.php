@@ -74,6 +74,7 @@ Route::POST('/announcements', [AnnouncementController::class, 'saveAnnouncement'
 Route::put ('/announcements/{id}', [AnnouncementController::class, 'updateAnnouncement']);
 Route::delete ('/announcements/{id}', [AnnouncementController::class, 'destroy']);
 
+
 //check
 Route::get('/salaryadvance', [SalarayAdvanceController::class, 'getAllSalaryAdvances']);
 Route::get('/salaryadvance/{id}', [SalarayAdvanceController::class, 'getSalaryAdavanceInfo']);
