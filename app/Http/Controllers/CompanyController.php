@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Company;
 use Illuminate\Http\Request;
-use DB;
+//use DB;
+use Illuminate\Support\Facades\DB;
 
 class CompanyController extends Controller
 {
@@ -78,7 +79,7 @@ class CompanyController extends Controller
      
           $search = $request->search;
           if (!is_null($search)){
-              $qualification = $qualification
+              $company = $company
               ->where('c.name','LIKE','%'.$search.'%')
               ->orWhere('c.description','LIKE','%'.$search.'%');
           }

@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\SalaryType;
 use Illuminate\Http\Request;
-use DB;
+
+use Illuminate\Support\Facades\DB;
 
 class SalaryTypeController extends Controller
 {
@@ -59,9 +60,9 @@ class SalaryTypeController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(SalaryType $salaryType)
+    public function destroy($id)
     {
-        $salary = Salary::find($id);
+        $salary = SalaryType::find($id);
         $salary->delete();
     }
 
@@ -102,7 +103,7 @@ class SalaryTypeController extends Controller
      {
          try{
  
-             $position = DB::table('salary_types as s')
+             $salary = DB::table('salary_types as s')
              ->select('s.id','s.title','s.category','s.description')
              ->where('s.id',$id)
              ->first();

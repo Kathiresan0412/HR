@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Employees;
 use Illuminate\Http\Request;
 use App\Models\EmployeeQualifications;
-use DB;
+
+use Illuminate\Support\Facades\DB;
 
 class EmployeesController extends Controller
 {

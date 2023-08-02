@@ -13,8 +13,6 @@ return new class extends Migration
     {
         Schema::create('leave_requests', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('bio_code')->unsigned()->index()->nullable();
-            $table->foreign('bio_code')->references('id')->on('employees')->onDelete('set null');
             $table->bigInteger('employee')->unsigned()->index()->nullable();
             $table->foreign('employee')->references('id')->on('employees')->onDelete('set null');
             $table->bigInteger('position')->unsigned()->index()->nullable();

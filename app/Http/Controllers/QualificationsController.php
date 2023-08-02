@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Qualifications;
 use Illuminate\Http\Request;
-use DB;
+use Illuminate\Support\Facades\DB;
 
 class QualificationsController extends Controller
 {
@@ -59,7 +59,7 @@ class QualificationsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Qualifications $qualifications)
+    public function destroy( $id)
     {
         $qualification = Qualifications::find($id);
         $qualification->delete();

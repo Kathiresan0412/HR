@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('salaray_advances', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('bio_code')->unsigned()->index()->nullable();
-            $table->foreign('bio_code')->references('id')->on('employees')->onDelete('set null');
+            $table->bigInteger('employee')->unsigned()->index();
+            $table->foreign('employee')->references('id')->on('employees')->onDelete('cascade');
             $table->decimal('amount');
             $table->string('type');
             $table->date('from_date');

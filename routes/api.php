@@ -9,6 +9,13 @@ use App\Http\Controllers\DepartmentsController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\EmployeesController;
 use App\Http\Controllers\AnnouncementController;
+use App\Http\Controllers\LeaveRequestController;
+use App\Http\Controllers\SalarayAdvanceController;
+use App\Http\Controllers\AllowedLeaveController;
+use App\Http\Controllers\ShortLeavesController;
+use App\Http\Controllers\LeaveTypeController;
+use App\Http\Controllers\EmployeeQualificationsController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -66,3 +73,38 @@ Route::get ('/announcements/{id}', [AnnouncementController::class, 'getAnnouncem
 Route::POST('/announcements', [AnnouncementController::class, 'saveAnnouncement']);
 Route::put ('/announcements/{id}', [AnnouncementController::class, 'updateAnnouncement']);
 Route::delete ('/announcements/{id}', [AnnouncementController::class, 'destroy']);
+
+//check
+Route::get('/salaryadvance', [SalarayAdvanceController::class, 'getAllSalaryAdvances']);
+Route::get('/salaryadvance/{id}', [SalarayAdvanceController::class, 'getSalaryAdavanceInfo']);
+Route::post('/salaryadvance', [SalarayAdvanceController::class, 'saveSalaryAdvance']);
+Route::put('/salaryadvance/{id}', [SalarayAdvanceController::class, 'updateSalaryAdvance']);
+Route::delete('/salaryadvance/{id}', [SalarayAdvanceController::class, 'destroySalaryAdvance']);
+
+Route::get ('/allowedleaves', [AllowedLeaveController::class, 'getAllAllowedLeaves']);
+Route::get ('/allowedleaves/{id}', [AllowedLeaveController::class, 'getAllowedLeavesinfo']);
+Route::POST('/allowedleaves', [AllowedLeaveController::class, 'saveAllowedLeaves']);
+Route::put ('/allowedleaves/{id}', [AllowedLeaveController::class, 'updateAllowedLeaves']);
+Route::delete ('/allowedleaves/{id}', [AllowedLeaveController::class, 'destroyAllowedLeaves']);
+
+Route::get ('/leavere_quests', [LeaveRequestController::class, 'getAllLeave_requests']);
+Route::get ('/leavere_quests/{id}', [LeaveRequestController::class, 'getAllLeave_requestInfo']);
+Route::POST('/leavere_quests', [LeaveRequestController::class, 'saveLeave_requestInfo']);
+Route::put ('/leavere_quests/{id}', [LeaveRequestController::class, 'updateLeave_requestInfo']);
+Route::delete ('/leavere_quests/{id}', [LeaveRequestController::class, 'destroyLeave_request']);
+
+Route::get ('/leavetypes', [LeaveTypeController::class, 'getAllLeaveTypes']);
+Route::get ('/leavetypes/{id}', [LeaveTypeController::class, 'getLeaveTypesinfo']);
+Route::POST('/leavetypes', [LeaveTypeController::class, 'saveLeaveTypes']);
+Route::put ('/leavetypes/{id}', [LeaveTypeController::class, 'updateLeaveTypes']);
+Route::delete ('/leavetypes/{id}', [LeaveTypeController::class, 'destroyLeaveTypes']);
+
+Route::get ('/shortLeaves', [ShortLeavesController::class, 'getAllShortLeave']);
+Route::get ('/shortLeaves/{id}', [ShortLeavesController::class, 'getShortLeaveInfo']);
+Route::POST('/shortLeaves', [ShortLeavesController::class, 'saveShortLeave']);
+Route::put ('/shortLeaves/{id}', [ShortLeavesController::class, 'updateShortLeave']);
+Route::delete ('/shortLeaves/{id}', [ShortLeavesController::class, 'destroyShortLeave']);
+
+Route::get ('/EmployeeQualifications', [EmployeeQualificationsController::class, 'getAllEmployeeQualifications']);
+Route::get ('/EmployeeQualifications/{id}', [EmployeeQualificationsController::class, 'getEmployeeQualifications']);
+

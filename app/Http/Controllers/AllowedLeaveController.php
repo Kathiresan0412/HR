@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\AllowedLeave;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AllowedLeaveController extends Controller
 {
@@ -60,6 +61,125 @@ class AllowedLeaveController extends Controller
      */
     public function destroy(AllowedLeave $allowedLeave)
     {
-        //
+        
+    }
+
+    public function updateAllowedLeaves(Request $request, $id)
+    {
+        DB::beginTransaction();
+        try{
+            $request->validate([
+                'position'=>'required',
+                'type'=>'required',
+                'term'=>'required',
+                'count'=>'required',
+            ]);
+            $allowedleaves = new AllowedLeave();
+            $allowedleaves->position = $request->position;
+            $allowedleaves->type = $request->type;
+            $allowedleaves->term = $request->term;
+            $allowedleaves->count = $request->count;
+            $allowedleaves->save();
+            DB::commit();
+            return response()->json([
+            "msg" => "allowedleaves Data",
+            "data"=> $allowedleaves,
+            ],201);
+        }catch(\Throwable $e) {
+            DB::rollback();
+            return response()->json([
+                "msg"=>"oops something went wrong",
+                "error"=> $e->getMessage(),
+            ],500);
+        }
+    }
+    public function destroyAllowedLeaves($id)
+    {
+        try{
+                $allowedleaves = AllowedLeave::find($id);
+                $allowedleaves ->delete();
+
+            }
+            catch(\Throwable $e){
+            return response()->json([
+                "message"=>"Ooops Something went wrong please try again",
+                "error"=> $e->getMessage(),
+            ],500);
+        }
+    }
+    public function getAllAllowedLeaves(Request $request)
+    {
+        try {
+            $allowedleaves = DB::table('allowed_leaves as l')
+           ->select('l.id','p.id as position','t.id as type','l.term')
+           ->leftJoin('positions as p', 'p.id', '=', 'l.position')
+           ->leftJoin('leave_types as t','t.id','=','l.type');
+
+           $allowedleaves = $allowedleaves->orderBy('l.id','desc')->get();
+           return response()->json([
+               "message" => "allowedleaves Data",
+               "data" => $allowedleaves,
+           ],200);
+       }catch(\Throwable $e){
+           return response()->json([
+               "message"=>"oops something went wrong",
+               "error"=> $e->getMessage(),
+           ],500);
+       }
+    }
+    public function getAllowedLeavesinfo($id)
+    {
+        try{
+
+            $allowedleaves = DB::table('allowed_leaves as l')
+            ->select('l.id','p.id as position','t.id as type','l.term',)
+            ->leftJoin('positions as p', 'p.id', '=', 'l.position')
+            ->leftJoin('leave_types as t','t.id','=','l.type');
+            $allowedleaves = $allowedleaves->orderBy('l.id','desc')
+            ->where('l.id',$id)
+            ->first();
+
+            return response()->json([
+                "message" => "allowedleaves Data",
+                "data" => $allowedleaves,
+            ],200);
+        }catch(\Throwable $e){
+            return response()->json([
+                "message"=>"oops something went wrong",
+                "error"=> $e->getMessage(),
+            ],500);
+        }
+    }
+
+    public function saveAllowedLeaves(Request $request)
+    {
+        try{
+            $request->validate([
+                'position'=>'required',
+                'type'=>'required',
+                'term'=>'required',
+                'count'=>'required',
+            ]);
+
+            $allowedleaves = new AllowedLeave();
+            $allowedleaves->position = $request->position;
+            $allowedleaves->type = $request->type;
+            $allowedleaves->term = $request->term;
+            $allowedleaves->count = $request->count;
+            $allowedleaves->save();
+
+            DB::commit();
+
+            return response()->json([
+                "msg" => "allowedleaves Data",
+                "data"=> $allowedleaves,
+            ],201);
+        }catch(\Throwable $e) {
+            DB::rollback();
+            return response()->json([
+                "msg"=>"oops something went wrong",
+                "error"=> $e->getMessage(),
+            ],500);
+        }
     }
 }

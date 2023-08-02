@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\position;
 use Illuminate\Http\Request;
-use DB;
+//use DB;
+use Illuminate\Support\Facades\DB;
 
 class PositionController extends Controller
 {

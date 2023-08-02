@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('employees', function (Blueprint $table) {
             $table->id();
-            $table->string('bio_code');
+            $table->string('bio_code')->unique();
             $table->string('first_name');
             $table->string('last_name');
             $table->string('dob_date');
