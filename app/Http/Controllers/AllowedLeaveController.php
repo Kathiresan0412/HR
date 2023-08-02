@@ -72,13 +72,14 @@ class AllowedLeaveController extends Controller
                 'position'=>'required',
                 'type'=>'required',
                 'term'=>'required',
-                'count'=>'required',
+               // 'count'=>'required',
             ]);
             $allowedleaves = new AllowedLeave();
             $allowedleaves->position = $request->position;
             $allowedleaves->type = $request->type;
+            $allowedleaves->days = $request->days;
             $allowedleaves->term = $request->term;
-            $allowedleaves->count = $request->count;
+            //$allowedleaves->count = $request->count;
             $allowedleaves->save();
             DB::commit();
             return response()->json([
@@ -111,7 +112,7 @@ class AllowedLeaveController extends Controller
     {
         try {
             $allowedleaves = DB::table('allowed_leaves as l')
-           ->select('l.id','p.id as position','t.id as type','l.term')
+           ->select('l.id','p.name as position','t.name as type','l.days','l.term')
            ->leftJoin('positions as p', 'p.id', '=', 'l.position')
            ->leftJoin('leave_types as t','t.id','=','l.type');
 
@@ -132,9 +133,9 @@ class AllowedLeaveController extends Controller
         try{
 
             $allowedleaves = DB::table('allowed_leaves as l')
-            ->select('l.id','p.id as position','t.id as type','l.term',)
-            ->leftJoin('positions as p', 'p.id', '=', 'l.position')
-            ->leftJoin('leave_types as t','t.id','=','l.type');
+           ->select('l.id','p.name as position','t.name as type','l.days','l.term')
+           ->leftJoin('positions as p', 'p.id', '=', 'l.position')
+           ->leftJoin('leave_types as t','t.id','=','l.type');
             $allowedleaves = $allowedleaves->orderBy('l.id','desc')
             ->where('l.id',$id)
             ->first();
@@ -158,14 +159,15 @@ class AllowedLeaveController extends Controller
                 'position'=>'required',
                 'type'=>'required',
                 'term'=>'required',
-                'count'=>'required',
+                //'count'=>'required',
             ]);
 
             $allowedleaves = new AllowedLeave();
             $allowedleaves->position = $request->position;
             $allowedleaves->type = $request->type;
+            $allowedleaves->days = $request->days;
             $allowedleaves->term = $request->term;
-            $allowedleaves->count = $request->count;
+           // $allowedleaves->count = $request->count;
             $allowedleaves->save();
 
             DB::commit();
