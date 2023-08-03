@@ -16,9 +16,10 @@ return new class extends Migration
             $table->bigInteger('employee')->unsigned()->nullable();
             $table->foreign('employee')->references('id')->on('employees')->onDelete('set null');
             $table->string('ol_level_al_level_resheets'); //all file uplogg
-            $table->string('aa');
-            $table->string('feedback_date');
-            $table->string('feedback_date');
+            $table->string('goverment_bank_book');
+            $table->string('work_experince');
+            $table->string('gs_charactet_certificate');
+            $table->string('nic');
             $table->timestamps();
         });
     }

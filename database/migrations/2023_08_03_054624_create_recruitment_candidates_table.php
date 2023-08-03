@@ -16,12 +16,13 @@ return new class extends Migration
             $table->string('first_name');
             $table->string('last_name');
             $table->date('dob');
+            $table->string('gender');
             $table->string('phone_no');
-            $table->string('mail');
+            $table->string('e_mail');
             $table->string('resume');
             $table->date('application_date');
-            $table->bigInteger('position_applied_for')->unsigned()->index()->nullable();
-            $table->foreign('position_applied_for')->references('id')->on('positions')->onDelete('set null');
+            $table->bigInteger('position_id')->unsigned()->nullable();
+            $table->foreign('position_id')->references('id')->on('positions')->onDelete('set null');
             $table->string('interview_status');
             $table->timestamps();
         });
