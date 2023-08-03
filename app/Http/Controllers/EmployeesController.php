@@ -128,7 +128,7 @@ class EmployeesController extends Controller
             ->get();
 
         return response()->json([
-            "message" => "positions Data",
+            "message" => "All employees Data",
             "data" => $employees,
         ], 200);
     } catch (\Throwable $e) {
@@ -183,7 +183,7 @@ class EmployeesController extends Controller
               ->first();
   
               return response()->json([
-                  "message" => "Selected Employee Data",
+                  "message" => "Selected employee Data",
                   "data" => $employees,
               ],200);
           }catch(\Throwable $e){
