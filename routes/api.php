@@ -136,3 +136,9 @@ Route::POST('/resignations', [ResignationsController::class, 'store']);
 Route::put ('/resignations/{id}', [ResignationsController::class, 'update']);
 Route::delete ('/resignations/{id}', [ResignationsController::class, 'destory']);
 
+Route::get ('/instructors', [ResignationsController::class, 'index']);
+Route::get ('/instructors/{id}', [ResignationsController::class, 'edit']);
+Route::POST('/instructors', [ResignationsController::class, 'store']);
+Route::put ('/instructors/{id}', [ResignationsController::class, 'update']);
+Route::delete ('/instructors/{id}', [ResignationsController::class, 'destory']);
+
