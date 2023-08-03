@@ -22,11 +22,6 @@ return new class extends Migration
             $table->decimal('premiums');
             $table->string('beneficiary_information');
             $table->timestamps();
-             
-
-
- 
-
         });
     }
 

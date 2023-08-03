@@ -15,6 +15,8 @@ use App\Http\Controllers\AllowedLeaveController;
 use App\Http\Controllers\ShortLeavesController;
 use App\Http\Controllers\LeaveTypeController;
 use App\Http\Controllers\EmployeeQualificationsController;
+use App\Http\Controllers\AttendanceController;
+
 
 
 /*
@@ -109,3 +111,8 @@ Route::delete ('/shortLeaves/{id}', [ShortLeavesController::class, 'destroyShort
 Route::get ('/EmployeeQualifications', [EmployeeQualificationsController::class, 'getAllEmployeeQualifications']);
 Route::get ('/EmployeeQualifications/{id}', [EmployeeQualificationsController::class, 'getEmployeeQualifications']);
 
+Route::get('/attendance', [AttendanceController::class, 'getAllAttendance']);
+Route::get('/attendance/{id}', [AttendanceController::class, 'getAttendanceinfo']);
+Route::post('/attendance', [AttendanceController::class, 'saveAttendance']);
+Route::put('/attendance/{id}', [AttendanceController::class, 'updateAttendance']);
+Route::delete('/attendance/{id}', [AttendanceController::class, 'destroyAttendance']);
