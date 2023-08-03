@@ -11,12 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('attendance_records', function (Blueprint $table) {
+        Schema::create('attendence_adjusments', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('employee')->unsigned()->index()->nullable();;
-            $table->foreign('employee')->references('id')->on('employees')->onDelete('set null');
             $table->date('date');
-            $table->string('type');
+            $table->datetime('start_time');
+            $table->datetime('end_time');
+            $table->string('remark');
+            $table->string('added_by');
+            $table->string('updated_by');
             $table->timestamps();
         });
     }
@@ -26,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('attendance_records');
+        Schema::dropIfExists('attendence_adjusments');
     }
 };
