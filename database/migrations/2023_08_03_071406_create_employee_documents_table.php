@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('employee')->unsigned()->nullable();
             $table->foreign('employee')->references('id')->on('employees')->onDelete('set null');
-            $table->string('ol_level_al_level_resheets');//all file upload
-            $table->string('feedback_date');
+            $table->string('ol_level_al_level_resheets'); //all file upload
+            $table->string('aa');
             $table->string('feedback_date');
             $table->string('feedback_date');
             $table->timestamps();
