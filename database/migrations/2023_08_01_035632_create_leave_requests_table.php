@@ -15,8 +15,7 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('employee')->unsigned()->index()->nullable();
             $table->foreign('employee')->references('id')->on('employees')->onDelete('set null');
-            $table->bigInteger('position')->unsigned()->index()->nullable();
-            $table->foreign('position')->references('id')->on('positions')->onDelete('set null');
+
             $table->bigInteger('type')->unsigned()->index()->nullable();
             $table->foreign('type')->references('id')->on('leave_types')->onDelete('set null');
             $table->date('request_on');
