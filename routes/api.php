@@ -17,6 +17,8 @@ use App\Http\Controllers\LeaveTypeController;
 use App\Http\Controllers\EmployeeQualificationsController;
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\RecruitmentCandidateController;
+use App\Http\Controllers\ResignationsController;
+
 
 
 
@@ -48,8 +50,8 @@ Route::post('/salarytypes',[SalaryTypeController::class, 'saveSalaryType']);
 Route::put('/salarytypes/{id}',[SalaryTypeController::class, 'updateSalaryType']);
 Route::delete('/salarytypes/{id}',[SalaryTypeController::class, 'destory']);
 
-Route::get('/qualifications',[QualificationsController::class, 'getAllQualification']);
-Route::get('/qualifications/{id}',[QualificationsController::class, 'getQualificationInfo']);
+Route::get('/qualifications',[QualificationsController::class, 'index']);
+Route::get('/qualifications/{id}',[QualificationsController::class, 'edit']);
 Route::post('/qualifications',[QualificationsController::class, 'saveQualification']);
 Route::put('/qualifications/{id}',[QualificationsController::class, 'updateQualification']);
 Route::delete('/qualifications/{id}',[QualificationsController::class, 'destory']);
@@ -119,8 +121,18 @@ Route::post('/attendance', [AttendanceController::class, 'saveAttendance']);
 Route::put('/attendance/{id}', [AttendanceController::class, 'updateAttendance']);
 Route::delete('/attendance/{id}', [AttendanceController::class, 'destroyAttendance']);
 
+//must check
+
 Route::get ('/recruitmentcandidates', [RecruitmentCandidateController::class, 'getAllRecruitmentCandidates']);
 Route::get ('/recruitmentcandidates/{id}', [RecruitmentCandidateController::class, 'getRecruitmentCandidateInfo']);
 Route::POST('/recruitmentcandidates', [RecruitmentCandidateController::class, 'saveRecruitmentCandidates']);
 Route::put ('/recruitmentcandidates/{id}', [RecruitmentCandidateController::class, 'updateRecruitmentCandidates']);
 Route::delete ('/recruitmentcandidates/{id}', [RecruitmentCandidateController::class, 'destroyRecruitmentCandidates']);
+
+
+Route::get ('/resignations', [ResignationsController::class, 'index']);
+Route::get ('/resignations/{id}', [ResignationsController::class, 'edit']);
+Route::POST('/resignations', [ResignationsController::class, 'store']);
+Route::put ('/resignations/{id}', [ResignationsController::class, 'update']);
+Route::delete ('/resignations/{id}', [ResignationsController::class, 'destory']);
+

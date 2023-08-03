@@ -11,9 +11,30 @@ class QualificationsController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+      try{
+        $qualification = DB::table('qualifications as q')
+        ->select('q.id','q.name','q.description');
+   
+        $search = $request->search;
+        if (!is_null($search)){
+            $qualification = $qualification
+            ->where('q.name','LIKE','%'.$search.'%')
+            ->orWhere('q.description','LIKE','%'.$search.'%');
+        }
+        $qualification = $qualification->orderBy('q.id','desc')->get();
+
+        return response()->json([
+            "message" => "qualification Data",
+            "data" => $qualification,
+        ],200);
+    }catch(\Throwable $e){
+        return response()->json([
+            "message"=>"oops something went wrong",
+            "error"=> $e->getMessage(),
+        ],500);
+    }
     }
 
     /**
@@ -43,9 +64,25 @@ class QualificationsController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Qualifications $qualifications)
+    public function edit( $id)
     {
-        //
+        try{
+
+            $qualification = DB::table('qualifications as q')
+            ->select('q.id','q.name','q.description')
+            ->where('q.id',$id)
+            ->first();
+  
+            return response()->json([
+                "message" => "Qualification Data",
+                "data" => $qualification,
+            ],200);
+        }catch(\Throwable $e){
+            return response()->json([
+                "message"=>"oops something went wrong",
+                "error"=> $e->getMessage(),
+            ],500);
+        }
     }
 
     /**
@@ -69,52 +106,10 @@ class QualificationsController extends Controller
 
 
   /**************************API functions**********************************/
-  public function getAllQualification(Request $request,)
-  {
-   
-      try{
-          $qualification = DB::table('qualifications as q')
-          ->select('q.id','q.name','q.description');
-     
-          $search = $request->search;
-          if (!is_null($search)){
-              $qualification = $qualification
-              ->where('q.name','LIKE','%'.$search.'%')
-              ->orWhere('q.description','LIKE','%'.$search.'%');
-          }
-          $qualification = $qualification->orderBy('q.id','desc')->get();
-
-          return response()->json([
-              "message" => "qualification Data",
-              "data" => $qualification,
-          ],200);
-      }catch(\Throwable $e){
-          return response()->json([
-              "message"=>"oops something went wrong",
-              "error"=> $e->getMessage(),
-          ],500);
-      }
-  }
-
+ 
   public function getQualificationInfo($id)
   {
-      try{
-
-          $qualification = DB::table('qualifications as q')
-          ->select('q.id','q.name','q.description')
-          ->where('q.id',$id)
-          ->first();
-
-          return response()->json([
-              "message" => "Qualification Data",
-              "data" => $qualification,
-          ],200);
-      }catch(\Throwable $e){
-          return response()->json([
-              "message"=>"oops something went wrong",
-              "error"=> $e->getMessage(),
-          ],500);
-      }
+     
   }
 
   public function saveQualification(Request $request)

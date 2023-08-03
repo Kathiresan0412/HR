@@ -176,7 +176,7 @@ class AttendanceController extends Controller
              'status'=>'required'
          ]);
 
-         $attendances = new Attendance();
+         $attendances =  Attendance::find($id);
          $attendances->employee = $request->employee;
          $attendances->date = $request->date;
          $attendances->start_time = $request->start_time;
