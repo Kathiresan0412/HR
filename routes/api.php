@@ -18,10 +18,10 @@ use App\Http\Controllers\EmployeeQualificationsController;
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\RecruitmentCandidateController;
 use App\Http\Controllers\ResignationsController;
-
-
-
-
+use App\Http\Controllers\TrainingProgramAttendeeController;
+use App\Http\Controllers\TrainingRecordController;
+use App\Http\Controllers\TrainingProgramController;
+use App\Http\Controllers\InstructorController;
 
 /*
 |--------------------------------------------------------------------------
@@ -87,7 +87,7 @@ Route::get('/salaryadvance/{id}', [SalarayAdvanceController::class, 'getSalaryAd
 Route::post('/salaryadvance', [SalarayAdvanceController::class, 'saveSalaryAdvance']);
 Route::put('/salaryadvance/{id}', [SalarayAdvanceController::class, 'updateSalaryAdvance']);
 Route::delete('/salaryadvance/{id}', [SalarayAdvanceController::class, 'destroySalaryAdvance']);
-
+//must check
 Route::get ('/allowedleaves', [AllowedLeaveController::class, 'getAllAllowedLeaves']);
 Route::get ('/allowedleaves/{id}', [AllowedLeaveController::class, 'getAllowedLeavesinfo']);
 Route::POST('/allowedleaves', [AllowedLeaveController::class, 'saveAllowedLeaves']);
@@ -114,7 +114,7 @@ Route::delete ('/shortLeaves/{id}', [ShortLeavesController::class, 'destroyShort
 
 Route::get ('/EmployeeQualifications', [EmployeeQualificationsController::class, 'getAllEmployeeQualifications']);
 Route::get ('/EmployeeQualifications/{id}', [EmployeeQualificationsController::class, 'getEmployeeQualifications']);
-
+//must check
 Route::get('/attendance', [AttendanceController::class, 'getAllAttendance']);
 Route::get('/attendance/{id}', [AttendanceController::class, 'getAttendanceinfo']);
 Route::post('/attendance', [AttendanceController::class, 'saveAttendance']);
@@ -136,9 +136,31 @@ Route::POST('/resignations', [ResignationsController::class, 'store']);
 Route::put ('/resignations/{id}', [ResignationsController::class, 'update']);
 Route::delete ('/resignations/{id}', [ResignationsController::class, 'destory']);
 
-Route::get ('/instructors', [ResignationsController::class, 'index']);
-Route::get ('/instructors/{id}', [ResignationsController::class, 'edit']);
-Route::POST('/instructors', [ResignationsController::class, 'store']);
-Route::put ('/instructors/{id}', [ResignationsController::class, 'update']);
-Route::delete ('/instructors/{id}', [ResignationsController::class, 'destory']);
+Route::get ('/instructors', [InstructorController::class, 'index']);
+Route::get ('/instructors/{id}', [InstructorController::class, 'edit']);
+Route::POST('/instructors', [InstructorController::class, 'store']);
+Route::put ('/instructors/{id}', [InstructorController::class, 'update']);
+Route::delete ('/instructors/{id}', [InstructorController::class, 'destory']);
+
+Route::get ('/training_programs', [TrainingProgramController::class, 'index']);
+Route::get ('/training_programs/{id}', [TrainingProgramController::class, 'edit']);
+Route::POST('/training_programs', [TrainingProgramController::class, 'store']);
+Route::put ('/training_programs/{id}', [TrainingProgramController::class, 'update']);
+Route::delete ('/training_programs/{id}', [TrainingProgramController::class, 'destory']);
+
+Route::get ('/training_program_attendees', [TrainingProgramAttendeeController::class, 'index']);
+Route::get ('/training_program_attendees/{id}', [TrainingProgramAttendeeController::class, 'edit']);
+Route::POST('/training_program_attendees', [TrainingProgramAttendeeController::class, 'store']);
+Route::put ('/training_program_attendees/{id}', [TrainingProgramAttendeeController::class, 'update']);
+Route::delete ('/training_program_attendees/{id}', [TrainingProgramAttendeeController::class, 'destory']);
+
+
+Route::get ('/training_records', [TrainingRecordController::class, 'index']);
+Route::get ('/training_records/{id}', [TrainingRecordController::class, 'edit']);
+Route::POST('/training_records', [TrainingRecordController::class, 'store']);
+Route::put ('/training_records/{id}', [TrainingRecordController::class, 'update']);
+Route::delete ('/training_records/{id}', [TrainingRecordController::class, 'destory']);
+
+
+h
 
