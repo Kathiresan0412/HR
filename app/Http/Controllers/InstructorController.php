@@ -14,7 +14,7 @@ class InstructorController extends Controller
     {
         try {
             $instructor = DB::table('instructors as i')
-        ->select('i.id','e.first_name as employee','d.id as department')
+        ->select('i.id','e.first_name as employee','d.name as department')
         ->leftJoin('employees as e', 'e.id', '=', 'i.employee')
         ->leftJoin('departments as d', 'd.id', '=', 'i.department');
 

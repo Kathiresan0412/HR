@@ -156,3 +156,4 @@ class TrainingRecordController extends Controller
         $training->delete();
     }
 }
+
