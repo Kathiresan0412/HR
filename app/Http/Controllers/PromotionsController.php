@@ -68,8 +68,9 @@ class PromotionsController extends Controller
     {
         //  try {
         $promotions = DB::table('promotions as b')
-            ->select('b.id', 'e.first_name as employee', 'b.previous_position', 'p.name as position', 'b.previous_salary', 'b.from', 'e.basic_salary as current_salary', 'b.status')
+            ->select('b.id', 'e.first_name as employee', 'b.previous_position', 'p.name as current_position', 'b.previous_salary', 'b.from', 'e.basic_salary as current_salary', 'b.status')
             ->leftJoin('employees as e', 'e.id', '=', 'b.employee')
+
             ->leftJoin('positions as p', 'p.id', '=', 'e.position');
 
         $search = $request->search;
@@ -119,27 +120,24 @@ class PromotionsController extends Controller
             $request->validate([
                 'employee' => 'required',
                 'previous_position' => 'required',
-                'position' => 'required',
+              //  'position' => 'required',
                 'previous_salary' => 'required',
                 'from' => 'required',
                // 'current_salary' => 'required',
-                'status' => 'required'
+               // 'status' => 'required'
             ]);
-
             $promotion = new Promotions();
             $promotion->employee = $request->employee; //RHS name form name and LHS name database 
             $promotion->previous_position = $request->previous_position;
-            $promotion->position = $request->position;
             $promotion->previous_salary = $request->previous_salary;
             $promotion->from = $request->from;
-            $promotion->current_salary = $request->current_salary;
             $promotion->status = $request->status;
             $promotion->save();
 
             $id=$promotion->employee;
             $employee = Employees::find($id);
-            $employee->position = $request->position;
-            $employee->basic_salary = $request->basic_salary;
+            $employee->position = $request->current_position;
+            $employee->basic_salary = $request->current_salary;
             $employee->save();
             
             DB::commit();

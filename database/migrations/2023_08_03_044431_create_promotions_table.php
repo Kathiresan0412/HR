@@ -17,10 +17,7 @@ return new class extends Migration
             $table->foreign('employee')->references('id')->on('employees')->onDelete('set null');
             $table->string('previous_position');
             $table->string('previous_salary');
-            $table->bigInteger('position')->unsigned()->index()->nullable();
-            $table->foreign('position')->references('id')->on('positions')->onDelete('set null');
             $table->date('from');
-            $table->decimal('current_salary');
             $table->string('status');
             $table->timestamps();
         });
