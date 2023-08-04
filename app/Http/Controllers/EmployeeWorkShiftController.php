@@ -23,6 +23,7 @@ class EmployeeWorkShiftController extends Controller
                "message" => "work shift Data",
                "data" => $EmployeeWorkShift,
            ],200);
+
        }catch(\Throwable $e){
            return response()->json([
                "message"=>"oops something went wrong",
@@ -122,15 +123,20 @@ class EmployeeWorkShiftController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, EmployeeWorkShift $employeeWorkShift)
+    public function update($id)
     {
-        //
+        try{
+            $WorkShiftDetail = WorkShiftDetail::find($id);
+            $WorkShiftDetail ->delete();
+        }
+        catch(\Throwable $e){
+        return response()->json([
+            "message"=>"Ooops Something went wrong please try again",
+            "error"=> $e->getMessage(),
+        ],500);
     }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(EmployeeWorkShift $employeeWorkShift)
+    }
+    public function destroy( $id)
     {
         //
     }
