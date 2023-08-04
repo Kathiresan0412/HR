@@ -76,8 +76,7 @@ class SalarayAdvanceController extends Controller
             if (!is_null($search)) {
                 $salary_advances = $salary_advances
                     ->where('sad.id', 'LIKE', '%' . $search . '%')
-                    ->orWhere('sad.type', 'LIKE', '%' . $search . '%')
-                    ->orWhere('sad.bio_code', 'LIKE', '%' . $search . '%');
+                    ->orWhere('sad.type', 'LIKE', '%' . $search . '%');
             }
             $salary_advances = $salary_advances->orderBy('sad.id')->get();
 
