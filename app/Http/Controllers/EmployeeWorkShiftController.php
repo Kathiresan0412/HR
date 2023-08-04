@@ -52,7 +52,6 @@ class EmployeeWorkShiftController extends Controller
                 'date'=>'required',
                 //'count'=>'required',
             ]);
-
             $EmployeeWorkShift = new EmployeeWorkShift();
             $EmployeeWorkShift->title = $request->title;
             $EmployeeWorkShift->employee = $request->employee;
@@ -64,9 +63,9 @@ class EmployeeWorkShiftController extends Controller
             $workshift=$EmployeeWorkShift->id;
 
             $WorkShiftDetail = $request->WorkShiftDetails;
-            foreach($WorkShiftDetail as $WorkShiftDetails){
+            foreach($WorkShiftDetail as $WorkShiftDetail){
             $WorkShiftDetail = new WorkShiftDetail();
-            $WorkShiftDetail->work_shif_id = $request->workshift;
+            $WorkShiftDetail->work_shif_id = $request->$workshift;
             $WorkShiftDetail->from = $request->from;
             $WorkShiftDetail->to = $request->to;
             $WorkShiftDetail->save();
@@ -123,7 +122,55 @@ class EmployeeWorkShiftController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update($id)
+    public function update(Request $request,$id)
+    {
+
+        try{
+            $request->validate([
+                'title'=>'required',
+                'employee'=>'required',
+                'date'=>'required',
+                //'count'=>'required',
+            ]);
+            $EmployeeWorkShift =  EmployeeWorkShift::find($id);
+            $EmployeeWorkShift->title = $request->title;
+            $EmployeeWorkShift->employee = $request->employee;
+            $EmployeeWorkShift->date = $request->date;
+            $EmployeeWorkShift->is_of_day = $request->is_of_day;
+            $EmployeeWorkShift->is_of_hour = $request->is_of_hour;
+           // $allowedleaves->count = $request->count;
+            $EmployeeWorkShift->save();
+           // $workshift=$EmployeeWorkShift->id;
+
+           WorkShiftDetail::where('work_shift_detail',$id)->delete();
+            $WorkShiftDetail = $request->WorkShiftDetails;
+            if(!is_null($qualification)){
+            foreach($WorkShiftDetail as $WorkShiftDetail){
+            $WorkShiftDetail = new WorkShiftDetail();
+            $WorkShiftDetail->work_shif_id = $request->$id;
+            $WorkShiftDetail->from = $request->from;
+            $WorkShiftDetail->to = $request->to;
+            $WorkShiftDetail->save();
+            }
+              }
+           
+            DB::commit();
+
+            return response()->json([
+                "msg" => "allowedleaves Data",
+                "data"=> $EmployeeWorkShift,
+            ],201);
+        }catch(\Throwable $e) {
+            DB::rollback();
+            return response()->json([
+                "msg"=>"oops something went wrong",
+                "error"=> $e->getMessage(),
+            ],500);
+        }
+    }
+      
+    
+    public function destroy( $id)
     {
         try{
             $WorkShiftDetail = WorkShiftDetail::find($id);
@@ -135,9 +182,5 @@ class EmployeeWorkShiftController extends Controller
             "error"=> $e->getMessage(),
         ],500);
     }
-    }
-    public function destroy( $id)
-    {
-        //
     }
 }
