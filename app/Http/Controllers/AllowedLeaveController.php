@@ -116,6 +116,16 @@ class AllowedLeaveController extends Controller
            ->leftJoin('positions as p', 'p.id', '=', 'l.position')
            ->leftJoin('leave_types as t','t.id','=','l.type');
 
+
+           $search = $request->search;
+           if (!is_null($search)){
+               $allowedleaves = $allowedleaves
+               ->where('l.id','LIKE','%'.$search.'%')
+               ->orWhere('l.position','LIKE','%'.$search.'%')
+               ->orWhere('l.type','LIKE','%'.$search.'%')
+               ->orWhere('l.days','LIKE','%'.$search.'%')
+               ->orWhere('l.term','LIKE','%'.$search.'%');
+           }
            $allowedleaves = $allowedleaves->orderBy('l.id','desc')->get();
            return response()->json([
                "message" => "allowedleaves Data",
