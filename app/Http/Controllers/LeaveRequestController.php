@@ -169,7 +169,6 @@ class LeaveRequestController extends Controller
         DB::beginTransaction();
         try {
             $request->validate([
-              //  'bio_code' => 'required',
                 'employee' => 'required',
                 'type' => 'required',
                 'request_on' => 'required',
@@ -181,7 +180,6 @@ class LeaveRequestController extends Controller
             ]);
 
             $leave_request = LeaveRequest::find($id);
-          //  $leave_request->bio_code = $request->bio_code;
             $leave_request->employee = $request->employee;
             $leave_request->type = $request->type;
             $leave_request->request_on = $request->request_on;

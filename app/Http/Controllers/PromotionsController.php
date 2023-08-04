@@ -122,7 +122,7 @@ class PromotionsController extends Controller
                 'position' => 'required',
                 'previous_salary' => 'required',
                 'from' => 'required',
-                'current_salary' => 'required',
+               // 'current_salary' => 'required',
                 'status' => 'required'
             ]);
 
@@ -159,40 +159,7 @@ class PromotionsController extends Controller
 
     public function updatePromotion(Request $request, $id)
     {
-        DB::beginTransaction();
-        try {
-            $request->validate([
-                'employee' => 'required',
-                'previous_position' => 'required',
-                'position' => 'required',
-                'previous_salary' => 'required',
-                'from' => 'required',
-                'current_salary' => 'required',
-                'status' => 'required'
-            ]);
-
-            $promotion = Promotions::find($id);
-            $promotion->employee = $request->employee; //RHS name form name and LHS name database 
-            $promotion->previous_position = $request->previous_position;
-            $promotion->position = $request->position;
-            $promotion->previous_salary = $request->previous_salary;
-            $promotion->from = $request->from;
-            $promotion->current_salary = $request->current_salary;
-            $promotion->status = $request->status;
-            $promotion->save();
-            DB::commit();
-
-            return response()->json([
-                "message" => "promotion Data",
-                "data" => $promotion,
-            ], 201);
-        } catch (\Throwable $e) {
-            return response()->json([
-                "message" => "Oops somthing went wrong please try again",
-                "error" => $e->getMessage(),
-            ], 500);
-        }
-
+       
     }
 
     public function destroyPromotion($id)

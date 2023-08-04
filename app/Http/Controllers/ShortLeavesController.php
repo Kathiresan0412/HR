@@ -78,7 +78,7 @@ class ShortLeavesController extends Controller
                 ->where('e.id','LIKE','%'.$search.'%')
                 ->where('employee','LIKE','%'.$search.'%')
                 ->orWhere('s.id','LIKE','%'.$search.'%')
-                ->orWhere('s.date','LIKE','%'.$search.'%');
+                ->orWhere('s.note','LIKE','%'.$search.'%');
             }
             $shortLeaves = $shortLeaves->orderBy('s.id','desc')->get();
 
