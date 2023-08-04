@@ -74,9 +74,8 @@ class LeaveRequestController extends Controller
 
         if (!is_null($search)) {
             $leave_requests = $leave_requests
-                ->where('l.bio_code', 'LIKE', '%' . $search . '%')
                 ->orWhere('l.employee', 'LIKE', '%' . $search . '%')
-                ->orWhere('l.leave_type', 'LIKE', '%' . $search . '%')
+                ->orWhere('l.type', 'LIKE', '%' . $search . '%')
                 ->orWhere('l.request_on', 'LIKE', '%' . $search . '%')
                 ->orWhere('l.reason', 'LIKE', '%' . $search . '%');
         }
