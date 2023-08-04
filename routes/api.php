@@ -22,7 +22,9 @@ use App\Http\Controllers\TrainingProgramAttendeeController;
 use App\Http\Controllers\TrainingRecordController;
 use App\Http\Controllers\TrainingProgramController;
 use App\Http\Controllers\InstructorController;
-
+use App\Http\Controllers\PromotionsController;
+use App\Http\Controllers\EmployeeWorkShiftController;
+//use App\Http\Controllers\PromotionsController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -162,5 +164,25 @@ Route::put ('/training_records/{id}', [TrainingRecordController::class, 'update'
 Route::delete ('/training_records/{id}', [TrainingRecordController::class, 'destory']);
 
 
-h
+
+
+Route::get ('/work-shifts', [EmployeeWorkShiftController::class, 'index']);
+Route::get ('/work-shifts/{id}', [EmployeeWorkShiftController::class, 'edit']);
+Route::POST('/work-shifts', [EmployeeWorkShiftController::class, 'store']);
+Route::put ('/work-shifts/{id}', [EmployeeWorkShiftController::class, 'update']);
+Route::delete ('/work-shifts/{id}', [EmployeeWorkShiftController::class, 'destory']);
+
+Route::get('/promotions', [PromotionsController::class, 'getAllPromotions']);
+Route::get('/promotions/{id}', [PromotionsController::class, 'getPromotionInfo']);
+Route::post('/promotions', [PromotionsController::class, 'savePromotion']);
+Route::put('/promotions/{id}', [PromotionsController::class, 'updatePromotion']);
+Route::delete('/promotions/{id}', [PromotionsController::class, 'destroyPromotion']);
+
+
+// Route::get ('/promotions', [PromotionsController::class, 'index']);
+// Route::get ('/promotions/{id}', [PromotionsController::class, 'edit']);
+// Route::POST('/promotions', [PromotionsController::class, 'store']);
+// Route::put ('/promotions/{id}', [PromotionsController::class, 'update']);
+// Route::delete ('/promotions/{id}', [PromotionsController::class, 'destory']);
+
 

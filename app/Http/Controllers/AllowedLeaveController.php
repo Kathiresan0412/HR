@@ -74,7 +74,7 @@ class AllowedLeaveController extends Controller
                 'term'=>'required',
                // 'count'=>'required',
             ]);
-            $allowedleaves = new AllowedLeave();
+            $allowedleaves = AllowedLeave::find($id);
             $allowedleaves->position = $request->position;
             $allowedleaves->type = $request->type;
             $allowedleaves->days = $request->days;

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\WorkShiftDetail;
 use Illuminate\Http\Request;
 
+
 class WorkShiftDetailController extends Controller
 {
     /**
@@ -12,7 +13,23 @@ class WorkShiftDetailController extends Controller
      */
     public function index()
     {
-        //
+        try {
+            $EmployeeWorkShift = DB::table('work_shift_details as wsd')
+           ->select('wse.id','e.first_name as employee','ews.title as title','ews.date as date','ews.date as date','ews.is_of_hour as is_of_hour','ews.is_of_day as is_of_day','wsd.from','wsd.to')
+           ->leftJoin('employee_work_shifts as ews','ews.id','=','wsd.work_shif_id')
+           ->leftJoin('employees as e', 'e.id', '=', 'ews.employee');
+
+           $EmployeeWorkShift = $EmployeeWorkShift->orderBy('l.id','desc')->get();
+           return response()->json([
+               "message" => "allowedleaves Data",
+               "data" => $EmployeeWorkShift,
+           ],200);
+       }catch(\Throwable $e){
+           return response()->json([
+               "message"=>"oops something went wrong",
+               "error"=> $e->getMessage(),
+           ],500);
+       }
     }
 
     /**

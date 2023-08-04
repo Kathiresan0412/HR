@@ -117,7 +117,7 @@ class InstructorController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(\Illuminate\Support\Facades\Request $request,  $id)
+    public function update(Request $request,  $id)
     {
         DB::beginTransaction();
         try{
