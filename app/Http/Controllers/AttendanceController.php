@@ -184,9 +184,7 @@ class AttendanceController extends Controller
          $attendances->worked_hrs = $request->worked_hrs;
          $attendances->work_shift_tot_hrs = $request->work_shift_tot_hrs;
          $attendances->status = $request->status;
-
          $attendances->save();
-         Attendance::where('attendances',$id)->delete();
 
          DB::commit();
 

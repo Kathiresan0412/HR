@@ -123,9 +123,7 @@ Route::get('/attendance/{id}', [AttendanceController::class, 'getAttendanceinfo'
 Route::post('/attendance', [AttendanceController::class, 'saveAttendance']);
 Route::put('/attendance/{id}', [AttendanceController::class, 'updateAttendance']);
 Route::delete('/attendance/{id}', [AttendanceController::class, 'destroyAttendance']);
-//aparnan
 
-//achuthan
 Route::get ('/recruitmentcandidates', [RecruitmentCandidateController::class, 'getAllRecruitmentCandidates']);
 Route::get ('/recruitmentcandidates/{id}', [RecruitmentCandidateController::class, 'getRecruitmentCandidateInfo']);
 Route::POST('/recruitmentcandidates', [RecruitmentCandidateController::class, 'saveRecruitmentCandidates']);
@@ -143,7 +141,9 @@ Route::get ('/instructors/{id}', [InstructorController::class, 'edit']);
 Route::POST('/instructors', [InstructorController::class, 'store']);
 Route::put ('/instructors/{id}', [InstructorController::class, 'update']);
 Route::delete ('/instructors/{id}', [InstructorController::class, 'destory']);
+//aparnan
 
+//achuthan
 Route::get ('/training_programs', [TrainingProgramController::class, 'index']);
 Route::get ('/training_programs/{id}', [TrainingProgramController::class, 'edit']);
 Route::POST('/training_programs', [TrainingProgramController::class, 'store']);
