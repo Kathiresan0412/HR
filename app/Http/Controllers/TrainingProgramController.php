@@ -102,6 +102,7 @@ class TrainingProgramController extends Controller
             $training = DB::table('training_programs as t')
             ->select('t.id','t.name','t.description','t.start_date','t.end_date','i.id as instructor','t.location')
             ->leftJoin('instructors as i', 't.instructor', '=', 'i.id')
+            ->where('t.id',$id)
             ->first();
 
             return response()->json([
