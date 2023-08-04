@@ -140,7 +140,7 @@ class LeaveRequestController extends Controller
             $leave_request = new LeaveRequest();
            // $leave_request->bio_code = $request->bio_code;
             $leave_request->employee = $request->employee;
-            $leave_request->type = $request->leave_type;
+            $leave_request->type = $request->type;
             $leave_request->request_on = $request->request_on;
             $leave_request->dates = $request->dates;
             $leave_request->days = $request->days;
