@@ -83,13 +83,13 @@ Route::put ('/announcements/{id}', [AnnouncementController::class, 'updateAnnoun
 Route::delete ('/announcements/{id}', [AnnouncementController::class, 'destroy']);
 
 
-//check
+//Saji
 Route::get('/salaryadvance', [SalarayAdvanceController::class, 'getAllSalaryAdvances']);
 Route::get('/salaryadvance/{id}', [SalarayAdvanceController::class, 'getSalaryAdavanceInfo']);
 Route::post('/salaryadvance', [SalarayAdvanceController::class, 'saveSalaryAdvance']);
 Route::put('/salaryadvance/{id}', [SalarayAdvanceController::class, 'updateSalaryAdvance']);
 Route::delete('/salaryadvance/{id}', [SalarayAdvanceController::class, 'destroySalaryAdvance']);
-//must check
+
 Route::get ('/allowedleaves', [AllowedLeaveController::class, 'getAllAllowedLeaves']);
 Route::get ('/allowedleaves/{id}', [AllowedLeaveController::class, 'getAllowedLeavesinfo']);
 Route::POST('/allowedleaves', [AllowedLeaveController::class, 'saveAllowedLeaves']);
@@ -101,7 +101,8 @@ Route::get ('/leavere_quests/{id}', [LeaveRequestController::class, 'getAllLeave
 Route::POST('/leavere_quests', [LeaveRequestController::class, 'saveLeave_requestInfo']);
 Route::put ('/leavere_quests/{id}', [LeaveRequestController::class, 'updateLeave_requestInfo']);
 Route::delete ('/leavere_quests/{id}', [LeaveRequestController::class, 'destroyLeave_request']);
-
+//saji
+//aparnan
 Route::get ('/leavetypes', [LeaveTypeController::class, 'getAllLeaveTypes']);
 Route::get ('/leavetypes/{id}', [LeaveTypeController::class, 'getLeaveTypesinfo']);
 Route::POST('/leavetypes', [LeaveTypeController::class, 'saveLeaveTypes']);
@@ -116,21 +117,20 @@ Route::delete ('/shortLeaves/{id}', [ShortLeavesController::class, 'destroyShort
 
 Route::get ('/EmployeeQualifications', [EmployeeQualificationsController::class, 'getAllEmployeeQualifications']);
 Route::get ('/EmployeeQualifications/{id}', [EmployeeQualificationsController::class, 'getEmployeeQualifications']);
-//must check
+
 Route::get('/attendance', [AttendanceController::class, 'getAllAttendance']);
 Route::get('/attendance/{id}', [AttendanceController::class, 'getAttendanceinfo']);
 Route::post('/attendance', [AttendanceController::class, 'saveAttendance']);
 Route::put('/attendance/{id}', [AttendanceController::class, 'updateAttendance']);
 Route::delete('/attendance/{id}', [AttendanceController::class, 'destroyAttendance']);
+//aparnan
 
-//must check
-
+//achuthan
 Route::get ('/recruitmentcandidates', [RecruitmentCandidateController::class, 'getAllRecruitmentCandidates']);
 Route::get ('/recruitmentcandidates/{id}', [RecruitmentCandidateController::class, 'getRecruitmentCandidateInfo']);
 Route::POST('/recruitmentcandidates', [RecruitmentCandidateController::class, 'saveRecruitmentCandidates']);
 Route::put ('/recruitmentcandidates/{id}', [RecruitmentCandidateController::class, 'updateRecruitmentCandidates']);
 Route::delete ('/recruitmentcandidates/{id}', [RecruitmentCandidateController::class, 'destroyRecruitmentCandidates']);
-
 
 Route::get ('/resignations', [ResignationsController::class, 'index']);
 Route::get ('/resignations/{id}', [ResignationsController::class, 'edit']);
@@ -150,22 +150,13 @@ Route::POST('/training_programs', [TrainingProgramController::class, 'store']);
 Route::put ('/training_programs/{id}', [TrainingProgramController::class, 'update']);
 Route::delete ('/training_programs/{id}', [TrainingProgramController::class, 'destory']);
 
-Route::get ('/training_program_attendees', [TrainingProgramAttendeeController::class, 'index']);
-Route::get ('/training_program_attendees/{id}', [TrainingProgramAttendeeController::class, 'edit']);
-Route::POST('/training_program_attendees', [TrainingProgramAttendeeController::class, 'store']);
-Route::put ('/training_program_attendees/{id}', [TrainingProgramAttendeeController::class, 'update']);
-Route::delete ('/training_program_attendees/{id}', [TrainingProgramAttendeeController::class, 'destory']);
-
-
 Route::get ('/training_records', [TrainingRecordController::class, 'index']);
 Route::get ('/training_records/{id}', [TrainingRecordController::class, 'edit']);
 Route::POST('/training_records', [TrainingRecordController::class, 'store']);
 Route::put ('/training_records/{id}', [TrainingRecordController::class, 'update']);
 Route::delete ('/training_records/{id}', [TrainingRecordController::class, 'destory']);
-
-
-
-
+//achuthan
+//jathusan
 Route::get ('/work-shifts', [EmployeeWorkShiftController::class, 'index']);
 Route::get ('/work-shifts/{id}', [EmployeeWorkShiftController::class, 'edit']);
 Route::POST('/work-shifts', [EmployeeWorkShiftController::class, 'store']);
@@ -177,12 +168,6 @@ Route::get('/promotions/{id}', [PromotionsController::class, 'getPromotionInfo']
 Route::post('/promotions', [PromotionsController::class, 'savePromotion']);
 Route::put('/promotions/{id}', [PromotionsController::class, 'updatePromotion']);
 Route::delete('/promotions/{id}', [PromotionsController::class, 'destroyPromotion']);
-
-
-// Route::get ('/promotions', [PromotionsController::class, 'index']);
-// Route::get ('/promotions/{id}', [PromotionsController::class, 'edit']);
-// Route::POST('/promotions', [PromotionsController::class, 'store']);
-// Route::put ('/promotions/{id}', [PromotionsController::class, 'update']);
-// Route::delete ('/promotions/{id}', [PromotionsController::class, 'destory']);
+//jathusan
 
 
