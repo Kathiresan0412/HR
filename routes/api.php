@@ -96,11 +96,11 @@ Route::POST('/allowedleaves', [AllowedLeaveController::class, 'saveAllowedLeaves
 Route::put ('/allowedleaves/{id}', [AllowedLeaveController::class, 'updateAllowedLeaves']);
 Route::delete ('/allowedleaves/{id}', [AllowedLeaveController::class, 'destroyAllowedLeaves']);
 
-Route::get ('/leavere_quests', [LeaveRequestController::class, 'getAllLeave_requests']);
-Route::get ('/leavere_quests/{id}', [LeaveRequestController::class, 'getAllLeave_requestInfo']);
-Route::POST('/leavere_quests', [LeaveRequestController::class, 'saveLeave_requestInfo']);
-Route::put ('/leavere_quests/{id}', [LeaveRequestController::class, 'updateLeave_requestInfo']);
-Route::delete ('/leavere_quests/{id}', [LeaveRequestController::class, 'destroyLeave_request']);
+Route::get ('/leave_requests', [LeaveRequestController::class, 'getAllLeave_requests']);
+Route::get ('/leave_requests/{id}', [LeaveRequestController::class, 'getAllLeave_requestInfo']);
+Route::POST('/leave_requests', [LeaveRequestController::class, 'saveLeave_requestInfo']);
+Route::put ('/leave_requests/{id}', [LeaveRequestController::class, 'updateLeave_requestInfo']);
+Route::delete ('/leave_requests/{id}', [LeaveRequestController::class, 'destroyLeave_request']);
 //saji
 //aparnan
 Route::get ('/leavetypes', [LeaveTypeController::class, 'getAllLeaveTypes']);
