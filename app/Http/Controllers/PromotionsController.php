@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Promotions;
+use App\Models\Employees;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -45,7 +46,7 @@ class PromotionsController extends Controller
      */
     public function edit(Promotions $promotions)
     {
-        //
+       
     }
 
     /**
@@ -80,7 +81,6 @@ class PromotionsController extends Controller
                 ->orWhere('b.position', 'LIKE', '%' . $search . '%')
                 ->orWhere('b.status', 'LIKE', '%' . $search . '%');
         }
-
         $promotions = $promotions->orderBy('id', 'asc')
             ->get();
 
@@ -88,13 +88,6 @@ class PromotionsController extends Controller
             "message" => "positions Data",
             "data" => $promotions,
         ], 200);
-        //  } catch (\Throwable $e) {
-        //      return response()->json([
-        //          "message" => "Oops somthing went wrong please try again",
-        //          "error" => $e->getMessage(),
-        //      ], 500);
-        //  }
-
     }
 
     public function getPromotionInfo($id)
@@ -143,6 +136,12 @@ class PromotionsController extends Controller
             $promotion->status = $request->status;
             $promotion->save();
 
+            $id=$promotion->employee;
+            $employee = Employees::find($id);
+            $employee->position = $request->position;
+            $employee->basic_salary = $request->basic_salary;
+            $employee->save();
+            
             DB::commit();
 
             return response()->json([
