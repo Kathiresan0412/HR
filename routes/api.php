@@ -24,10 +24,6 @@ use App\Http\Controllers\TrainingProgramController;
 use App\Http\Controllers\InstructorController;
 use App\Http\Controllers\PromotionsController;
 use App\Http\Controllers\EmployeeWorkShiftController;
-<<<<<<< HEAD
-use App\Http\Controllers\EmployeeDocumentController;
-
-=======
 use App\Http\Controllers\EmployeeFeedbackController;
 use App\Http\Controllers\EmployeeDocumentController;
 use App\Http\Controllers\EmployeeHealthController;
@@ -36,7 +32,6 @@ use App\Http\Controllers\EmployeeDisciplinaryController;
 use App\Http\Controllers\EmployeeBenefitController;
 use App\Http\Controllers\OTSController;
 //use App\Http\Controllers\OTSController;
->>>>>>> ec5da9d3a741cbd18b2bf4f1bcd7f8534d0026f3
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -192,14 +187,14 @@ Route::delete('/ots/{id}', [OTSController::class, 'update']);
 
 
 //jathusan
-<<<<<<< HEAD
+
 //abarnan
 Route::get ('/employee_documents', [EmployeeDocumentController::class, 'index']);
 Route::get ('/employee_documents/{id}', [EmployeeDocumentController::class, 'edit']);
 Route::POST('/employee_documents', [EmployeeDocumentController::class, 'store']);
 Route::put ('/employee_documents/{id}', [EmployeeDocumentController::class, 'update']);
 Route::delete ('/employee_documents/{id}', [EmployeeDocumentController::class, 'destory']);
-=======
+
 Route::get('/EmployeeBenefitType', [EmployeeBenefitTypeController::class,'index']);
 Route::get('/EmployeeBenefitType/{id}', [EmployeeBenefitTypeController::class, 'edit']);
 Route::post('/EmployeeBenefitType', [EmployeeBenefitTypeController::class, 'store']);
@@ -219,12 +214,7 @@ Route::get('/EmployeeFeedback/{id}', [EmployeeFeedbackController::class, 'edit']
 Route::post('/EmployeeFeedback', [EmployeeFeedbackController::class, 'store']);
 Route::put('/EmployeeFeedback/{id}', [EmployeeFeedbackController::class, 'update']);
 Route::delete('/EmployeeFeedback/{id}', [EmployeeFeedbackController::class, 'delete']);
-//aparnan
-Route::get('/EmployeeDocument', [EmployeeDocumentController::class, 'index']);
-Route::get('/EmployeeDocument/{id}', [EmployeeDocumentController::class, 'edit']);
-Route::post('/EmployeeDocument', [EmployeeDocumentController::class, 'store']);
-Route::put('/EmployeeDocument/{id}', [EmployeeDocumentController::class, 'update']);
-Route::delete('/EmployeeDocument/{id}', [EmployeeDocumentController::class, 'delete']);
+
 //saji
 Route::get('/EmployeeHealth', [EmployeeHealthController::class, 'index']);
 Route::get('/EmployeeHealth/{id}', [EmployeeHealthController::class, 'edit']);
@@ -243,7 +233,3 @@ Route::get('/EmployeeDisciplinary/{id}', [EmployeeDisciplinaryController::class,
 Route::post('/EmployeeDisciplinary', [EmployeeDisciplinaryController::class, 'store']);
 Route::put('/EmployeeDisciplinary/{id}', [EmployeeDisciplinaryController::class, 'update']);
 Route::delete('/EmployeeDisciplinary/{id}', [EmployeeDisciplinaryController::class, 'delete']);
-
-
->>>>>>> ec5da9d3a741cbd18b2bf4f1bcd7f8534d0026f3
-
