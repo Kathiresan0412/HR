@@ -15,7 +15,7 @@ class EmployeeHealthController extends Controller
     {
         try {
             $employee_healths = DB::table('employee_healths as eh')
-                ->select('eh.id', 'e.name as employee', 'eh.medical_examination_date', 'eh.medical_condition', 'eh.Doctor_notes', 'eh.allergies', 'eh.prescription_details')
+                ->select('eh.id', 'e.first_name as employee', 'eh.medical_examination_date', 'eh.medical_condition', 'eh.Doctor_notes', 'eh.allergies', 'eh.prescription_details')
                 ->leftJoin('employees as e', 'e.id', '=', 'eh.employee');
 
 
@@ -105,7 +105,7 @@ class EmployeeHealthController extends Controller
     {
         try {
             $employee_healths = DB::table('employee_healths as eh')
-            ->select('eh.id', 'e.name as employee', 'eh.medical_examination_date', 'eh.medical_condition', 'eh.Doctor_notes', 'eh.allergies', 'eh.prescription_details')
+            ->select('eh.id', 'e.first_name as employee', 'eh.medical_examination_date', 'eh.medical_condition', 'eh.Doctor_notes', 'eh.allergies', 'eh.prescription_details')
             ->leftJoin('employees as e', 'e.id', '=', 'eh.employee')
             ->where('eh.id', $id)
             ->first();

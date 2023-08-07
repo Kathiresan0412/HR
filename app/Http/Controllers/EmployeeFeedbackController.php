@@ -15,7 +15,7 @@ class EmployeeFeedbackController extends Controller
     {
         try {
             $employee_feedback = DB::table('employee_feedback as ef')
-                ->select('ef.id', 'e.name as employee', 'ef.feedback_date', 'ef.feedback_comments', 'ef.survey_questions_and_responses')
+                ->select('ef.id', 'e.first_name as employee', 'ef.feedback_date', 'ef.feedback_comments', 'ef.survey_questions_and_responses')
                 ->leftJoin('employees as e', 'e.id', '=', 'ef.employee');
 
 
@@ -100,7 +100,7 @@ class EmployeeFeedbackController extends Controller
     {
         try {
             $employee_feedback = DB::table('employee_feedback as ef')
-                ->select('ef.id', 'e.name as employee', 'ef.feedback_date', 'ef.feedback_comments', 'ef.survey_questions_and_responses')
+                ->select('ef.id', 'e.first_name as employee', 'ef.feedback_date', 'ef.feedback_comments', 'ef.survey_questions_and_responses')
                 ->leftJoin('employees as e', 'e.id', '=', 'ef.employee')
                 ->where('ef.id', $id)
                 ->first();
