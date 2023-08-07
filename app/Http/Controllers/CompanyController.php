@@ -156,34 +156,34 @@ class CompanyController extends Controller
   }
 
   public function updateCompany(Request $request, $id)
-  {
-      DB::beginTransaction();
-      try{
-      $request->validate([
-         'name'=>'required',
-         'description'=>'required'
-      ]);
+    {
+        DB::beginTransaction();
+        try{
+            $request->validate([
+                'name'=>'required',
+                'description'=>'required'
+            ]);
 
-      $company = Company::find($id);
-      $company->name = $request->name;
-      $company->description = $request->description;
-      $company->save();  
-   
-    DB::commit();
+            $company = Company::find($id);
+            $company->name = $request->name;
+            $company->description = $request->description;
+            $company->save();  
+        
+            DB::commit();
 
-    return response()->json([
-      "msg" => "company Data",
-      "data"=> $company,
-  ],201);
-}catch(\Throwable $e) {
-  DB::rollback();
-  return response()->json([
-      "msg"=>"oops something went wrong",
-      "error"=> $e->getMessage(),
-  ],500);
-}
-  }
-  
+            return response()->json([
+            "msg" => "company Data",
+            "data"=> $company,
+        ],201);
+        }catch(\Throwable $e) {
+            DB::rollback();
+            return response()->json([
+                "msg"=>"oops something went wrong",
+                "error"=> $e->getMessage(),
+            ],500);
+        }
+    }
+    
 
 
 }
