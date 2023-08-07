@@ -16,8 +16,8 @@ class WorkShiftDetailController extends Controller
         try {
             $EmployeeWorkShift = DB::table('work_shift_details as wsd')
            ->select('wse.id','e.first_name as employee','ews.title as title','ews.date as date','ews.date as date','ews.is_of_hour as is_of_hour','ews.is_of_day as is_of_day','wsd.from','wsd.to')
-           ->leftJoin('employee_work_shifts as ews','ews.id','=','wsd.work_shif_id')
-           ->leftJoin('employees as e', 'e.id', '=', 'ews.employee');
+           ->leftJoin('employee_work_shifts as ews','ews.id','=','wsd.work_shif_id');
+         //  ->leftJoin('employees as e', 'e.id', '=', 'ews.employee');
 
            $EmployeeWorkShift = $EmployeeWorkShift->orderBy('l.id','desc')->get();
            return response()->json([
