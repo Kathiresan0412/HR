@@ -17,8 +17,13 @@ class EmployeeWorkShiftController extends Controller
            ->select('ews.id','e.first_name as employee','ews.title','ews.date','ews.is_of_hour','ews.is_of_day')
           // ->leftJoin('employee_work_shifts as ews','ews.id','=','wsd.work_shif_id')
            ->leftJoin('employees as e', 'e.id', '=', 'ews.employee');
+          
 
            $EmployeeWorkShift = $EmployeeWorkShift->orderBy('ews.id','desc')->get();
+
+          
+
+
            return response()->json([
                "message" => "work shift Data",
                "data" => $EmployeeWorkShift,
@@ -107,6 +112,17 @@ class EmployeeWorkShiftController extends Controller
            $EmployeeWorkShift = $EmployeeWorkShift->orderBy('ews.id','desc')->get()
            ->where('ews.id',$id)
            ->first();
+
+
+           $EmployeeWorkShift = DB::table('work_shift_details as wsd')
+           ->select('wse.id','e.first_name as employee','ews.title as title','ews.date as date','ews.date as date','ews.is_of_hour as is_of_hour','ews.is_of_day as is_of_day','wsd.from','wsd.to')
+           ->leftJoin('employee_work_shifts as ews','ews.id','=','wsd.work_shif_id');
+           $EmployeeWorkShift = $EmployeeWorkShift->orderBy('l.id','desc')->get()->where('id','ews.id') ->first();
+
+        //    $EmployeeWorkShift =[];
+        // foreach ($EmployeeWorkShift as $WorkShift) {
+        //     array_push($company_managers, $com_manager->manager);}
+
            return response()->json([
                "message" => "work shift Data",
                "data" => $EmployeeWorkShift,
@@ -143,16 +159,16 @@ class EmployeeWorkShiftController extends Controller
            // $workshift=$EmployeeWorkShift->id;
 
            WorkShiftDetail::where('work_shift_detail',$id)->delete();
-            $WorkShiftDetail = $request->WorkShiftDetails;
-            if(!is_null($qualification)){
-            foreach($WorkShiftDetail as $WorkShiftDetail){
-            $WorkShiftDetail = new WorkShiftDetail();
-            $WorkShiftDetail->work_shif_id = $request->$id;
-            $WorkShiftDetail->from = $request->from;
-            $WorkShiftDetail->to = $request->to;
-            $WorkShiftDetail->save();
+           $workshift=$EmployeeWorkShift->id;
+           $WorkShiftDetail = $request->WorkShiftDetails;
+           foreach($WorkShiftDetail as $WorkShiftDetail){
+           $WorkShiftDetail = new WorkShiftDetail();
+           $WorkShiftDetail->work_shif_id = $request->$workshift;
+           $WorkShiftDetail->from = $request->from;
+           $WorkShiftDetail->to = $request->to;
+           $WorkShiftDetail->save();
             }
-              }
+              
            
             DB::commit();
 
