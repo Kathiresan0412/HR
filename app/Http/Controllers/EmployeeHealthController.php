@@ -30,7 +30,7 @@ class EmployeeHealthController extends Controller
                     ->orWhere('eh.allergies', 'LIKE', '%' . $search . '%')
                     ->orWhere('eh.prescription_details', 'LIKE', '%' . $search . '%');
             }
-            $employee_healths = $employee_healths->orderBy('ef.id', 'asc')->get();
+            $employee_healths = $employee_healths->orderBy('eh.id', 'asc')->get();
             return response()->json([
                 "message" => "employee_healths Data",
                 "data" => $employee_healths,
