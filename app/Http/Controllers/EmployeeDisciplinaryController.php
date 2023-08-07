@@ -130,8 +130,15 @@ class EmployeeDisciplinaryController extends Controller
     
     public function delete($id)
     {
-        $empDiscipline = EmployeeDisciplinary::find($id);
-        $empDiscipline->delete();
+         try {
+            $empDiscipline = EmployeeDisciplinary::find($id);
+            $empDiscipline->delete();
+        } catch (\Throwable $e) {
+            return response()->json([
+                "message" => "Ooops Something went wrong please try again",
+                "error" => $e->getMessage(),
+            ], 500);
+        }
     }
 
     

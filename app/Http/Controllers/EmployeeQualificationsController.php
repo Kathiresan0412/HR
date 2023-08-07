@@ -11,10 +11,6 @@ class EmployeeQualificationsController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        //
-    }
 
     /**
      * Show the form for creating a new resource.
@@ -23,49 +19,12 @@ class EmployeeQualificationsController extends Controller
     {
         //
     }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
     public function show(EmployeeQualifications $employeeQualifications)
     {
-        //
+        
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(EmployeeQualifications $employeeQualifications)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, EmployeeQualifications $employeeQualifications)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(EmployeeQualifications $employeeQualifications)
-    {
-        //
-    }
-    public function getAllEmployeeQualifications(Request $request,)
+    public function index(Request $request,)
   {
-   
       try{
           $EmployeeQualifications = DB::table('employee_qualifications as eq')
           ->select('eq.id','emp.first_name as employee ','qu.name as qualification')
@@ -92,17 +51,15 @@ class EmployeeQualificationsController extends Controller
       }
   }
 
-  public function getEmployeeQualifications($id)
+  public function edit($id)
   {
       try{
-
         $EmployeeQualifications = DB::table('employee_qualifications as eq')
         ->select('eq.id','emp.first_name as employee ','qu.name as qualification')
         ->leftJoin('employees as emp','emp.id','=','eq.employee')
         ->leftJoin('qualifications as qu','qu.id','=','eq.qualification')
           ->where('eq.id',$id)
           ->first();
-
           return response()->json([
               "message" => "company Data",
               "data" => $EmployeeQualifications

@@ -11,10 +11,7 @@ class AnnouncementController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        //
-    }
+
 
     /**
      * Show the form for creating a new resource.
@@ -27,10 +24,6 @@ class AnnouncementController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
-        //
-    }
 
     /**
      * Display the specified resource.
@@ -43,33 +36,23 @@ class AnnouncementController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Announcement $announcement)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Announcement $announcement)
-    {
-        //
-    }
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy($id)
     {
-        $announcement = Announcement::find($id);
-        $announcement->delete();
+        try {
+            $announcement = Announcement::find($id);
+            $announcement->delete();
+        } catch (\Throwable $e) {
+            return response()->json([
+                "message" => "Ooops Something went wrong please try again",
+                "error" => $e->getMessage(),
+            ], 500);
+        }
     }
-
-
-
-
-    /**************************API functions**********************************/
-    public function getAllAnnouncement(Request $request,)
+     public function index(Request $request,)
     {
      
         try{
@@ -98,7 +81,7 @@ class AnnouncementController extends Controller
         }
     }
 
-    public function getAnnouncementInfo($id)
+    public function edit($id)
     {
         try{
 
@@ -119,7 +102,7 @@ class AnnouncementController extends Controller
         }
     }
 
-    public function saveAnnouncement(Request $request)
+    public function store(Request $request)
     {
         DB::beginTransaction();
         try{
@@ -147,7 +130,7 @@ class AnnouncementController extends Controller
     }
     }
 
-    public function updateAnnouncement(Request $request, $id)
+    public function update(Request $request, $id)
     {
         DB::beginTransaction();
         try{

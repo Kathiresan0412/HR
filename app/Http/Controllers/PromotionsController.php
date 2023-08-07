@@ -9,62 +9,16 @@ use Illuminate\Support\Facades\DB;
 
 class PromotionsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         //
     }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
     public function show(Promotions $promotions)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Promotions $promotions)
-    {
-       
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Promotions $promotions)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Promotions $promotions)
-    {
-        //
-    }
-    public function getAllPromotions(Request $request)
+    public function index(Request $request)
     {
         //  try {
         $promotions = DB::table('promotions as b')
@@ -91,7 +45,7 @@ class PromotionsController extends Controller
         ], 200);
     }
 
-    public function getPromotionInfo($id)
+    public function edit($id)
     {
         $promotions = DB::table('promotions as b')
         ->select('b.id', 'e.first_name as employee', 'b.previous_position', 'p.name as position', 'b.previous_salary', 'b.from', 'e.basic_salary as current_salary', 'b.status')
@@ -113,7 +67,7 @@ class PromotionsController extends Controller
 
     }
 
-    public function savePromotion(Request $request)
+    public function store(Request $request)
     {
         DB::beginTransaction();
         try {
@@ -155,12 +109,12 @@ class PromotionsController extends Controller
         }
     }
 
-    public function updatePromotion(Request $request, $id)
+    public function update(Request $request, $id)
     {
        
     }
 
-    public function destroyPromotion($id)
+    public function destroy($id)
     {
         try {
             $promotions = Promotions::find($id);

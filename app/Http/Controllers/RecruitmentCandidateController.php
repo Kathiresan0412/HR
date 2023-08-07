@@ -8,29 +8,12 @@ use Illuminate\Support\Facades\DB;
 
 class RecruitmentCandidateController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
 
     /**
      * Display the specified resource.
@@ -40,30 +23,7 @@ class RecruitmentCandidateController extends Controller
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(RecruitmentCandidate $recruitmentCandidate)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, RecruitmentCandidate $recruitmentCandidate)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(RecruitmentCandidate $recruitmentCandidate)
-    {
-        //
-    }
-    public function getAllRecruitmentCandidates(Request $request)
+    public function index(Request $request)
     {
         try {
             $recruit_candi = DB::table('recruitment_candidates as r')
@@ -96,7 +56,7 @@ class RecruitmentCandidateController extends Controller
     }
 
     
-    public function getRecruitmentCandidateInfo($id)
+    public function edit($id)
     {
         try{
 
@@ -122,7 +82,7 @@ class RecruitmentCandidateController extends Controller
     }
 
     
-    public function saveRecruitmentCandidates(Request $request)
+    public function save(Request $request)
     {
         DB::beginTransaction();
 
@@ -162,7 +122,7 @@ class RecruitmentCandidateController extends Controller
     }
 
    
-    public function updateRecruitmentCandidates(Request $request, $id)
+    public function update(Request $request, $id)
     {
         DB::beginTransaction();
         try{
@@ -200,7 +160,7 @@ class RecruitmentCandidateController extends Controller
         }
         }
 
-    public function destroyRecruitmentCandidates($id)
+    public function destroy($id)
     {
         try{
                 $recruit_candi = RecruitmentCandidate::find($id);

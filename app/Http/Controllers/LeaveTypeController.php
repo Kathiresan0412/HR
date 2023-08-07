@@ -11,10 +11,7 @@ class LeaveTypeController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        //
-    }
+ 
 
     /**
      * Show the form for creating a new resource.
@@ -27,10 +24,7 @@ class LeaveTypeController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
-        //
-    }
+
 
     /**
      * Display the specified resource.
@@ -40,30 +34,7 @@ class LeaveTypeController extends Controller
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(LeaveType $leaveType)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, LeaveType $leaveType)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(LeaveType $leaveType)
-    {
-        //
-    }
-    public function getAllLeaveTypes(Request $request)
+    public function index(Request $request)
     {
         try {
             $leavetypes = DB::table('leave_types as t')
@@ -93,7 +64,7 @@ class LeaveTypeController extends Controller
            ],500);
        }
     }
-    public function getLeaveTypesinfo($id)
+    public function edit($id)
     {
         try{
 
@@ -118,7 +89,7 @@ class LeaveTypeController extends Controller
     }
 
     
-    public function saveLeaveTypes(Request $request)
+    public function store(Request $request)
     {
         DB::beginTransaction();
 
@@ -151,7 +122,7 @@ class LeaveTypeController extends Controller
     }
 
    
-    public function updateLeaveTypes(Request $request, $id)
+    public function update(Request $request, $id)
     {
         DB::beginTransaction();
         try{
@@ -182,12 +153,11 @@ class LeaveTypeController extends Controller
         }
         }
 
-    public function destroyLeaveTypes($id)
+    public function destroy($id)
     {
         try{
                 $leavetypes = LeaveType::find($id);
                 $leavetypes ->delete();
-
             }
             catch(\Throwable $e){
             return response()->json([

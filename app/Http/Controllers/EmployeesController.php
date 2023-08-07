@@ -13,10 +13,7 @@ class EmployeesController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        //
-    }
+
 
     /**
      * Show the form for creating a new resource.
@@ -29,10 +26,6 @@ class EmployeesController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
-        //
-    }
 
     /**
      * Display the specified resource.
@@ -45,35 +38,24 @@ class EmployeesController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Employees $employees)
-    {
-        //
-    }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Employees $employees)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy($id)
     {
-        $employee = Employees::find($id);
-        $employee->delete();
+        try {
+            $employee = Employees::find($id);
+            $employee->delete();
+        } catch (\Throwable $e) {
+            return response()->json([
+                "message" => "Ooops Something went wrong please try again",
+                "error" => $e->getMessage(),
+            ], 500);
+        }
     }
 
-
-
       /**************************API functions**********************************/
-      public function getAllEmployees(Request $request)
+      public function index(Request $request)
 {
     try {
-
         $employees = DB::table('employees as e')
             ->select(
                 'e.id',
@@ -123,7 +105,6 @@ class EmployeesController extends Controller
                 ->orWhere('e.address', 'LIKE', '%' . $search . '%')
                 ->orWhere('e.nic', 'LIKE', '%' . $search . '%');
         }
-
         $employees = $employees->orderBy('id', 'asc')
             ->get();
 
@@ -140,10 +121,9 @@ class EmployeesController extends Controller
 
 }
   
-      public function getEmployeeInfo($id)
+      public function edit($id)
       {
           try{
-  
               $employees = DB::table('employees as e')
               ->select(
                 'e.id',
@@ -181,7 +161,6 @@ class EmployeesController extends Controller
               ->leftJoin('users as u', 'u.id', '=', 'e.created_by')
               ->where('e.id',$id)
               ->first();
-  
               return response()->json([
                   "message" => "Selected employee Data",
                   "data" => $employees,
@@ -193,8 +172,7 @@ class EmployeesController extends Controller
               ],500);
           }
       }
-  
-      public function saveEmployee(Request $request)
+      public function store(Request $request)
       {
           DB::beginTransaction();
           try{
@@ -227,9 +205,7 @@ class EmployeesController extends Controller
             $employee->img = $request->input('img'); 
             $employee->status = $request->input('status');
             $employee->save();
-
             $employee_id=$employee->id;
-
             $qualification = $request->qualification;
             foreach($qualification as $qualification){
                 $com = new EmployeeQualifications();
@@ -237,9 +213,7 @@ class EmployeesController extends Controller
                 $com->qualification = $qualification;
                 $com->save();
             }
-  
           DB::commit();
-  
           return response()->json([
               "msg" => "Saved Employee Data",
               "data"=> $employee,
@@ -253,7 +227,7 @@ class EmployeesController extends Controller
       }
       }
   
-      public function updateEmployee(Request $request, $id)
+      public function update(Request $request, $id)
       {
           DB::beginTransaction();
           try{
