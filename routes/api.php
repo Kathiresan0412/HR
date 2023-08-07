@@ -211,7 +211,11 @@ Route::get('/EmployeeFeedback', [EmployeeFeedbackController::class, 'index']);
 Route::get('/EmployeeFeedback/{id}', [EmployeeFeedbackController::class, 'edit']);
 Route::post('/EmployeeFeedback', [EmployeeFeedbackController::class, 'store']);
 Route::put('/EmployeeFeedback/{id}', [EmployeeFeedbackController::class, 'update']);
+<<<<<<< HEAD
+Route::delete('/EmployeeFeedback/{id}', [EmployeeFeedbackController::class, 'delete']);
+=======
 Route::delete('/EmployeeFeedback/{id}', [EmployeeFeedbackController::class, 'destory']);
+>>>>>>> 94d1fdbf32583e76e80ea88cd48a1b0d0a260eb8
 
 //saji
 Route::get('/EmployeeHealth', [EmployeeHealthController::class, 'index']);
@@ -230,7 +234,11 @@ Route::get('/EmployeeDisciplinary', [EmployeeDisciplinaryController::class, 'ind
 Route::get('/EmployeeDisciplinary/{id}', [EmployeeDisciplinaryController::class, 'edit']);
 Route::post('/EmployeeDisciplinary', [EmployeeDisciplinaryController::class, 'store']);
 Route::put('/EmployeeDisciplinary/{id}', [EmployeeDisciplinaryController::class, 'update']);
+<<<<<<< HEAD
+Route::delete('/EmployeeDisciplinary/{id}', [EmployeeDisciplinaryController::class, 'delete']);
+=======
 Route::delete('/EmployeeDisciplinary/{id}', [EmployeeDisciplinaryController::class, 'destory']);
+>>>>>>> 94d1fdbf32583e76e80ea88cd48a1b0d0a260eb8
 
 
 

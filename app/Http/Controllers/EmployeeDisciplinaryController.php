@@ -10,21 +10,21 @@ use DB;
 class EmployeeDisciplinaryController extends Controller
 {
     
-    public function getAllEmployeeDisciplinary(Request $request)
+    public function index(Request $request)
     {
         try{
             $empDiscipline = DB::table('employee_disciplinaries as e')
-            ->select('e.id','e.id as employee','e.incident_date', 'e.description','e.follow_up_notes')
-            ->leftJoin('employees as e', 'e.id', '=', 'e.employee');
+            ->select('e.id','em.id as employee','e.incident_date', 'e.description','e.follow_up_notes')
+            ->leftJoin('employees as em', 'em.id', '=', 'e.employee');
        
             $search = $request->search;
             if (!is_null($search)){
                 $empDiscipline = $empDiscipline
                 ->where('e.incident_date','LIKE','%'.$search.'%')
                 ->orWhere('e.description','LIKE','%'.$search.'%')
-                ->orWhere('e.follow-up-notes','LIKE','%'.$search.'%');
+                ->orWhere('e.follow_up_notes','LIKE','%'.$search.'%');
             }
-            $empDiscipline = $empDiscipline->orderBy('c.id','desc')->get();
+            $empDiscipline = $empDiscipline->orderBy('e.id','desc')->get();
   
             return response()->json([
                 "message" => "Employee Disciplinary Data",
@@ -40,13 +40,13 @@ class EmployeeDisciplinaryController extends Controller
     
 
 
-    public function getEmployeeDisciplinaryInfo($id)
+    public function edit($id)
     {
         try{
 
             $empDiscipline = DB::table('employee_disciplinaries as e')
-            ->select('e.id','e.id as employee','e.incident_date', 'e.description','e.follow_up_notes')
-            ->leftJoin('employees as e', 'e.id', '=', 'e.employee')
+            ->select('e.id','em.id as employee','e.incident_date', 'e.description','e.follow_up_notes')
+            ->leftJoin('employees as em', 'em.id', '=', 'e.employee')
             ->where('e.id',$id)
             ->first();
 
@@ -63,14 +63,14 @@ class EmployeeDisciplinaryController extends Controller
     }
     
     
-    public function storeEmployeeDisciplinary(Request $request)
+    public function store(Request $request)
     {
         DB::beginTransaction();
         try{
             $request->validate([
                 'incident_date'=>'required',
                 'description'=>'required',
-                'follow-up-notes'=>'required'
+                'follow_up_notes'=>'required'
             ]);
     
             $empDiscipline = new EmployeeDisciplinary();
@@ -95,14 +95,14 @@ class EmployeeDisciplinaryController extends Controller
         }
     }
 
-    public function updateEmployeeDisciplinary(EmployeeDisciplinary $employeeDisciplinary, Request $request, $id)
+    public function update(EmployeeDisciplinary $employeeDisciplinary, Request $request, $id)
     {
         DB::beginTransaction();
         try{
             $request->validate([
                 'incident_date'=>'required',
                 'description'=>'required',
-                'follow-up-notes'=>'required'
+                'follow_up_notes'=>'required'
             ]);
     
             $empDiscipline = EmployeeDisciplinary::find($id);
@@ -128,7 +128,7 @@ class EmployeeDisciplinaryController extends Controller
     }
     
     
-    public function destroyEmployeeDisciplinary($id)
+    public function delete($id)
     {
         $empDiscipline = EmployeeDisciplinary::find($id);
         $empDiscipline->delete();
