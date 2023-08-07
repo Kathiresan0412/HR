@@ -148,6 +148,12 @@ Route::get ('/instructors/{id}', [InstructorController::class, 'edit']);
 Route::POST('/instructors', [InstructorController::class, 'store']);
 Route::put ('/instructors/{id}', [InstructorController::class, 'update']);
 Route::delete ('/instructors/{id}', [InstructorController::class, 'destory']);
+
+Route::get ('/employee_documents', [EmployeeDocumentController::class, 'index']);
+Route::get ('/employee_documents/{id}', [EmployeeDocumentController::class, 'edit']);
+Route::POST('/employee_documents', [EmployeeDocumentController::class, 'store']);
+Route::put ('/employee_documents/{id}', [EmployeeDocumentController::class, 'update']);
+Route::delete ('/employee_documents/{id}', [EmployeeDocumentController::class, 'destory']);
 //aparnan
 
 //achuthan
