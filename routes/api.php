@@ -211,11 +211,7 @@ Route::get('/EmployeeFeedback', [EmployeeFeedbackController::class, 'index']);
 Route::get('/EmployeeFeedback/{id}', [EmployeeFeedbackController::class, 'edit']);
 Route::post('/EmployeeFeedback', [EmployeeFeedbackController::class, 'store']);
 Route::put('/EmployeeFeedback/{id}', [EmployeeFeedbackController::class, 'update']);
-<<<<<<< HEAD
-Route::delete('/EmployeeFeedback/{id}', [EmployeeFeedbackController::class, 'delete']);
-=======
 Route::delete('/EmployeeFeedback/{id}', [EmployeeFeedbackController::class, 'destory']);
->>>>>>> 94d1fdbf32583e76e80ea88cd48a1b0d0a260eb8
 
 //saji
 Route::get('/EmployeeHealth', [EmployeeHealthController::class, 'index']);
@@ -225,20 +221,16 @@ Route::put('/EmployeeHealth/{id}', [EmployeeHealthController::class, 'update']);
 Route::delete('/EmployeeHealth/{id}', [EmployeeHealthController::class, 'destory']);
 //achuthan
 Route::get('/EmployeeEmergency', [EmployeeEmergencyContactController::class, 'index']);
-Route::get('/EmployeeHealth/{id}', [EmployeeEmergencyContactController::class, 'edit']);
-Route::post('/EmployeeHealth', [EmployeeEmergencyContactController::class, 'store']);
-Route::put('/EmployeeHealth/{id}', [EmployeeEmergencyContactController::class, 'update']);
-Route::delete('/EmployeeHealth/{id}', [EmployeeEmergencyContactController::class, 'destory']);
+Route::get('/EmployeeEmergency/{id}', [EmployeeEmergencyContactController::class, 'edit']);
+Route::post('/EmployeeEmergency', [EmployeeEmergencyContactController::class, 'store']);
+Route::put('/EmployeeEmergency/{id}', [EmployeeEmergencyContactController::class, 'update']);
+Route::delete('/EmployeeEmergency/{id}', [EmployeeEmergencyContactController::class, 'destory']);
 //achuthan
 Route::get('/EmployeeDisciplinary', [EmployeeDisciplinaryController::class, 'index']);
 Route::get('/EmployeeDisciplinary/{id}', [EmployeeDisciplinaryController::class, 'edit']);
 Route::post('/EmployeeDisciplinary', [EmployeeDisciplinaryController::class, 'store']);
 Route::put('/EmployeeDisciplinary/{id}', [EmployeeDisciplinaryController::class, 'update']);
-<<<<<<< HEAD
-Route::delete('/EmployeeDisciplinary/{id}', [EmployeeDisciplinaryController::class, 'delete']);
-=======
 Route::delete('/EmployeeDisciplinary/{id}', [EmployeeDisciplinaryController::class, 'destory']);
->>>>>>> 94d1fdbf32583e76e80ea88cd48a1b0d0a260eb8
 
 
 
