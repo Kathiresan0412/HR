@@ -31,7 +31,7 @@ use App\Http\Controllers\EmployeeEmergencyContactController;
 use App\Http\Controllers\EmployeeDisciplinaryController;
 use App\Http\Controllers\EmployeeBenefitController;
 use App\Http\Controllers\OTSController;
-//use App\Http\Controllers\OTSController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -187,14 +187,6 @@ Route::delete('/ots/{id}', [OTSController::class, 'update']);
 
 
 //jathusan
-
-//abarnan
-Route::get ('/employee_documents', [EmployeeDocumentController::class, 'index']);
-Route::get ('/employee_documents/{id}', [EmployeeDocumentController::class, 'edit']);
-Route::POST('/employee_documents', [EmployeeDocumentController::class, 'store']);
-Route::put ('/employee_documents/{id}', [EmployeeDocumentController::class, 'update']);
-Route::delete ('/employee_documents/{id}', [EmployeeDocumentController::class, 'destory']);
-
 Route::get('/EmployeeBenefitType', [EmployeeBenefitTypeController::class,'index']);
 Route::get('/EmployeeBenefitType/{id}', [EmployeeBenefitTypeController::class, 'edit']);
 Route::post('/EmployeeBenefitType', [EmployeeBenefitTypeController::class, 'store']);
@@ -228,9 +220,11 @@ Route::post('/EmployeeHealth', [EmployeeEmergencyContactController::class, 'stor
 Route::put('/EmployeeHealth/{id}', [EmployeeEmergencyContactController::class, 'update']);
 Route::delete('/EmployeeHealth/{id}', [EmployeeEmergencyContactController::class, 'delete']);
 //achuthan
-Route::get('/EmployeeDisciplinary', [EmployeeDisciplinaryController::class, 'index', 'getAllEmployeeDisciplinary']);
-Route::get('/EmployeeDisciplinary/{id}', [EmployeeDisciplinaryController::class, 'edit','getEmployeeDisciplinaryInfo']);
-Route::post('/EmployeeDisciplinary', [EmployeeDisciplinaryController::class, 'store','storeEmployeeDisciplinary']);
-Route::put('/EmployeeDisciplinary/{id}', [EmployeeDisciplinaryController::class, 'update','updateEmployeeDisciplinary']);
-Route::delete('/EmployeeDisciplinary/{id}', [EmployeeDisciplinaryController::class, 'delete','destroyEmployeeDisciplinary']);
+Route::get('/EmployeeDisciplinary', [EmployeeDisciplinaryController::class, 'index']);
+Route::get('/EmployeeDisciplinary/{id}', [EmployeeDisciplinaryController::class, 'edit']);
+Route::post('/EmployeeDisciplinary', [EmployeeDisciplinaryController::class, 'store']);
+Route::put('/EmployeeDisciplinary/{id}', [EmployeeDisciplinaryController::class, 'update']);
+Route::delete('/EmployeeDisciplinary/{id}', [EmployeeDisciplinaryController::class, 'delete']);
+
+
 
