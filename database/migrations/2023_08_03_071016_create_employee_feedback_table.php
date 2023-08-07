@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreign('employee')->references('id')->on('employees')->onDelete('set null');
             $table->date('feedback_date');
             $table->string('feedback_comments');
-            $table->string('survey questions and responses');//link
+            $table->string('survey_questions_and_responses');//link
             $table->timestamps();
         });
     }
