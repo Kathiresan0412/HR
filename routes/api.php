@@ -24,6 +24,10 @@ use App\Http\Controllers\TrainingProgramController;
 use App\Http\Controllers\InstructorController;
 use App\Http\Controllers\PromotionsController;
 use App\Http\Controllers\EmployeeWorkShiftController;
+<<<<<<< HEAD
+use App\Http\Controllers\EmployeeDocumentController;
+
+=======
 use App\Http\Controllers\EmployeeFeedbackController;
 use App\Http\Controllers\EmployeeDocumentController;
 use App\Http\Controllers\EmployeeHealthController;
@@ -32,6 +36,7 @@ use App\Http\Controllers\EmployeeDisciplinaryController;
 use App\Http\Controllers\EmployeeBenefitController;
 use App\Http\Controllers\OTSController;
 //use App\Http\Controllers\OTSController;
+>>>>>>> ec5da9d3a741cbd18b2bf4f1bcd7f8534d0026f3
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -187,7 +192,15 @@ Route::delete('/ots/{id}', [OTSController::class, 'update']);
 
 
 //jathusan
-Route::get('/EmployeeBenefitType', [EmployeeBenefitTypeController::class, 'index']);
+<<<<<<< HEAD
+//abarnan
+Route::get ('/employee_documents', [EmployeeDocumentController::class, 'index']);
+Route::get ('/employee_documents/{id}', [EmployeeDocumentController::class, 'edit']);
+Route::POST('/employee_documents', [EmployeeDocumentController::class, 'store']);
+Route::put ('/employee_documents/{id}', [EmployeeDocumentController::class, 'update']);
+Route::delete ('/employee_documents/{id}', [EmployeeDocumentController::class, 'destory']);
+=======
+Route::get('/EmployeeBenefitType', [EmployeeBenefitTypeController::class,'index']);
 Route::get('/EmployeeBenefitType/{id}', [EmployeeBenefitTypeController::class, 'edit']);
 Route::post('/EmployeeBenefitType', [EmployeeBenefitTypeController::class, 'store']);
 Route::put('/EmployeeBenefitType/{id}', [EmployeeBenefitTypeController::class, 'update']);
@@ -232,4 +245,5 @@ Route::put('/EmployeeDisciplinary/{id}', [EmployeeDisciplinaryController::class,
 Route::delete('/EmployeeDisciplinary/{id}', [EmployeeDisciplinaryController::class, 'delete','destroyEmployeeDisciplinary']);
 
 
+>>>>>>> ec5da9d3a741cbd18b2bf4f1bcd7f8534d0026f3
 
