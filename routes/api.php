@@ -24,7 +24,8 @@ use App\Http\Controllers\TrainingProgramController;
 use App\Http\Controllers\InstructorController;
 use App\Http\Controllers\PromotionsController;
 use App\Http\Controllers\EmployeeWorkShiftController;
-//use App\Http\Controllers\PromotionsController;
+use App\Http\Controllers\EmployeeDocumentController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -169,5 +170,10 @@ Route::post('/promotions', [PromotionsController::class, 'savePromotion']);
 Route::put('/promotions/{id}', [PromotionsController::class, 'updatePromotion']);
 Route::delete('/promotions/{id}', [PromotionsController::class, 'destroyPromotion']);
 //jathusan
-
+//abarnan
+Route::get ('/employee_documents', [EmployeeDocumentController::class, 'index']);
+Route::get ('/employee_documents/{id}', [EmployeeDocumentController::class, 'edit']);
+Route::POST('/employee_documents', [EmployeeDocumentController::class, 'store']);
+Route::put ('/employee_documents/{id}', [EmployeeDocumentController::class, 'update']);
+Route::delete ('/employee_documents/{id}', [EmployeeDocumentController::class, 'destory']);
 
