@@ -187,7 +187,7 @@ Route::delete('/ots/{id}', [OTSController::class, 'update']);
 
 
 //jathusan
-Route::get('/EmployeeBenefitType', [EmployeeBenefitTypeController::class, 'index']);
+Route::get('/EmployeeBenefitType', [EmployeeBenefitTypeController::class,'index']);
 Route::get('/EmployeeBenefitType/{id}', [EmployeeBenefitTypeController::class, 'edit']);
 Route::post('/EmployeeBenefitType', [EmployeeBenefitTypeController::class, 'store']);
 Route::put('/EmployeeBenefitType/{id}', [EmployeeBenefitTypeController::class, 'update']);
