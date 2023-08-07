@@ -225,11 +225,11 @@ Route::post('/EmployeeHealth', [EmployeeEmergencyContactController::class, 'stor
 Route::put('/EmployeeHealth/{id}', [EmployeeEmergencyContactController::class, 'update']);
 Route::delete('/EmployeeHealth/{id}', [EmployeeEmergencyContactController::class, 'delete']);
 //achuthan
-Route::get('/EmployeeDisciplinary', [EmployeeDisciplinaryController::class, 'index']);
-Route::get('/EmployeeDisciplinary/{id}', [EmployeeDisciplinaryController::class, 'edit']);
-Route::post('/EmployeeDisciplinary', [EmployeeDisciplinaryController::class, 'store']);
-Route::put('/EmployeeDisciplinary/{id}', [EmployeeDisciplinaryController::class, 'update']);
-Route::delete('/EmployeeDisciplinary/{id}', [EmployeeDisciplinaryController::class, 'delete']);
+Route::get('/EmployeeDisciplinary', [EmployeeDisciplinaryController::class, 'index', 'getAllEmployeeDisciplinary']);
+Route::get('/EmployeeDisciplinary/{id}', [EmployeeDisciplinaryController::class, 'edit','getEmployeeDisciplinaryInfo']);
+Route::post('/EmployeeDisciplinary', [EmployeeDisciplinaryController::class, 'store','storeEmployeeDisciplinary']);
+Route::put('/EmployeeDisciplinary/{id}', [EmployeeDisciplinaryController::class, 'update','updateEmployeeDisciplinary']);
+Route::delete('/EmployeeDisciplinary/{id}', [EmployeeDisciplinaryController::class, 'delete','destroyEmployeeDisciplinary']);
 
 
 

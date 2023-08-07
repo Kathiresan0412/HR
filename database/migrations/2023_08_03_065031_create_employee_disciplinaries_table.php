@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreign('employee')->references('id')->on('employees')->onDelete('set null');
             $table->date('incident_date');
             $table->string('description');
-            $table->string('follow-up-notes');
+            $table->string('follow_up_notes');
             $table->timestamps();
         });
     }
