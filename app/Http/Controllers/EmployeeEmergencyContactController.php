@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\EmployeeEmergencyContact;
 use Illuminate\Http\Request;
-use DB;
+use Illuminate\Support\Facades\DB;
 
 class EmployeeEmergencyContactController extends Controller
 {
