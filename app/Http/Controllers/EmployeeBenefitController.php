@@ -14,8 +14,8 @@ class EmployeeBenefitController extends Controller
     {
         try {
             $eemployeeBenefits = DB::table('employee_benefits as eb')
-        ->select('eb.id','e.first_name as employee','ebt.name as benefit_type','eb.coverage_details','eb.premiums','eb.beneficiary_information')
-        ->leftJoin('employees as e', 'e.id', '=', 'eb.employee')
+        ->select('eb.id','e.first_name as attendees','ebt.name as benefit_type','eb.enrollment_date','eb.coverage_details','eb.premiums','eb.beneficiary_information')
+        ->leftJoin('employees as e', 'e.id', '=', 'eb.attendees')
         ->leftJoin('employee_benefit_types as ebt', 'ebt.id', '=','eb.benefit_type');
         
 
@@ -23,7 +23,7 @@ class EmployeeBenefitController extends Controller
            if (!is_null($search)){
                $eemployeeBenefits = $eemployeeBenefits
                ->where('eb.id','LIKE','%'.$search.'%')
-               ->orWhere('eb.employee','LIKE','%'.$search.'%')
+               ->orWhere('eb.attendees','LIKE','%'.$search.'%')
                ->orWhere('eb.benefit_type','LIKE','%'.$search.'%')
                ->orWhere('eb.coverage_details','LIKE','%'.$search.'%')
                ->orWhere('eb.premiums','LIKE','%'.$search.'%')
@@ -59,17 +59,12 @@ class EmployeeBenefitController extends Controller
     {
         DB::beginTransaction();
         try {
-            $request->validate([
-                'employee' => 'required',
-               // 'benefit_type' => 'required',
-                'coverage_details' => 'required',
-                'premiums' => 'required',
-                'beneficiary_information' => 'required'
-            ]);
+           
 
             $eemployeeBenefits = new EmployeeBenefit();
-            $eemployeeBenefits->employee = $request->employee;
+            $eemployeeBenefits->attendees = $request->attendees;
             $eemployeeBenefits->benefit_type = $request->benefit_type;
+            $eemployeeBenefits->enrollment_date = $request->enrollment_date;
             $eemployeeBenefits->coverage_details = $request->coverage_details;
             $eemployeeBenefits->premiums = $request->premiums;
             $eemployeeBenefits->beneficiary_information = $request->beneficiary_information;
@@ -106,8 +101,8 @@ class EmployeeBenefitController extends Controller
         try {
 
             $eemployeeBenefits = DB::table('employee_benefits as eb')
-            ->select('eb.id','e.first_name as employee','ebt.name as benefit_type','eb.coverage_details','eb.premiums','eb.beneficiary_information')
-            ->leftJoin('employees as e', 'e.id', '=', 'eb.employee')
+            ->select('eb.id','e.first_name as attendees','ebt.name as benefit_type','eb.enrollment_date','eb.coverage_details','eb.premiums','eb.beneficiary_information')
+            ->leftJoin('employees as e', 'e.id', '=', 'eb.attendees')
             ->leftJoin('employee_benefit_types as ebt', 'ebt.id', '=','eb.benefit_type')
                 ->where('eb.id', $id)
                 ->first();
@@ -131,20 +126,13 @@ class EmployeeBenefitController extends Controller
     {
         DB::beginTransaction();
         try {
-            $request->validate([
-                'employee' => 'required',
-                //'benefit_type' => 'required',
-                'coverage_details' => 'required',
-                'premiums' => 'required',
-                'beneficiary_information' => 'required'
-            ]);
-
+          
             $EmployeeBenefit =EmployeeBenefit ::find($id);
-            $EmployeeBenefit->employee = $request->employee;
+            $EmployeeBenefit->attendees = $request->attendees;
             $EmployeeBenefit->benefit_type = $request->benefit_type;
+            $EmployeeBenefit->enrollment_date = $request->enrollment_date;
             $EmployeeBenefit->coverage_details = $request->coverage_details;
             $EmployeeBenefit->premiums = $request->premiums;
-            $EmployeeBenefit->to_date = $request->to_date;
             $EmployeeBenefit->beneficiary_information = $request->beneficiary_information;
             $EmployeeBenefit->save();
 

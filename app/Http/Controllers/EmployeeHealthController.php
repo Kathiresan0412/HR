@@ -57,6 +57,13 @@ class EmployeeHealthController extends Controller
     public function store(Request $request)
     {
         try {
+            $request->validate([
+                'employee' => 'required',
+                'medical_examination_date' => 'required',
+                'medical_condition' => 'required',
+                'Doctor_notes' => 'required',
+                'allergies' => 'required',
+                'prescription_details' => 'required']);
           
 
             $employee_healths = new EmployeeHealth();
