@@ -53,11 +53,11 @@ Route::post('/positions',[PositionController::class, 'savePosition']);
 Route::put('/positions/{id}',[PositionController::class, 'updatePosition']);
 Route::delete('/positions/{id}',[PositionController::class, 'destory']);
 
-Route::get('/salarytypes',[SalaryTypeController::class, 'getAllSalaryType']);
-Route::get('/salarytypes/{id}',[SalaryTypeController::class, 'getSalaryTypeInfo']);
-Route::post('/salarytypes',[SalaryTypeController::class, 'saveSalaryType']);
-Route::put('/salarytypes/{id}',[SalaryTypeController::class, 'updateSalaryType']);
-Route::delete('/salarytypes/{id}',[SalaryTypeController::class, 'destory']);
+Route::get('/salary-types',[SalaryTypeController::class, 'getAll']);
+Route::get('/salary-types/{id}',[SalaryTypeController::class, 'getOne']);
+Route::post('/salary-types',[SalaryTypeController::class, 'save']);
+Route::put('/salary-types/{id}',[SalaryTypeController::class, 'update']);
+Route::delete('/salary-types/{id}',[SalaryTypeController::class, 'delete']);
 
 Route::get('/qualifications',[QualificationsController::class, 'index']);
 Route::get('/qualifications/{id}',[QualificationsController::class, 'edit']);
@@ -149,19 +149,19 @@ Route::POST('/instructors', [InstructorController::class, 'store']);
 Route::put ('/instructors/{id}', [InstructorController::class, 'update']);
 Route::delete ('/instructors/{id}', [InstructorController::class, 'destory']);
 
-Route::get ('/employee_documents', [EmployeeDocumentController::class, 'index']);
-Route::get ('/employee_documents/{id}', [EmployeeDocumentController::class, 'edit']);
-Route::POST('/employee_documents', [EmployeeDocumentController::class, 'store']);
-Route::put ('/employee_documents/{id}', [EmployeeDocumentController::class, 'update']);
-Route::delete ('/employee_documents/{id}', [EmployeeDocumentController::class, 'destory']);
+Route::get ('/employee-documents', [EmployeeDocumentController::class, 'getAll']);
+Route::get ('/employee-documents/{id}', [EmployeeDocumentController::class, 'getOne']);
+Route::POST('/employee-documents', [EmployeeDocumentController::class, 'save']);
+Route::put ('/employee-documents/{id}', [EmployeeDocumentController::class, 'update']);
+Route::delete ('/employee-documents/{id}', [EmployeeDocumentController::class, 'delete']);
 //aparnan
 
 //achuthan
-Route::get ('/training_programs', [TrainingProgramController::class, 'index']);
-Route::get ('/training_programs/{id}', [TrainingProgramController::class, 'edit']);
-Route::POST('/training_programs', [TrainingProgramController::class, 'store']);
-Route::put ('/training_programs/{id}', [TrainingProgramController::class, 'update']);
-Route::delete ('/training_programs/{id}', [TrainingProgramController::class, 'destory']);
+Route::get ('/training-programs', [TrainingProgramController::class, 'getAll']);
+Route::get ('/training-programs/{id}', [TrainingProgramController::class, 'getOne']);
+Route::POST('/training-programs', [TrainingProgramController::class, 'save']);
+Route::put ('/training-programs/{id}', [TrainingProgramController::class, 'update']);
+Route::delete ('/training-programs/{id}', [TrainingProgramController::class, 'delete']);
 
 
 //achuthan
@@ -179,17 +179,17 @@ Route::put('/promotions/{id}', [PromotionsController::class, 'updatePromotion'])
 Route::delete('/promotions/{id}', [PromotionsController::class, 'destroyPromotion']);
 
 
-Route::get ('/training_records', [TrainingRecordController::class, 'index']);
-Route::get ('/training_records/{id}', [TrainingRecordController::class, 'edit']);
-Route::POST('/training_records', [TrainingRecordController::class, 'store']);
-Route::put ('/training_records/{id}', [TrainingRecordController::class, 'update']);
-Route::delete ('/training_records/{id}', [TrainingRecordController::class, 'destory']);
+Route::get ('/training-records', [TrainingRecordController::class, 'getAll']);
+Route::get ('/training-records/{id}', [TrainingRecordController::class, 'getOne']);
+Route::POST('/training-records', [TrainingRecordController::class, 'save']);
+Route::put ('/training-records/{id}', [TrainingRecordController::class, 'update']);
+Route::delete ('/training-records/{id}', [TrainingRecordController::class, 'delete']);
 //sangi
-Route::get('/ots', [OTSController::class, 'index']);
-Route::get('/ots/{id}', [OTSController::class, 'edit']);
-Route::post('/ots', [OTSController::class, 'store']);
+Route::get('/ots', [OTSController::class, 'getAll']);
+Route::get('/ots/{id}', [OTSController::class, 'getOne']);
+Route::post('/ots', [OTSController::class, 'save']);
 Route::put('/ots/{id}', [OTSController::class, 'update']);
-Route::delete('/ots/{id}', [OTSController::class, 'destory']);
+Route::delete('/ots/{id}', [OTSController::class, 'delete']);
 
 Route::get('/EmployeeBenefitType', [EmployeeBenefitTypeController::class,'index']);
 Route::get('/EmployeeBenefitType/{id}', [EmployeeBenefitTypeController::class, 'edit']);

@@ -49,29 +49,30 @@ class SalaryTypeController extends Controller
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, SalaryType $salaryType)
-    {
-        //
-    }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function delete($id)
     {
-        $salary = SalaryType::find($id);
-        $salary->delete();
+        try {
+            $salary = SalaryType::find($id);
+            $salary->delete();
+
+            return response()->json([
+                "msg" => "Salary Type Data Deleted",
+            ], 201);
+
+        } catch (\Throwable $e) {
+            return response()->json([
+                "message" => "Ooops Something went wrong please try again",
+                "error" => $e->getMessage(),
+            ], 500);
+        }
     }
 
-
-
-
-
-     /**************************API functions**********************************/
-     public function getAllSalaryType(Request $request,)
+    /**************************API functions**********************************/
+     public function getAll(Request $request,)
      {
       
          try{
@@ -85,10 +86,22 @@ class SalaryTypeController extends Controller
                  ->orWhere('s.category','LIKE','%'.$search.'%')
                  ->orWhere('s.description','LIKE','%'.$search.'%');
              }
-             $salary = $salary->orderBy('s.id','desc')->get();
+             $filterParameters = [
+                'title' => 's.title',
+                'category' => 's.category',
+                'description' => 's.description',           
+            ];
+        
+            foreach ($filterParameters as $parameter => $column) {
+                $value = $request->input($parameter);
+                if (isset($value) && $value !== '') {
+                    $salary->where($column, '=', $value);
+                }
+            }
+             $salary = $salary->orderBy('s.created_at','desc')->get();
  
              return response()->json([
-                 "message" => "position Data",
+                 "message" => "All Salary Types Data",
                  "data" => $salary,
              ],200);
          }catch(\Throwable $e){
@@ -99,7 +112,7 @@ class SalaryTypeController extends Controller
          }
      }
  
-     public function getSalaryTypeInfo($id)
+     public function getOne($id)
      {
          try{
  
@@ -109,7 +122,7 @@ class SalaryTypeController extends Controller
              ->first();
  
              return response()->json([
-                 "message" => "Position Data",
+                 "message" => "Salary Type Data",
                  "data" => $salary,
              ],200);
          }catch(\Throwable $e){
@@ -120,7 +133,7 @@ class SalaryTypeController extends Controller
          }
      }
  
-     public function saveSalaryType(Request $request)
+     public function save(Request $request)
      {
          DB::beginTransaction();
          try{
@@ -139,7 +152,7 @@ class SalaryTypeController extends Controller
          DB::commit();
  
          return response()->json([
-             "msg" => "Position Data",
+             "msg" => "Salary type Data Saved",
              "data"=> $salary,
          ],201);
      }catch(\Throwable $e) {
@@ -151,14 +164,14 @@ class SalaryTypeController extends Controller
      }
      }
  
-     public function updateSalaryType(Request $request, $id)
+     public function update(Request $request, $id)
      {
          DB::beginTransaction();
          try{
          $request->validate([
             'title'=>'required',
-             'category'=>'required',
-             'description'=>'required'
+            'category'=>'required',
+            'description'=>'required'
          ]);
  
          $salary = SalaryType::find($id);
@@ -170,16 +183,16 @@ class SalaryTypeController extends Controller
        DB::commit();
  
        return response()->json([
-         "msg" => "Position Data",
+         "msg" => "Salary type Data Updated",
          "data"=> $salary,
-     ],201);
- }catch(\Throwable $e) {
-     DB::rollback();
-     return response()->json([
-         "msg"=>"oops something went wrong",
-         "error"=> $e->getMessage(),
-     ],500);
- }
+        ],201);
+        }catch(\Throwable $e) {
+         DB::rollback();
+         return response()->json([
+            "msg"=>"oops something went wrong",
+            "error"=> $e->getMessage(),
+            ],500);
+        }
      }
      
  

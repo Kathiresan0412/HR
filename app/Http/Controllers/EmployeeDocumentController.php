@@ -11,7 +11,7 @@ class EmployeeDocumentController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function getAll(Request $request)
     {
         try {
             $documents = DB::table('employee_documents as d')
@@ -28,10 +28,10 @@ class EmployeeDocumentController extends Controller
                     ->orWhere('d.work_experince', 'LIKE', '%' . $search . '%')
                     ->orWhere('d.nic', 'LIKE', '%' . $search . '%');
             }
-            $documents = $documents->orderBy('d.id')->get();
+            $documents = $documents->orderBy('d.created_at')->get();
     
             return response()->json([
-                "message" => "----AllEmployee documents Data-----",
+                "message" => "All Employee documents Data",
                 "data" => $documents,
             ], 200);
         } catch (\Throwable $e) {
@@ -53,11 +53,19 @@ class EmployeeDocumentController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function save(Request $request)
     {
         DB::beginTransaction();
         try {
-    
+            $request->validate([
+                'employee' => 'required',
+               'ol_level_al_level_resheets'=>'required',
+               'goverment_bank_book'=>'required',
+               'work_experince'=>'required',
+               'gs_charactet_certificate'=>'required',
+               'nic'=>'required'
+            ]);
+
             $documents = new EmployeeDocument();
             $documents->employee = $request->employee;
             $documents->ol_level_al_level_resheets = $request->ol_level_al_level_resheets;
@@ -70,7 +78,7 @@ class EmployeeDocumentController extends Controller
             DB::commit();
     
             return response()->json([
-                "msg" => "Saved Employee Documents Data",
+                "message" => "Saved Employee Documents Data",
                 "data" => $documents,
             ], 201);
         } catch (\Throwable $e) {
@@ -93,18 +101,17 @@ class EmployeeDocumentController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit($id)
+    public function getOne($id)
     {
         try {
-
             $documents = DB::table('employee_documents as d')
             ->select('d.id', 'emp.first_name as employee','d.ol_level_al_level_resheets', 'd.goverment_bank_book', 'd.work_experince', 'd.gs_charactet_certificate', 'd.nic')
             ->leftJoin('employees as emp', 'd.employee', '=', 'emp.id')
-                ->where('d.id', $id)
-                ->first();
+            ->where('d.id', $id)
+            ->first();
     
             return response()->json([
-                "message" => "Selected employee documents Data",
+                "message" => "employee documents Data",
                 "data" => $documents,
             ], 200);
         } catch (\Throwable $e) {
@@ -122,6 +129,14 @@ class EmployeeDocumentController extends Controller
     {
         DB::beginTransaction();
     try {
+        $request->validate([
+            'employee' => 'required',
+           'ol_level_al_level_resheets'=>'required',
+           'goverment_bank_book'=>'required',
+           'work_experince'=>'required',
+           'gs_charactet_certificate'=>'required',
+           'nic'=>'required'
+        ]);
 
         $documents = EmployeeDocument::find($id);
         $documents->employee = $request->employee;
@@ -135,13 +150,13 @@ class EmployeeDocumentController extends Controller
         DB::commit();
 
         return response()->json([
-            "msg" => "Updated Employee Documents Data",
+            "message" => "Employee Documents Data Update",
             "data" => $documents,
         ], 201);
     } catch (\Throwable $e) {
         DB::rollback();
         return response()->json([
-            "msg" => "oops something went wrong",
+            "message" => "oops something went wrong",
             "error" => $e->getMessage(),
         ], 500);
     }
@@ -150,10 +165,22 @@ class EmployeeDocumentController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function delete($id)
     {
-        $documents = EmployeeDocument::find($id);
-        $documents->delete();
+        try {
+            $documents = EmployeeDocument::find($id);
+            $documents->delete();
+
+            return response()->json([
+                "message" => "Employee Document Data Deleted",
+            ], 201);
+
+        } catch (\Throwable $e) {
+            return response()->json([
+                "message" => "Ooops Something went wrong please try again",
+                "error" => $e->getMessage(),
+            ], 500);
+        }
     }
 }
 
