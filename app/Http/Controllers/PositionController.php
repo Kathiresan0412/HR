@@ -27,6 +27,7 @@ class PositionController extends Controller
                     ->orWhere('p.workable_time_period', 'LIKE', '%' . $search . '%')
                     ->orWhere('p.description', 'LIKE', '%' . $search . '%');
             }
+
             $positions = $positions->orderBy('p.id', 'desc')->get();
 
             return response()->json([
@@ -144,6 +145,7 @@ class PositionController extends Controller
                 'workable_time_period' => 'required',
                 'description' => 'required'
             ]);
+
             $position = Position::find($id);
             $position->name = $request->name;
             $position->type = $request->type;
@@ -152,6 +154,7 @@ class PositionController extends Controller
             $position->description = $request->description;
             $position->save();
             DB::commit();
+
             return response()->json([
                 "msg" => "Position Data",
                 "data" => $position,
