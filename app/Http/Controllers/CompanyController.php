@@ -30,7 +30,6 @@ class CompanyController extends Controller
      */
     public function destroy($id)
     {
-        
         try {
             $company = Company::find($id);
             $company->delete();
@@ -45,17 +44,18 @@ class CompanyController extends Controller
 
   public function index(Request $request)
   {
-   
       try{
           $company = DB::table('companies as c')
           ->select('c.id','c.name','c.description');
      
           $search = $request->search;
+
           if (!is_null($search)){
               $company = $company
               ->where('c.name','LIKE','%'.$search.'%')
               ->orWhere('c.description','LIKE','%'.$search.'%');
           }
+
           $company = $company->orderBy('c.id','desc')->get();
 
           return response()->json([
@@ -73,7 +73,6 @@ class CompanyController extends Controller
   public function edit($id)
   {
       try{
-
           $company = DB::table('companies as c')
           ->select('c.id','c.name','c.description')
           ->where('c.id',$id)

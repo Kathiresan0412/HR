@@ -19,6 +19,7 @@ class SalarayAdvanceController extends Controller
                 $salary_advances = $salary_advances
                     ->where('sad.id', 'LIKE', '%' . $search . '%')
                     ->orWhere('sad.type', 'LIKE', '%' . $search . '%');
+                    //missing columns and Filter
             }
             $salary_advances = $salary_advances->orderBy('sad.id')->get();
             return response()->json([
