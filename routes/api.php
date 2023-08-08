@@ -163,7 +163,6 @@ Route::POST('/training_programs', [TrainingProgramController::class, 'store']);
 Route::put ('/training_programs/{id}', [TrainingProgramController::class, 'update']);
 Route::delete ('/training_programs/{id}', [TrainingProgramController::class, 'destory']);
 
-
 //achuthan
 //jathusan
 Route::get ('/work-shifts', [EmployeeWorkShiftController::class, 'index']);
@@ -231,6 +230,3 @@ Route::get('/EmployeeDisciplinary/{id}', [EmployeeDisciplinaryController::class,
 Route::post('/EmployeeDisciplinary', [EmployeeDisciplinaryController::class, 'store']);
 Route::put('/EmployeeDisciplinary/{id}', [EmployeeDisciplinaryController::class, 'update']);
 Route::delete('/EmployeeDisciplinary/{id}', [EmployeeDisciplinaryController::class, 'destory']);
-
-
-
