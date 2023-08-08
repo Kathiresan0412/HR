@@ -8,60 +8,12 @@ use Illuminate\Support\Facades\DB;
 
 class LeaveRequestController extends Controller
 {
-    public function index()
-    {
-        //
-    }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
     public function show(LeaveRequest $leaveRequest)
     {
         //
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(LeaveRequest $leaveRequest)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, LeaveRequest $leaveRequest)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(LeaveRequest $leaveRequest)
-    {
-        //
-    }
-
-    public function getAllLeave_requests(Request $request)
+    public function index(Request $request)
     {
         //  try {
         $leave_requests = DB::table('leave_requests as l')
@@ -96,7 +48,7 @@ class LeaveRequestController extends Controller
 
     }
 
-    public function getAllLeave_requestInfo($id)
+    public function edit($id)
     {
         //  try {
             $leave_requests = DB::table('leave_requests as l')
@@ -120,7 +72,7 @@ class LeaveRequestController extends Controller
 
     }
 
-    public function saveLeave_requestInfo(Request $request)
+    public function store(Request $request)
     {
         DB::beginTransaction();
         try {
@@ -164,7 +116,7 @@ class LeaveRequestController extends Controller
         }
     }
 
-    public function updateLeave_requestInfo(Request $request, $id)
+    public function update(Request $request, $id)
     {
         DB::beginTransaction();
         try {
@@ -204,12 +156,11 @@ class LeaveRequestController extends Controller
             ], 500);
         }
     }
-    public function destroyLeave_request($id)
+    public function destroy($id)
     {
         try {
             $leave_request = LeaveRequest::find($id);
             $leave_request->delete();
-
         } catch (\Throwable $e) {
             return response()->json([
                 "message" => "Ooops Something went wrong please try again",

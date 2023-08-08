@@ -63,8 +63,8 @@ class EmployeeHealthController extends Controller
                 'medical_condition' => 'required',
                 'Doctor_notes' => 'required',
                 'allergies' => 'required',
-                'prescription_details' => 'required'
-            ]);
+                'prescription_details' => 'required']);
+          
 
             $employee_healths = new EmployeeHealth();
             $employee_healths->employee = $request->employee;

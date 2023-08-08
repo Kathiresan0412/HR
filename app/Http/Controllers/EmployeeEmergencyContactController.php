@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\EmployeeEmergencyContact;
 use Illuminate\Http\Request;
-use DB;
+use Illuminate\Support\Facades\DB;
 
 class EmployeeEmergencyContactController extends Controller
 {
@@ -160,7 +160,14 @@ class EmployeeEmergencyContactController extends Controller
      */
     public function destroy($id)
     {
-        $empEmergenCon = EmployeeEmergencyContact::find($id);
-        $empEmergenCon->delete();
+         try {
+            $empEmergenCon = EmployeeEmergencyContact::find($id);
+            $empEmergenCon->delete();
+        } catch (\Throwable $e) {
+            return response()->json([
+                "message" => "Ooops Something went wrong please try again",
+                "error" => $e->getMessage(),
+            ], 500);
+        }
     }
 }

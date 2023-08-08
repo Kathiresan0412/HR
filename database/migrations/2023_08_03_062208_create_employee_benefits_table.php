@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('employee_benefits', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('attendees')->unsigned()->index()->nullable();
-            $table->foreign('attendees')->references('id')->on('employees')->onDelete('set null');
+            $table->bigInteger('employee')->unsigned()->index()->nullable();
+            $table->foreign('employee')->references('id')->on('employees')->onDelete('set null');
             $table->bigInteger('benefit_type')->unsigned()->index()->nullable();
             $table->foreign('benefit_type')->references('id')->on('employee_benefit_types')->onDelete('set null');
             $table->date('enrollment_date');

@@ -152,8 +152,15 @@ class EmployeeDocumentController extends Controller
      */
     public function destroy($id)
     {
-        $documents = EmployeeDocument::find($id);
-        $documents->delete();
+        try {
+            $documents = EmployeeDocument::find($id);
+            $documents->delete();
+        } catch (\Throwable $e) {
+            return response()->json([
+                "message" => "Ooops Something went wrong please try again",
+                "error" => $e->getMessage(),
+            ], 500);
+        }
     }
 }
 
