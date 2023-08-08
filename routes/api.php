@@ -77,19 +77,11 @@ Route::POST('/companies', [CompanyController::class, 'save']);
 Route::put ('/companies/{id}', [CompanyController::class, 'update']);
 Route::delete ('/companies/{id}', [CompanyController::class, 'delete']);
 
-<<<<<<< HEAD
 Route::get ('/employees', [EmployeeController::class, 'getAll']);
 Route::get ('/employees/{id}', [EmployeeController::class, 'getOne']);
 Route::POST('/employees', [EmployeeController::class, 'save']);
 Route::put ('/employees/{id}', [EmployeeController::class, 'update']);
 Route::delete ('/employees/{id}', [EmployeeController::class, 'delete']);
-=======
-Route::get('/employees', [EmployeesController::class, 'index']);
-Route::get('/employees/{id}', [EmployeesController::class, 'edit']);
-Route::POST('/employees', [EmployeesController::class, 'store']);
-Route::put('/employees/{id}', [EmployeesController::class, 'update']);
-Route::delete('/employees/{id}', [EmployeesController::class, 'destroy']);
->>>>>>> 683e3a3b954193ee36196f711f2bde1a761f72c6
 
 Route::get('/announcements', [AnnouncementController::class, 'getAll']);
 Route::get('/announcements/{id}', [AnnouncementController::class, 'getOne']);
