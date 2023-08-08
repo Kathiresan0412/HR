@@ -27,6 +27,19 @@ class PositionController extends Controller
                     ->orWhere('p.workable_time_period', 'LIKE', '%' . $search . '%')
                     ->orWhere('p.description', 'LIKE', '%' . $search . '%');
             }
+            
+            $filterParameters = [
+                'description' => 'p.description',
+                'type' => 'p.type', 
+                     
+            ];
+    
+            foreach ($filterParameters as $parameter => $column) {
+                $value = $request->input($parameter);
+                if (isset($value) && $value !== '') {
+                    $positions->where($column, '=', $value);
+                }
+            }
 
             $positions = $positions->orderBy('p.id', 'desc')->get();
 

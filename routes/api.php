@@ -7,7 +7,7 @@ use App\Http\Controllers\SalaryTypeController;
 use App\Http\Controllers\QualificationsController;
 use App\Http\Controllers\DepartmentsController;
 use App\Http\Controllers\CompanyController;
-use App\Http\Controllers\EmployeesController;
+use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\AnnouncementController;
 use App\Http\Controllers\LeaveRequestController;
 use App\Http\Controllers\SalarayAdvanceController;
@@ -77,11 +77,11 @@ Route::POST('/companies', [CompanyController::class, 'store']);
 Route::put ('/companies/{id}', [CompanyController::class, 'update']);
 Route::delete ('/companies/{id}', [CompanyController::class, 'destroy']);
 
-Route::get ('/employees', [EmployeesController::class, 'index']);
-Route::get ('/employees/{id}', [EmployeesController::class, 'edit']);
-Route::POST('/employees', [EmployeesController::class, 'store']);
-Route::put ('/employees/{id}', [EmployeesController::class, 'update']);
-Route::delete ('/employees/{id}', [EmployeesController::class, 'destroy']);
+Route::get ('/employees', [EmployeeController::class, 'getAll']);
+Route::get ('/employees/{id}', [EmployeeController::class, 'getOne']);
+Route::POST('/employees', [EmployeeController::class, 'save']);
+Route::put ('/employees/{id}', [EmployeeController::class, 'update']);
+Route::delete ('/employees/{id}', [EmployeeController::class, 'delete']);
 
 Route::get ('/announcements', [AnnouncementController::class, 'index']);
 Route::get ('/announcements/{id}', [AnnouncementController::class, 'edit']);
@@ -193,23 +193,23 @@ Route::delete('/EmployeeBenefitType/{id}', [EmployeeBenefitTypeController::class
 
 
 
-Route::get('/EmployeeBenefit', [EmployeeBenefitController::class, 'index']);
-Route::get('/EmployeeBenefit/{id}', [EmployeeBenefitController::class, 'edit']);
-Route::post('/EmployeeBenefit', [EmployeeBenefitController::class, 'store']);
-Route::put('/EmployeeBenefit/{id}', [EmployeeBenefitController::class, 'update']);
-Route::delete('/EmployeeBenefit/{id}', [EmployeeBenefitController::class, 'destory']);
+Route::get('/employee-benefits', [EmployeeBenefitController::class, 'getAll']);
+Route::get('/employee-benefits/{id}', [EmployeeBenefitController::class, 'getOne']);
+Route::post('/employee-benefits', [EmployeeBenefitController::class, 'save']);
+Route::put('/employee-benefits/{id}', [EmployeeBenefitController::class, 'update']);
+Route::delete('/employee-benefits/{id}', [EmployeeBenefitController::class, 'delete']);
 
-Route::get('/EmployeeFeedback', [EmployeeFeedbackController::class, 'index']);
-Route::get('/EmployeeFeedback/{id}', [EmployeeFeedbackController::class, 'edit']);
-Route::post('/EmployeeFeedback', [EmployeeFeedbackController::class, 'store']);
-Route::put('/EmployeeFeedback/{id}', [EmployeeFeedbackController::class, 'update']);
-Route::delete('/EmployeeFeedback/{id}', [EmployeeFeedbackController::class, 'destory']);
+Route::get('/employee-feedbacks', [EmployeeFeedbackController::class, 'getAll']);
+Route::get('/employee-feedbacks/{id}', [EmployeeFeedbackController::class, 'getOne']);
+Route::post('/employee-feedbacks', [EmployeeFeedbackController::class, 'save']);
+Route::put('/employee-feedbacks/{id}', [EmployeeFeedbackController::class, 'update']);
+Route::delete('/employee-feedbacks/{id}', [EmployeeFeedbackController::class, 'delete']);
 
-Route::get('/EmployeeHealth', [EmployeeHealthController::class, 'index']);
-Route::get('/EmployeeHealth/{id}', [EmployeeHealthController::class, 'edit']);
-Route::post('/EmployeeHealth', [EmployeeHealthController::class, 'store']);
-Route::put('/EmployeeHealth/{id}', [EmployeeHealthController::class, 'update']);
-Route::delete('/EmployeeHealth/{id}', [EmployeeHealthController::class, 'destory']);
+Route::get('/employee-healths', [EmployeeHealthController::class, 'getAll']);
+Route::get('/employee-healths/{id}', [EmployeeHealthController::class, 'getOne']);
+Route::post('/employee-healths', [EmployeeHealthController::class, 'save']);
+Route::put('/employee-healths/{id}', [EmployeeHealthController::class, 'update']);
+Route::delete('/employee-healths/{id}', [EmployeeHealthController::class, 'delete']);
 
 Route::get('/EmployeeEmergency', [EmployeeEmergencyContactController::class, 'index']);
 Route::get('/EmployeeEmergency/{id}', [EmployeeEmergencyContactController::class, 'edit']);

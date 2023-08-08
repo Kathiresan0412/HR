@@ -2,58 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Employees;
+use App\Models\Employee;
 use Illuminate\Http\Request;
 use App\Models\EmployeeQualifications;
 
 use Illuminate\Support\Facades\DB;
 
-class EmployeesController extends Controller
+class EmployeeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
 
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Employees $employees)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-
-    public function destroy($id)
-    {
-        try {
-            $employee = Employees::find($id);
-            $employee->delete();
-        } catch (\Throwable $e) {
-            return response()->json([
-                "message" => "Ooops Something went wrong please try again",
-                "error" => $e->getMessage(),
-            ], 500);
-        }
-    }
 
     /**************************API functions**********************************/
-    public function index(Request $request)
+    public function getAll(Request $request)
     {
         try {
             $employees = DB::table('employees as e')
@@ -105,13 +65,22 @@ class EmployeesController extends Controller
                     ->orWhere('e.address', 'LIKE', '%' . $search . '%')
                     ->orWhere('e.nic', 'LIKE', '%' . $search . '%');
             }
-            $employees = $employees->orderBy('id', 'asc')
+            //filter----------------------------------------------
+            $type = $request->type;
+            if (isset($type) && $type != "") {
+                $employees->where('p.type', '=', $type);
+            }
+
+            //filter----------------------------------------------
+
+            $employees = $employees->orderBy('e.created_at', 'desc')
                 ->get();
 
             return response()->json([
                 "message" => "All employees Data",
                 "data" => $employees,
             ], 200);
+
         } catch (\Throwable $e) {
             return response()->json([
                 "message" => "Oops somthing went wrong please try again",
@@ -121,10 +90,10 @@ class EmployeesController extends Controller
 
     }
 
-    public function edit($id)
+    public function getOne($id)
     {
         try {
-            $employees = DB::table('employees as e')
+            $employee = DB::table('employees as e')
                 ->select(
                     'e.id',
                     'e.bio_code',
@@ -162,8 +131,8 @@ class EmployeesController extends Controller
                 ->where('e.id', $id)
                 ->first();
             $EmployeeQualification = EmployeeQualifications::leftJoin('qualifications as qu', 'qu.id', '=', 'employee_qualifications.qualification')
-            ->where('employee', $id)
-            ->get();
+                ->where('employee', $id)
+                ->get();
             $EmployeeQualifications = [];
             foreach ($EmployeeQualification as $employeeqalificatio) {
                 // $qualific= $employeeqalificatio->qualification;
@@ -172,14 +141,14 @@ class EmployeesController extends Controller
                 // ->leftJoin('qualifications as qu', 'qu.id', '=', 'eq.qualification')
                 // ->where('eq.id',$qualification)
                 // ->first();
-                return $employeeqalificatio;
+                // return $employeeqalificatio;
                 array_push($EmployeeQualifications, $employeeqalificatio->name);
-                
+
             }
 
             return response()->json([
-                "message" => "Selected employee Data",
-                "data" => $employees,
+                "message" => "Employee Data",
+                "data" => $employee,
                 "EmployeeQualifications" => $EmployeeQualifications
             ], 200);
         } catch (\Throwable $e) {
@@ -189,12 +158,42 @@ class EmployeesController extends Controller
             ], 500);
         }
     }
-    public function store(Request $request)
+    public function save(Request $request)
     {
-        //validate
         DB::beginTransaction();
         try {
-            $employee = new Employees();
+            $request->validate([
+                'bio_code' => 'required',
+                'first_name' => 'required',
+                'last_name' => 'required',
+                'dob_date' => 'required',
+                'gender' => 'required',
+                'mobile' => 'required',
+                'alternative_phone' => 'required',
+                'landline_number' => 'required',
+                'emergency_mobile' => 'required',
+                'email' => 'required',
+                'address' => 'required',
+                'blood' => 'required',
+                'nic' => 'required',
+                'passport_no' => 'required',
+                'company' => 'required',
+                'position' => 'required',
+                'department' => 'required',
+                'basic_salary' => 'required',
+                'budgetary_relief' => 'required',
+                'hire_date' => 'required',
+                'has_shift' => 'required',
+                'ot_eligibility' => 'required',
+                'reg_hiredate' => 'required',
+                'locker_number' => 'required',
+                'created_by' => 'required',
+                'img' => 'required',
+                'status' => 'required',
+                'qualification' => 'required'
+            ]);
+
+            $employee = new Employee();
             $employee->bio_code = $request->input('bio_code');
             $employee->first_name = $request->input('first_name');
             $employee->last_name = $request->input('last_name');
@@ -224,18 +223,22 @@ class EmployeesController extends Controller
             $employee->status = $request->input('status');
             $employee->save();
             $employee_id = $employee->id;
-            $qualifications = $request->qualifications;
-            foreach ($qualifications as $qualification) {
-                $com = new EmployeeQualifications();
-                $com->employee = $employee->id;
-                $com->qualification = $qualification;
-                $com->save();
+
+            if ($request->has('qualifications') && is_array($request->qualifications)) {
+                $qualifications = $request->qualifications;
+                foreach ($qualifications as $qualification) {
+                    $com = new EmployeeQualifications();
+                    $com->employee = $employee_id;
+                    $com->qualification = $qualification;
+                    $com->save();
+                }
             }
+
             DB::commit();
             return response()->json([
-                "msg" => "Saved Employee Data",
+                "msg" => "Employee Data Saved",
                 "data" => $employee,
-            ], 201);
+            ], 200);
         } catch (\Throwable $e) {
             DB::rollback();
             return response()->json([
@@ -247,11 +250,41 @@ class EmployeesController extends Controller
 
     public function update(Request $request, $id)
     {
-        //validate
         DB::beginTransaction();
         try {
 
-            $employee = Employees::find($id);
+            $request->validate([
+                'bio_code' => 'required',
+                'first_name' => 'required',
+                'last_name' => 'required',
+                'dob_date' => 'required',
+                'gender' => 'required',
+                'mobile' => 'required',
+                'alternative_phone' => 'required',
+                'landline_number' => 'required',
+                'emergency_mobile' => 'required',
+                'email' => 'required',
+                'address' => 'required',
+                'blood' => 'required',
+                'nic' => 'required',
+                'passport_no' => 'required',
+                'company' => 'required',
+                'position' => 'required',
+                'department' => 'required',
+                'basic_salary' => 'required',
+                'budgetary_relief' => 'required',
+                'hire_date' => 'required',
+                'has_shift' => 'required',
+                'ot_eligibility' => 'required',
+                'reg_hiredate' => 'required',
+                'locker_number' => 'required',
+                'created_by' => 'required',
+                'img' => 'required',
+                'status' => 'required',
+                'qualification' => 'required'
+            ]);
+
+            $employee = Employee::find($id);
             $employee->bio_code = $request->input('bio_code');
             $employee->first_name = $request->input('first_name');
             $employee->last_name = $request->input('last_name');
@@ -296,13 +329,31 @@ class EmployeesController extends Controller
             DB::commit();
 
             return response()->json([
-                "msg" => "Updated Employee Data",
+                "msg" => "Employee Data Updated",
                 "data" => $employee,
             ], 200);
         } catch (\Throwable $e) {
             DB::rollback();
             return response()->json([
                 "msg" => "oops something went wrong",
+                "error" => $e->getMessage(),
+            ], 500);
+        }
+    }
+
+    public function delete($id)
+    {
+        try {
+            $employee = Employee::find($id);
+            $employee->delete();
+
+            return response()->json([
+                "message" => "Employee Data Deleted"
+            ], 200);
+
+        } catch (\Throwable $e) {
+            return response()->json([
+                "message" => "Ooops Something went wrong please try again",
                 "error" => $e->getMessage(),
             ], 500);
         }

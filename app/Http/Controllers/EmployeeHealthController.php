@@ -8,20 +8,18 @@ use DB;
 
 class EmployeeHealthController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index(Request $request)
+
+    public function getAll(Request $request)
     {
         try {
-            $employee_healths = DB::table('employee_healths as eh')
+            $employeeHealths = DB::table('employee_healths as eh')
                 ->select('eh.id', 'e.first_name as employee', 'eh.medical_examination_date', 'eh.medical_condition', 'eh.Doctor_notes', 'eh.allergies', 'eh.prescription_details')
                 ->leftJoin('employees as e', 'e.id', '=', 'eh.employee');
 
 
             $search = $request->search;
             if (!is_null($search)) {
-                $employee_healths = $employee_healths
+                $employeeHealths = $employeeHealths
                     ->where('eh.id', 'LIKE', '%' . $search . '%')
                     ->orWhere('eh.employee', 'LIKE', '%' . $search . '%')
                     ->orWhere('eh.medical_examination_date', 'LIKE', '%' . $search . '%')
@@ -30,10 +28,23 @@ class EmployeeHealthController extends Controller
                     ->orWhere('eh.allergies', 'LIKE', '%' . $search . '%')
                     ->orWhere('eh.prescription_details', 'LIKE', '%' . $search . '%');
             }
-            $employee_healths = $employee_healths->orderBy('eh.id', 'asc')->get();
+
+            $filterParameters = [
+                'medical_examination_date' => 'eh.medical_examination_date',
+                'medical_condition' => 'eh.medical_condition',
+
+            ];
+
+            foreach ($filterParameters as $parameter => $column) {
+                $value = $request->input($parameter);
+                if (isset($value) && $value !== '') {
+                    $employeeHealths->where($column, '=', $value);
+                }
+            }
+            $employeeHealths = $employeeHealths->orderBy('eh.created_at', 'desc')->get();
             return response()->json([
-                "message" => "employee_healths Data",
-                "data" => $employee_healths,
+                "message" => "All Employee Healths Data",
+                "data" => $employeeHealths,
             ], 200);
         } catch (\Throwable $e) {
             return response()->json([
@@ -43,18 +54,7 @@ class EmployeeHealthController extends Controller
         }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function save(Request $request)
     {
         try {
             $request->validate([
@@ -63,24 +63,25 @@ class EmployeeHealthController extends Controller
                 'medical_condition' => 'required',
                 'Doctor_notes' => 'required',
                 'allergies' => 'required',
-                'prescription_details' => 'required']);
-          
+                'prescription_details' => 'required'
+            ]);
 
-            $employee_healths = new EmployeeHealth();
-            $employee_healths->employee = $request->employee;
-            $employee_healths->medical_examination_date = $request->medical_examination_date;
-            $employee_healths->medical_condition = $request->medical_condition;
-            $employee_healths->Doctor_notes = $request->Doctor_notes;
-            $employee_healths->allergies = $request->allergies;
-            $employee_healths->prescription_details = $request->prescription_details;
-            $employee_healths->save();
+
+            $employeeHealth = new EmployeeHealth();
+            $employeeHealth->employee = $request->employee;
+            $employeeHealth->medical_examination_date = $request->medical_examination_date;
+            $employeeHealth->medical_condition = $request->medical_condition;
+            $employeeHealth->Doctor_notes = $request->Doctor_notes;
+            $employeeHealth->allergies = $request->allergies;
+            $employeeHealth->prescription_details = $request->prescription_details;
+            $employeeHealth->save();
 
             DB::commit();
 
             return response()->json([
-                "msg" => "employee_healths Data",
-                "data" => $employee_healths,
-            ], 201);
+                "msg" => "Employee Health Data Saved",
+                "data" => $employeeHealth,
+            ], 200);
         } catch (\Throwable $e) {
             DB::rollback();
             return response()->json([
@@ -90,29 +91,18 @@ class EmployeeHealthController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(EmployeeHealth $employeeHealth)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit($id)
+    public function getOne($id)
     {
         try {
-            $employee_healths = DB::table('employee_healths as eh')
-            ->select('eh.id', 'e.first_name as employee', 'eh.medical_examination_date', 'eh.medical_condition', 'eh.Doctor_notes', 'eh.allergies', 'eh.prescription_details')
-            ->leftJoin('employees as e', 'e.id', '=', 'eh.employee')
-            ->where('eh.id', $id)
-            ->first();
+            $employeeHealth = DB::table('employee_healths as eh')
+                ->select('eh.id', 'e.first_name as employee', 'eh.medical_examination_date', 'eh.medical_condition', 'eh.Doctor_notes', 'eh.allergies', 'eh.prescription_details')
+                ->leftJoin('employees as e', 'e.id', '=', 'eh.employee')
+                ->where('eh.id', $id)
+                ->first();
 
             return response()->json([
-                "message" => "employee_healths Data",
-                "data" => $employee_healths,
+                "message" => "Employee Health Data",
+                "data" => $employeeHealth,
             ], 200);
         } catch (\Throwable $e) {
             return response()->json([
@@ -122,12 +112,9 @@ class EmployeeHealthController extends Controller
         }
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, $id)
     {
-        
+
         DB::beginTransaction();
         try {
             $request->validate([
@@ -138,20 +125,20 @@ class EmployeeHealthController extends Controller
                 'allergies' => 'required',
                 'prescription_details' => 'required'
             ]);
-            $employee_healths = EmployeeHealth::find($id);
-            $employee_healths->employee = $request->employee;
-            $employee_healths->medical_examination_date = $request->medical_examination_date;
-            $employee_healths->medical_condition = $request->medical_condition;
-            $employee_healths->Doctor_notes = $request->Doctor_notes;
-            $employee_healths->allergies = $request->allergies;
-            $employee_healths->prescription_details = $request->prescription_details;
-            $employee_healths->save();
+            $employeeHealth = EmployeeHealth::find($id);
+            $employeeHealth->employee = $request->employee;
+            $employeeHealth->medical_examination_date = $request->medical_examination_date;
+            $employeeHealth->medical_condition = $request->medical_condition;
+            $employeeHealth->Doctor_notes = $request->Doctor_notes;
+            $employeeHealth->allergies = $request->allergies;
+            $employeeHealth->prescription_details = $request->prescription_details;
+            $employeeHealth->save();
 
             DB::commit();
             return response()->json([
-                "msg" => "employee_healths Data",
-                "data" => $employee_healths,
-            ], 201);
+                "msg" => "Employee Health Data Updated",
+                "data" => $employeeHealth,
+            ], 200);
         } catch (\Throwable $e) {
             DB::rollback();
             return response()->json([
@@ -161,14 +148,15 @@ class EmployeeHealthController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy($id)
+    public function delete($id)
     {
         try {
-            $employee_healths = EmployeeHealth::find($id);
-            $employee_healths->delete();
+            $employeeHealth = EmployeeHealth::find($id);
+            $employeeHealth->delete();
+
+            return response()->json([
+                "message" => "Employee Health Data Deleted"
+            ], 200);
 
         } catch (\Throwable $e) {
             return response()->json([
