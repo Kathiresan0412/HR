@@ -11,59 +11,18 @@ class AttendanceController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
+  
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
     public function show(Attendance $attendance)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Attendance $attendance)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Attendance $attendance)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Attendance $attendance)
-    {
-        //
-    }
-    public function  getAllAttendance (Request $request){
+    public function  index (Request $request){
 
         try {
             $attendances = DB::table('attendances as at')
@@ -98,7 +57,7 @@ class AttendanceController extends Controller
        }
       }
 
-      public function  getAttendanceinfo ($id){
+      public function  edit($id){
        // return 's';
         try {
             $attendances = DB::table('attendances as at')
@@ -122,7 +81,7 @@ class AttendanceController extends Controller
       }
 
 
- public function saveAttendance(Request $request)
+ public function store(Request $request)
  {
      DB::beginTransaction();
      try{
@@ -162,7 +121,7 @@ class AttendanceController extends Controller
      }
  }
 
- public function updateAttendance(Request $request, $id)
+ public function update(Request $request, $id)
  {
      DB::beginTransaction();
      try{
@@ -201,7 +160,7 @@ class AttendanceController extends Controller
      }
  }
 
- public function destroyAttendance($id)
+ public function destroy($id)
 {
     try {
         $attendances = Attendance::find($id);

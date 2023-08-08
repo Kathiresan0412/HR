@@ -9,33 +9,12 @@ use Illuminate\Support\Facades\DB;
 
 class CompanyController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
     public function show(Company $company)
     {
         //
@@ -44,18 +23,7 @@ class CompanyController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Company $company)
-    {
-        //
-    }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Company $company)
-    {
-        //
-    }
 
     /**
      * Remove the specified resource from storage.
@@ -75,10 +43,7 @@ class CompanyController extends Controller
     }
 
 
-
-
-      /**************************API functions**********************************/
-  public function getAllCompany(Request $request,)
+  public function index(Request $request)
   {
    
       try{
@@ -105,7 +70,7 @@ class CompanyController extends Controller
       }
   }
 
-  public function getCompanyInfo($id)
+  public function edit($id)
   {
       try{
 
@@ -126,7 +91,7 @@ class CompanyController extends Controller
       }
   }
 
-  public function saveCompany(Request $request)
+  public function store(Request $request)
   {
       DB::beginTransaction();
       try{
@@ -155,7 +120,7 @@ class CompanyController extends Controller
   }
   }
 
-  public function updateCompany(Request $request, $id)
+  public function update(Request $request, $id)
     {
         DB::beginTransaction();
         try{

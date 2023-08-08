@@ -154,7 +154,14 @@ class TrainingProgramController extends Controller
      */
     public function destroy($id)
     {
-        $trainingProgram = TrainingProgram::find($id);
-        $trainingProgram->delete();
+            try {
+            $trainingProgram = TrainingProgram::find($id);
+            $trainingProgram->delete();
+        } catch (\Throwable $e) {
+            return response()->json([
+                "message" => "Ooops Something went wrong please try again",
+                "error" => $e->getMessage(),
+            ], 500);
+        }
     }
 }

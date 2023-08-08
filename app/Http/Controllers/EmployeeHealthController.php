@@ -30,7 +30,7 @@ class EmployeeHealthController extends Controller
                     ->orWhere('eh.allergies', 'LIKE', '%' . $search . '%')
                     ->orWhere('eh.prescription_details', 'LIKE', '%' . $search . '%');
             }
-            $employee_healths = $employee_healths->orderBy('ef.id', 'asc')->get();
+            $employee_healths = $employee_healths->orderBy('eh.id', 'asc')->get();
             return response()->json([
                 "message" => "employee_healths Data",
                 "data" => $employee_healths,
@@ -63,8 +63,8 @@ class EmployeeHealthController extends Controller
                 'medical_condition' => 'required',
                 'Doctor_notes' => 'required',
                 'allergies' => 'required',
-                'prescription_details' => 'required'
-            ]);
+                'prescription_details' => 'required']);
+          
 
             $employee_healths = new EmployeeHealth();
             $employee_healths->employee = $request->employee;
