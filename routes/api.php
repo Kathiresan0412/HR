@@ -216,7 +216,7 @@ Route::get('/EmployeeEmergency/{id}', [EmployeeEmergencyContactController::class
 Route::post('/EmployeeEmergency', [EmployeeEmergencyContactController::class, 'store']);
 Route::put('/EmployeeEmergency/{id}', [EmployeeEmergencyContactController::class, 'update']);
 Route::delete('/EmployeeEmergency/{id}', [EmployeeEmergencyContactController::class, 'destory']);
-//achuthan
+
 Route::get('/EmployeeDisciplinary', [EmployeeDisciplinaryController::class, 'index']);
 Route::get('/EmployeeDisciplinary/{id}', [EmployeeDisciplinaryController::class, 'edit']);
 Route::post('/EmployeeDisciplinary', [EmployeeDisciplinaryController::class, 'store']);

@@ -17,11 +17,10 @@ class PositionController extends Controller
         try {
             $positions = DB::table('positions as p')
                 ->select('p.id', 'p.name', 'p.type', 'p.workable_time', 'p.workable_time_period', 'p.description');
-
             $search = $request->search;
-            if (!is_null($search)) {
-                $positions = $positions
-                    ->where('p.name', 'LIKE', '%' . $search . '%')
+            $type = $request->type;
+            if (!is_null($search) &&($type!="")) {
+                $positions = $positions->where('p.name', 'LIKE', '%' . $search . '%')
                     ->orWhere('p.type', 'LIKE', '%' . $search . '%')
                     ->orWhere('p.workable_time', 'LIKE', '%' . $search . '%')
                     ->orWhere('p.workable_time_period', 'LIKE', '%' . $search . '%')
@@ -35,7 +34,7 @@ class PositionController extends Controller
             ], 200);
         } catch (\Throwable $e) {
             return response()->json([
-                "message" => "oops something went wrong",
+                "message" => "Something went wrong",
                 "error" => $e->getMessage(),
             ], 500);
         }

@@ -63,13 +63,16 @@ class EmployeeWorkShiftController extends Controller
             // $allowedleaves->count = $request->count;
             $EmployeeWorkShift->save();
             $workshift = $EmployeeWorkShift->id;
+           
 
-            $WorkShiftDetail = $request->WorkShiftDetails;
-            foreach ($WorkShiftDetail as $WorkShiftDetai) {
+            $work_shift_details = $request->work_shift_details;
+            
+            foreach ($work_shift_details as $shift) {
+              //  return $WorkShiftDetai;
                 $WorkShiftDetai = new WorkShiftDetail();
                 $WorkShiftDetai->work_shif_id = $workshift;
-                $WorkShiftDetai->from = $request->from;
-                $WorkShiftDetai->to = $request->to;
+                $WorkShiftDetai->from = $shift["from"];
+                $WorkShiftDetai->to = $shift["to"];
                 $WorkShiftDetai->save();
             }
 
