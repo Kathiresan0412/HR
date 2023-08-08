@@ -40,68 +40,90 @@ class AnnouncementController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function delete($id)
     {
         try {
             $announcement = Announcement::find($id);
             $announcement->delete();
+            return response()->json([
+                "Message" => "Announcement Data Deleted",
+
+            ], 200);
         } catch (\Throwable $e) {
             return response()->json([
-                "message" => "Ooops Something went wrong please try again",
-                "error" => $e->getMessage(),
+                "Message" => "Ooops Something went wrong please try again",
+                "Error" => $e->getMessage(),
             ], 500);
         }
     }
-    public function index(Request $request, )
+    public function getAll(Request $request,)
     {
 
         try {
-            $announcement = DB::table('announcements as a')
+            $announcements = DB::table('announcements as a')
                 ->select('a.id', 'a.date', 'a.attachment', 'a.description', 'a.title');
 
             $search = $request->search;
             if (!is_null($search)) {
-                $announcement = $announcement
+                $announcements = $announcements
                     ->where('a.date', 'LIKE', '%' . $search . '%')
                     ->orWhere('a.description', 'LIKE', '%' . $search . '%')
                     ->orWhere('a.title', 'LIKE', '%' . $search . '%');
             }
-            $announcement = $announcement->orderBy('a.id', 'desc')->get();
+
+            $filterParameters = [
+                'date' => 'a.date',
+                'title' => 'a.title',
+                'description' => 'a.description',
+
+            ];
+
+            foreach ($filterParameters as $parameter => $column) {
+                $value = $request->input($parameter);
+                if (isset($value) && $value !== '') {
+                    $announcements->where($column, '=', $value);
+                }
+            }
+
+            $announcements = $announcements->orderBy('a.created_at', 'desc')->get();
 
             return response()->json([
-                "message" => "announcement Data",
-                "data" => $announcement,
+                "Message" => "All Announcement Data ",
+                "Data" => $announcements,
             ], 200);
         } catch (\Throwable $e) {
             return response()->json([
-                "message" => "oops something went wrong",
-                "error" => $e->getMessage(),
+                "Message" => "oops something went wrong",
+                "Error" => $e->getMessage(),
             ], 500);
         }
     }
 
-    public function edit($id)
+    public function getOne($id)
     {
         try {
 
             $announcement = DB::table('announcements as a')
-                ->select('a.id', 'a.date', 'a.attachment', 'a.description', 'a.title')
+                ->select('a.id', 'a.date', 'a.attachment', 'a.description', 'a.title');
+
+
+            $announcement = $announcement->orderBy('a.created_at', 'desc')
                 ->where('a.id', $id)
                 ->first();
 
             return response()->json([
-                "message" => "announcement Data",
-                "data" => $announcement,
+                "Message" => "Announcement Data",
+                "Data" => $announcement,
             ], 200);
         } catch (\Throwable $e) {
             return response()->json([
-                "message" => "oops something went wrong",
-                "error" => $e->getMessage(),
+                "Message" => "oops something went wrong",
+                "Error" => $e->getMessage(),
             ], 500);
         }
     }
 
-    public function store(Request $request)
+    public function save(Request $request)
     {
         DB::beginTransaction();
         try {
@@ -115,14 +137,16 @@ class AnnouncementController extends Controller
             DB::commit();
 
             return response()->json([
-                "msg" => "announcement Data",
-                "data" => $announcement,
-            ], 201);
+                "Message" => "Announcement Data Saved",
+                "Data" => $announcement,
+            ], 200);
         } catch (\Throwable $e) {
+
             DB::rollback();
+
             return response()->json([
-                "msg" => "oops something went wrong",
-                "error" => $e->getMessage(),
+                "Message" => "oops something went wrong",
+                "Error" => $e->getMessage(),
             ], 500);
         }
     }
@@ -141,18 +165,15 @@ class AnnouncementController extends Controller
             DB::commit();
 
             return response()->json([
-                "msg" => "announcement Data",
-                "data" => $announcement,
+                "Message" => "Announcement Data Updated",
+                "Data" => $announcement,
             ], 201);
         } catch (\Throwable $e) {
             DB::rollback();
             return response()->json([
-                "msg" => "oops something went wrong",
-                "error" => $e->getMessage(),
+                "Message" => "oops something went wrong",
+                "Error" => $e->getMessage(),
             ], 500);
         }
     }
-
-
-
 }

@@ -7,7 +7,16 @@ use Illuminate\Support\Facades\DB;
 
 class PromotionsController extends Controller
 {
-    public function getAll(Request $request)
+    public function create()
+    {
+        //
+    }
+    public function show(Promotions $promotions)
+    {
+        //
+    }
+
+    public function index(Request $request)
     {
         //  try {
         $promotions = DB::table('promotions as p')
@@ -109,7 +118,13 @@ class PromotionsController extends Controller
             ], 500);
         }
     }
-    public function delete($id)
+
+    public function update(Request $request, $id)
+    {
+       
+    }
+
+    public function destroy($id)
     {
         try {
             $promotion = Promotions::find($id);
