@@ -47,37 +47,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-<<<<<<< HEAD
-Route::get('/positions', [PositionController::class, 'index']);
-Route::get('/positions/{id}', [PositionController::class, 'edit']);
-Route::post('/positions', [PositionController::class, 'store']);
-Route::put('/positions/{id}', [PositionController::class, 'update']);
-Route::delete('/positions/{id}', [PositionController::class, 'destory']);
-
-Route::get('/salarytypes', [SalaryTypeController::class, 'index']);
-Route::get('/salarytypes/{id}', [SalaryTypeController::class, 'edit']);
-Route::post('/salarytypes', [SalaryTypeController::class, 'store']);
-Route::put('/salarytypes/{id}', [SalaryTypeController::class, 'update']);
-Route::delete('/salarytypes/{id}', [SalaryTypeController::class, 'destory']);
-
-Route::get('/qualifications', [QualificationsController::class, 'index']);
-Route::get('/qualifications/{id}', [QualificationsController::class, 'edit']);
-Route::post('/qualifications', [QualificationsController::class, 'store']);
-Route::put('/qualifications/{id}', [QualificationsController::class, 'update']);
-Route::delete('/qualifications/{id}', [QualificationsController::class, 'destory']);
-
-Route::get('/departments', [DepartmentsController::class, 'index']);
-Route::get('/departments/{id}', [DepartmentsController::class, 'edit']);
-Route::POST('/departments', [DepartmentsController::class, 'store']);
-Route::put('/departments/{id}', [DepartmentsController::class, 'update']);
-Route::delete('/departments/{id}', [DepartmentsController::class, 'destroy']);
-
-Route::get('/companies', [CompanyController::class, 'index']);
-Route::get('/companies/{id}', [CompanyController::class, 'edit']);
-Route::POST('/companies', [CompanyController::class, 'store']);
-Route::put('/companies/{id}', [CompanyController::class, 'update']);
-Route::delete('/companies/{id}', [CompanyController::class, 'destroy']);
-=======
 Route::get('/positions', [PositionController::class, 'getAll']);
 Route::get('/positions/{id}', [PositionController::class, 'getOne']);
 Route::post('/positions', [PositionController::class, 'save']);
@@ -107,7 +76,6 @@ Route::get ('/companies/{id}', [CompanyController::class, 'getOne']);
 Route::POST('/companies', [CompanyController::class, 'save']);
 Route::put ('/companies/{id}', [CompanyController::class, 'update']);
 Route::delete ('/companies/{id}', [CompanyController::class, 'delete']);
->>>>>>> c4564c3ed37b799bc9ea416fdd63d4420d0d2198
 
 Route::get('/employees', [EmployeesController::class, 'index']);
 Route::get('/employees/{id}', [EmployeesController::class, 'edit']);
@@ -115,19 +83,11 @@ Route::POST('/employees', [EmployeesController::class, 'store']);
 Route::put('/employees/{id}', [EmployeesController::class, 'update']);
 Route::delete('/employees/{id}', [EmployeesController::class, 'destroy']);
 
-<<<<<<< HEAD
-Route::get('/announcements', [AnnouncementController::class, 'index']);
-Route::get('/announcements/{id}', [AnnouncementController::class, 'edit']);
-Route::POST('/announcements', [AnnouncementController::class, 'store']);
-Route::put('/announcements/{id}', [AnnouncementController::class, 'update']);
-Route::delete('/announcements/{id}', [AnnouncementController::class, 'destroy']);
-=======
 Route::get('/announcements', [AnnouncementController::class, 'getAll']);
 Route::get('/announcements/{id}', [AnnouncementController::class, 'getOne']);
 Route::POST('/announcements', [AnnouncementController::class, 'save']);
 Route::put('/announcements/{id}', [AnnouncementController::class, 'update']);
 Route::delete('/announcements/{id}', [AnnouncementController::class, 'delete']);
->>>>>>> c4564c3ed37b799bc9ea416fdd63d4420d0d2198
 
 Route::get('/salaryadvance', [SalarayAdvanceController::class, 'getAll']);
 Route::get('/salaryadvance/{id}', [SalarayAdvanceController::class, 'getOne']);
@@ -135,66 +95,42 @@ Route::post('/salaryadvance', [SalarayAdvanceController::class, 'save']);
 Route::put('/salaryadvance/{id}', [SalarayAdvanceController::class, 'update']);
 Route::delete('/salaryadvance/{id}', [SalarayAdvanceController::class, 'delete']);
 
-<<<<<<< HEAD
-Route::get('/allowedleaves', [AllowedLeaveController::class, 'index']);
-Route::get('/allowedleaves/{id}', [AllowedLeaveController::class, 'edit']);
-Route::POST('/allowedleaves', [AllowedLeaveController::class, 'store']);
-Route::put('/allowedleaves/{id}', [AllowedLeaveController::class, 'update']);
-Route::delete('/allowedleaves/{id}', [AllowedLeaveController::class, 'destroy']);
-=======
 Route::get ('/allowed-leaves', [AllowedLeaveController::class, 'getAll']);
 Route::get ('/allowed-leaves/{id}', [AllowedLeaveController::class, 'getOne']);
 Route::POST('/allowed-leaves', [AllowedLeaveController::class, 'save']);
 Route::put ('/allowed-leaves/{id}', [AllowedLeaveController::class, 'update']);
 Route::delete ('/allowed-leaves/{id}', [AllowedLeaveController::class, 'delete']);
->>>>>>> c4564c3ed37b799bc9ea416fdd63d4420d0d2198
 
-Route::get('/leave_requests', [LeaveRequestController::class, 'index']);
-Route::get('/leave_requests/{id}', [LeaveRequestController::class, 'edit']);
-Route::POST('/leave_requests', [LeaveRequestController::class, 'store']);
-Route::put('/leave_requests/{id}', [LeaveRequestController::class, 'update']);
-Route::delete('/leave_requests/{id}', [LeaveRequestController::class, 'destroy']);
+//Checked by Achsuthan //Cross Checked by Viswa
+Route::get ('/leave-requests', [LeaveRequestController::class, 'getAll']);
+Route::get ('/leave-requests/{id}', [LeaveRequestController::class, 'getOne']);
+Route::POST('/leave-requests', [LeaveRequestController::class, 'save']);
+Route::put ('/leave-requests/{id}', [LeaveRequestController::class, 'update']);
+Route::delete ('/leave-requests/{id}', [LeaveRequestController::class, 'delete']);
 
-<<<<<<< HEAD
-Route::get('/leave-types', [LeaveTypeController::class, 'index']);
-Route::get('/leave-types/{id}', [LeaveTypeController::class, 'edit']);
-Route::POST('/leave-types', [LeaveTypeController::class, 'store']);
-Route::put('/leave-types/{id}', [LeaveTypeController::class, 'update']);
-Route::delete('/leave-types/{id}', [LeaveTypeController::class, 'destroy']);
-
-
-
-Route::get('/EmployeeQualifications', [EmployeeQualificationsController::class, 'index']);
-Route::get('/EmployeeQualifications/{id}', [EmployeeQualificationsController::class, 'edit']);
-=======
 Route::get('/leavetypes', [LeaveTypeController::class, 'getAll']);
 Route::get('/leavetypes/{id}', [LeaveTypeController::class, 'getOne']);
 Route::POST('/leavetypes', [LeaveTypeController::class, 'save']);
 Route::put('/leavetypes/{id}', [LeaveTypeController::class, 'update']);
 Route::delete('/leavetypes/{id}', [LeaveTypeController::class, 'delete']);
 
-Route::get('/shortLeaves', [ShortLeavesController::class, 'index']);
-Route::get('/shortLeaves/{id}', [ShortLeavesController::class, 'edit']);
-Route::POST('/shortLeaves', [ShortLeavesController::class, 'store']);
-Route::put('/shortLeaves/{id}', [ShortLeavesController::class, 'update']);
-Route::delete('/shortLeaves/{id}', [ShortLeavesController::class, 'destroy']);
+
 
 Route::get('/EmployeeQualifications', [EmployeeQualificationsController::class, 'getAll']);
 Route::get('/EmployeeQualifications/{id}', [EmployeeQualificationsController::class, 'getOne']);
->>>>>>> c4564c3ed37b799bc9ea416fdd63d4420d0d2198
 
-Route::get('/attendance', [AttendanceController::class, 'index']);
-Route::get('/attendance/{id}', [AttendanceController::class, 'edit']);
-Route::post('/attendance', [AttendanceController::class, 'store']);
-Route::put('/attendance/{id}', [AttendanceController::class, 'update']);
-Route::delete('/attendance/{id}', [AttendanceController::class, 'destory']);
+//Checked by Achsuthan //Cross Checked by Viswa
+Route::get('/attendances', [AttendanceController::class, 'getAll']);
+Route::get('/attendances/{id}', [AttendanceController::class, 'getOne']);
+Route::post('/attendances', [AttendanceController::class, 'save']);
+Route::put('/attendances/{id}', [AttendanceController::class, 'update']);
+Route::delete('/attendances/{id}', [AttendanceController::class, 'delete']);
 
 Route::get('/recruitmentcandidates', [RecruitmentCandidateController::class, 'index']);
 Route::get('/recruitmentcandidates/{id}', [RecruitmentCandidateController::class, 'edit']);
 Route::POST('/recruitmentcandidates', [RecruitmentCandidateController::class, 'store']);
 Route::put('/recruitmentcandidates/{id}', [RecruitmentCandidateController::class, 'update']);
 Route::delete('/recruitmentcandidates/{id}', [RecruitmentCandidateController::class, 'destory']);
-<<<<<<< HEAD
 //////////////////////
 Route::get('/resignations', [ResignationsController::class, 'getAll']);
 Route::get('/resignations/{id}', [ResignationsController::class, 'getOne']);
@@ -258,7 +194,6 @@ Route::get('/training_records/{id}', [TrainingRecordController::class, 'edit']);
 Route::POST('/training_records', [TrainingRecordController::class, 'store']);
 Route::put('/training_records/{id}', [TrainingRecordController::class, 'update']);
 Route::delete('/training_records/{id}', [TrainingRecordController::class, 'destory']);
-=======
 
 Route::get('/resignations', [ResignationsController::class, 'index']);
 Route::get('/resignations/{id}', [ResignationsController::class, 'edit']);
@@ -304,23 +239,19 @@ Route::get ('/training-records/{id}', [TrainingRecordController::class, 'getOne'
 Route::POST('/training-records', [TrainingRecordController::class, 'save']);
 Route::put ('/training-records/{id}', [TrainingRecordController::class, 'update']);
 Route::delete ('/training-records/{id}', [TrainingRecordController::class, 'delete']);
->>>>>>> c4564c3ed37b799bc9ea416fdd63d4420d0d2198
-//sangi
+
 Route::get('/ots', [OTSController::class, 'getAll']);
 Route::get('/ots/{id}', [OTSController::class, 'getOne']);
 Route::post('/ots', [OTSController::class, 'save']);
 Route::put('/ots/{id}', [OTSController::class, 'update']);
 Route::delete('/ots/{id}', [OTSController::class, 'delete']);
 
-<<<<<<< HEAD
-=======
+
 Route::get('/EmployeeBenefitType', [EmployeeBenefitTypeController::class, 'index']);
 Route::get('/EmployeeBenefitType/{id}', [EmployeeBenefitTypeController::class, 'edit']);
 Route::post('/EmployeeBenefitType', [EmployeeBenefitTypeController::class, 'store']);
 Route::put('/EmployeeBenefitType/{id}', [EmployeeBenefitTypeController::class, 'update']);
 Route::delete('/EmployeeBenefitType/{id}', [EmployeeBenefitTypeController::class, 'destory']);
-
->>>>>>> c4564c3ed37b799bc9ea416fdd63d4420d0d2198
 
 
 Route::get('/EmployeeBenefit', [EmployeeBenefitController::class, 'index']);
@@ -352,3 +283,17 @@ Route::get('/EmployeeDisciplinary/{id}', [EmployeeDisciplinaryController::class,
 Route::post('/EmployeeDisciplinary', [EmployeeDisciplinaryController::class, 'store']);
 Route::put('/EmployeeDisciplinary/{id}', [EmployeeDisciplinaryController::class, 'update']);
 Route::delete('/EmployeeDisciplinary/{id}', [EmployeeDisciplinaryController::class, 'destory']);
+
+//Checked by Achsuthan //Cross Checked by Viswa
+Route::get('/employee-emergency-contacts', [EmployeeEmergencyContactController::class, 'getAll']);
+Route::get('/employee-emergency-contacts/{id}', [EmployeeEmergencyContactController::class, 'getOne']);
+Route::post('/employee-emergency-contacts', [EmployeeEmergencyContactController::class, 'save']);
+Route::put('/employee-emergency-contacts/{id}', [EmployeeEmergencyContactController::class, 'update']);
+Route::delete('/employee-emergency-contacts/{id}', [EmployeeEmergencyContactController::class, 'delete']);
+
+//Checked by Achsuthan //Cross Checked by Viswa
+Route::get('/employee-disciplinaries', [EmployeeDisciplinaryController::class, 'getAll']);
+Route::get('/employee-disciplinaries/{id}', [EmployeeDisciplinaryController::class, 'getOne']);
+Route::post('/employee-disciplinaries', [EmployeeDisciplinaryController::class, 'save']);
+Route::put('/employee-disciplinaries/{id}', [EmployeeDisciplinaryController::class, 'update']);
+Route::delete('/employee-disciplinaries/{id}', [EmployeeDisciplinaryController::class, 'delete']);
