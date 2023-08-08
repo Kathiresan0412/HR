@@ -9,50 +9,6 @@ use Illuminate\Support\Facades\DB;
 
 class SalaryTypeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(SalaryType $salaryType)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(SalaryType $salaryType)
-    {
-        //
-    }
-
-
-    /**
-     * Remove the specified resource from storage.
-     */
     public function delete($id)
     {
         try {
@@ -61,7 +17,7 @@ class SalaryTypeController extends Controller
 
             return response()->json([
                 "msg" => "Salary Type Data Deleted",
-            ], 201);
+            ], 200);
 
         } catch (\Throwable $e) {
             return response()->json([
@@ -154,7 +110,7 @@ class SalaryTypeController extends Controller
          return response()->json([
              "msg" => "Salary type Data Saved",
              "data"=> $salary,
-         ],201);
+         ],200);
      }catch(\Throwable $e) {
          DB::rollback();
          return response()->json([
@@ -185,7 +141,7 @@ class SalaryTypeController extends Controller
        return response()->json([
          "msg" => "Salary type Data Updated",
          "data"=> $salary,
-        ],201);
+        ],200);
         }catch(\Throwable $e) {
          DB::rollback();
          return response()->json([
@@ -193,9 +149,6 @@ class SalaryTypeController extends Controller
             "error"=> $e->getMessage(),
             ],500);
         }
-     }
-     
- 
- 
+     } 
 }
 
