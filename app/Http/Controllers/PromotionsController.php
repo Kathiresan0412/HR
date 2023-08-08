@@ -1,7 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 use App\Models\Promotions;
-use App\Models\Employees;
+use App\Models\Employee;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -99,7 +99,7 @@ class PromotionsController extends Controller
             $promotion->save();
 
             $id=$promotion->employee;
-            $employee = Employees::find($id);
+            $employee = Employee::find($id);
             $employee->position = $request->current_position;
             $employee->basic_salary = $request->current_salary;
             $employee->save();
