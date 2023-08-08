@@ -101,11 +101,12 @@ Route::POST('/allowedleaves', [AllowedLeaveController::class, 'store']);
 Route::put ('/allowedleaves/{id}', [AllowedLeaveController::class, 'update']);
 Route::delete ('/allowedleaves/{id}', [AllowedLeaveController::class, 'destroy']);
 
-Route::get ('/leave_requests', [LeaveRequestController::class, 'index']);
-Route::get ('/leave_requests/{id}', [LeaveRequestController::class, 'edit']);
-Route::POST('/leave_requests', [LeaveRequestController::class, 'store']);
-Route::put ('/leave_requests/{id}', [LeaveRequestController::class, 'update']);
-Route::delete ('/leave_requests/{id}', [LeaveRequestController::class, 'destroy']);
+//Checked by Achsuthan //Cross Checked by Viswa
+Route::get ('/leave-requests', [LeaveRequestController::class, 'getAll']);
+Route::get ('/leave-requests/{id}', [LeaveRequestController::class, 'getOne']);
+Route::POST('/leave-requests', [LeaveRequestController::class, 'save']);
+Route::put ('/leave-requests/{id}', [LeaveRequestController::class, 'update']);
+Route::delete ('/leave-requests/{id}', [LeaveRequestController::class, 'delete']);
 
 Route::get ('/leavetypes', [LeaveTypeController::class, 'index']);
 Route::get ('/leavetypes/{id}', [LeaveTypeController::class, 'edit']);
@@ -122,17 +123,19 @@ Route::delete ('/shortLeaves/{id}', [ShortLeavesController::class, 'destroy']);
 Route::get ('/EmployeeQualifications', [EmployeeQualificationsController::class, 'index']);
 Route::get ('/EmployeeQualifications/{id}', [EmployeeQualificationsController::class, 'edit']);
 
-Route::get('/attendance', [AttendanceController::class, 'index']);
-Route::get('/attendance/{id}', [AttendanceController::class, 'edit']);
-Route::post('/attendance', [AttendanceController::class, 'store']);
-Route::put('/attendance/{id}', [AttendanceController::class, 'update']);
-Route::delete('/attendance/{id}', [AttendanceController::class, 'destory']);
+//Checked by Achsuthan //Cross Checked by Viswa
+Route::get('/attendances', [AttendanceController::class, 'getAll']);
+Route::get('/attendances/{id}', [AttendanceController::class, 'getOne']);
+Route::post('/attendances', [AttendanceController::class, 'save']);
+Route::put('/attendances/{id}', [AttendanceController::class, 'update']);
+Route::delete('/attendances/{id}', [AttendanceController::class, 'delete']);
 
-Route::get ('/recruitmentcandidates', [RecruitmentCandidateController::class, 'index']);
-Route::get ('/recruitmentcandidates/{id}', [RecruitmentCandidateController::class, 'edit']);
-Route::POST('/recruitmentcandidates', [RecruitmentCandidateController::class, 'store']);
-Route::put ('/recruitmentcandidates/{id}', [RecruitmentCandidateController::class, 'update']);
-Route::delete ('/recruitmentcandidates/{id}', [RecruitmentCandidateController::class, 'destory']);
+//Checked by Achsuthan //Cross Checked by Viswa
+Route::get ('/recruitment-candidates', [RecruitmentCandidateController::class, 'getAll']);
+Route::get ('/recruitment-candidates/{id}', [RecruitmentCandidateController::class, 'getOne']);
+Route::POST('/recruitment-candidates', [RecruitmentCandidateController::class, 'save']);
+Route::put ('/recruitment-candidates/{id}', [RecruitmentCandidateController::class, 'update']);
+Route::delete ('/recruitment-candidates/{id}', [RecruitmentCandidateController::class, 'delete']);
 
 Route::get ('/resignations', [ResignationsController::class, 'index']);
 Route::get ('/resignations/{id}', [ResignationsController::class, 'edit']);
@@ -211,14 +214,16 @@ Route::post('/EmployeeHealth', [EmployeeHealthController::class, 'store']);
 Route::put('/EmployeeHealth/{id}', [EmployeeHealthController::class, 'update']);
 Route::delete('/EmployeeHealth/{id}', [EmployeeHealthController::class, 'destory']);
 
-Route::get('/EmployeeEmergency', [EmployeeEmergencyContactController::class, 'index']);
-Route::get('/EmployeeEmergency/{id}', [EmployeeEmergencyContactController::class, 'edit']);
-Route::post('/EmployeeEmergency', [EmployeeEmergencyContactController::class, 'store']);
-Route::put('/EmployeeEmergency/{id}', [EmployeeEmergencyContactController::class, 'update']);
-Route::delete('/EmployeeEmergency/{id}', [EmployeeEmergencyContactController::class, 'destory']);
-//achuthan
-Route::get('/EmployeeDisciplinary', [EmployeeDisciplinaryController::class, 'index']);
-Route::get('/EmployeeDisciplinary/{id}', [EmployeeDisciplinaryController::class, 'edit']);
-Route::post('/EmployeeDisciplinary', [EmployeeDisciplinaryController::class, 'store']);
-Route::put('/EmployeeDisciplinary/{id}', [EmployeeDisciplinaryController::class, 'update']);
-Route::delete('/EmployeeDisciplinary/{id}', [EmployeeDisciplinaryController::class, 'destory']);
+//Checked by Achsuthan //Cross Checked by Viswa
+Route::get('/employee-emergency-contacts', [EmployeeEmergencyContactController::class, 'getAll']);
+Route::get('/employee-emergency-contacts/{id}', [EmployeeEmergencyContactController::class, 'getOne']);
+Route::post('/employee-emergency-contacts', [EmployeeEmergencyContactController::class, 'save']);
+Route::put('/employee-emergency-contacts/{id}', [EmployeeEmergencyContactController::class, 'update']);
+Route::delete('/employee-emergency-contacts/{id}', [EmployeeEmergencyContactController::class, 'delete']);
+
+//Checked by Achsuthan //Cross Checked by Viswa
+Route::get('/employee-disciplinaries', [EmployeeDisciplinaryController::class, 'getAll']);
+Route::get('/employee-disciplinaries/{id}', [EmployeeDisciplinaryController::class, 'getOne']);
+Route::post('/employee-disciplinaries', [EmployeeDisciplinaryController::class, 'save']);
+Route::put('/employee-disciplinaries/{id}', [EmployeeDisciplinaryController::class, 'update']);
+Route::delete('/employee-disciplinaries/{id}', [EmployeeDisciplinaryController::class, 'delete']);
