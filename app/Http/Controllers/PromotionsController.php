@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Http\Controllers;
-
 use App\Models\Promotions;
 use App\Models\Employees;
 use Illuminate\Http\Request;
@@ -9,45 +7,51 @@ use Illuminate\Support\Facades\DB;
 
 class PromotionsController extends Controller
 {
-    public function create()
-    {
-        //
-    }
-    public function show(Promotions $promotions)
-    {
-        //
-    }
-
-    public function index(Request $request)
+    public function getAll(Request $request)
     {
         //  try {
-        $promotions = DB::table('promotions as b')
-            ->select('b.id', 'e.first_name as employee', 'b.previous_position', 'p.name as current_position', 'b.previous_salary', 'b.from', 'e.basic_salary as current_salary', 'b.status')
-            ->leftJoin('employees as e', 'e.id', '=', 'b.employee')
+        $promotions = DB::table('promotions as p')
+            ->select('p.id', 'e.first_name as employee', 'p.previous_position', 'po.name as current_position', 'p.previous_salary', 'p.from', 'e.basic_salary as current_salary', 'p.status')
+            ->leftJoin('employees as e', 'e.id', '=', 'p.employee')
+            ->leftJoin('positions as po', 'po.id', '=', 'e.position');
 
-            ->leftJoin('positions as p', 'p.id', '=', 'e.position');
+            
+            $filterParameters = [
+                'status' => 'p.status',
+                'previousPosition' => 'p.previousPosition',
+                'from' => 'p.from',
+                'previous_salary' => 'p.previous_salary',
+
+            ];
+    
+            foreach ($filterParameters as $parameter => $column) {
+                $value = $request->input($parameter);
+                if (isset($value) && $value !== '') {
+                    $promotions->where($column, '=', $value);
+                }
+            }
 
         $search = $request->search;
-
         if (!is_null($search)) {
             $promotions = $promotions
-                ->where('b.employee', 'LIKE', '%' . $search . '%')
-                ->orWhere('b.previous_position', 'LIKE', '%' . $search . '%')
-                ->orWhere('b.position', 'LIKE', '%' . $search . '%')
-                ->orWhere('b.status', 'LIKE', '%' . $search . '%');
+                ->where('p.employee', 'LIKE', '%' . $search . '%')
+                ->orWhere('p.previous_position', 'LIKE', '%' . $search . '%')
+              //  ->orWhere('p.current_position', 'LIKE', '%' . $search . '%')
+                ->orWhere('p.status', 'LIKE', '%' . $search . '%');
         }
-        $promotions = $promotions->orderBy('id', 'asc')
+        $promotions = $promotions->orderBy('p.created_at', 'desc')
             ->get();
 
         return response()->json([
-            "message" => "positions Data",
+            "message" => "All Promotions Data",
             "data" => $promotions,
         ], 200);
     }
 
-    public function edit($id)
+    public function getOne($id)
     {
-        $promotions = DB::table('promotions as b')
+        try{
+        $promotion = DB::table('promotions as b')
         ->select('b.id', 'e.first_name as employee', 'b.previous_position', 'p.name as position', 'b.previous_salary', 'b.from', 'e.basic_salary as current_salary', 'b.status')
         ->leftJoin('employees as e', 'e.id', '=', 'b.employee')
         ->leftJoin('positions as p', 'p.id', '=', 'e.position')
@@ -55,30 +59,27 @@ class PromotionsController extends Controller
             ->first();
 
         return response()->json([
-            "message" => "promotions Data",
-            "data" => $promotions,
+            "message" => "Promotions Data",
+            "data" => $promotion,
         ], 200);
-        //  } catch (\Throwable $e) {
-        //      return response()->json([
-        //          "message" => "Oops somthing went wrong please try again",
-        //          "error" => $e->getMessage(),
-        //      ], 500);
-        //  }
+         } catch (\Throwable $e) {
+             return response()->json([
+                 "message" => "Oops somthing went wrong please try again",
+                 "error" => $e->getMessage(),
+             ], 500);
+         }
 
     }
 
-    public function store(Request $request)
+    public function save(Request $request)
     {
         DB::beginTransaction();
         try {
             $request->validate([
                 'employee' => 'required',
                 'previous_position' => 'required',
-              //  'position' => 'required',
                 'previous_salary' => 'required',
                 'from' => 'required',
-               // 'current_salary' => 'required',
-               // 'status' => 'required'
             ]);
             $promotion = new Promotions();
             $promotion->employee = $request->employee; //RHS name form name and LHS name database 
@@ -97,9 +98,9 @@ class PromotionsController extends Controller
             DB::commit();
 
             return response()->json([
-                "message" => "promotion Data",
+                "message" => "promotion Data Saved",
                 "data" => $promotion,
-            ], 201);
+            ], 200);
 
         } catch (\Throwable $e) {
             return response()->json([
@@ -108,18 +109,14 @@ class PromotionsController extends Controller
             ], 500);
         }
     }
-
-    public function update(Request $request, $id)
-    {
-       
-    }
-
-    public function destroy($id)
+    public function delete($id)
     {
         try {
-            $promotions = Promotions::find($id);
-            $promotions->delete();
-
+            $promotion = Promotions::find($id);
+            $promotion->delete();
+            return response()->json([
+                "message" => "Promotion Data Deleted"
+            ], 200);
         } catch (\Throwable $e) {
             return response()->json([
                 "message" => "Ooops Something went wrong please try again",

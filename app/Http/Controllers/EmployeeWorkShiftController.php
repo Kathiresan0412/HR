@@ -1,30 +1,47 @@
 <?php
-
 namespace App\Http\Controllers;
-
 use App\Models\WorkShiftDetail;
 use App\Models\EmployeeWorkShift;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
 class EmployeeWorkShiftController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+
+    public function getAll(Request $request)
     {
         try {
-            $EmployeeWorkShift = DB::table('employee_work_shifts as ews')
+            $employeeWorkShifts = DB::table('employee_work_shifts as ews')
                 ->select('ews.id', 'e.first_name as employee', 'ews.title', 'ews.date', 'ews.is_of_hour', 'ews.is_of_day')
                 // ->leftJoin('employee_work_shifts as ews','ews.id','=','wsd.work_shif_id')
                 ->leftJoin('employees as e', 'e.id', '=', 'ews.employee');
 
-            $EmployeeWorkShift = $EmployeeWorkShift->orderBy('ews.id', 'desc')->get();
+            $employeeWorkShifts = $employeeWorkShifts->orderBy('ews.created_at', 'desc')->get();
+            $filterParameters = [
+                'date' => 're.date',
+                'is_of_hour' => 'ews.is_of_hour',
+                'is_of_day' => 'ews.is_of_day',
+
+            ];
+
+            foreach ($filterParameters as $parameter => $column) {
+                $value = $request->input($parameter);
+                if (isset($value) && $value !== '') {
+                    $employeeWorkShifts->where($column, '=', $value);
+                }
+            }
+            $search = $request->search;
+            if (!is_null($search)) {
+                $promotions = $employeeWorkShifts
+                    ->where('ews.employee', 'LIKE', '%' . $search . '%')
+                    ->orWhere('ews.previous_position', 'LIKE', '%' . $search . '%')
+                  //  ->orWhere('p.current_position', 'LIKE', '%' . $search . '%')
+                    ->orWhere('ews.status', 'LIKE', '%' . $search . '%');
+            }
+            $promotions = $promotions->orderBy('p.created_at', 'desc')->get();
 
             return response()->json([
-                "message" => "work shift Data",
-                "data" => $EmployeeWorkShift,
+                "message" => "All work shift Data",
+                "data" => $employeeWorkShifts,
             ], 200);
         } catch (\Throwable $e) {
             return response()->json([
@@ -34,53 +51,38 @@ class EmployeeWorkShiftController extends Controller
         }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function save(Request $request)
     {
         try {
             $request->validate([
                 'title' => 'required',
                 'employee' => 'required',
                 'date' => 'required',
-                //'count'=>'required',
             ]);
-            $EmployeeWorkShift = new EmployeeWorkShift();
-            $EmployeeWorkShift->title = $request->title;
-            $EmployeeWorkShift->employee = $request->employee;
-            $EmployeeWorkShift->date = $request->date;
-            $EmployeeWorkShift->is_of_day = $request->is_of_day;
-            $EmployeeWorkShift->is_of_hour = $request->is_of_hour;
-            // $allowedleaves->count = $request->count;
-            $EmployeeWorkShift->save();
-            $workshift = $EmployeeWorkShift->id;
+            $employeeWorkShift = new EmployeeWorkShift();
+            $employeeWorkShift->title = $request->title;
+            $employeeWorkShift->employee = $request->employee;
+            $employeeWorkShift->date = $request->date;
+            $employeeWorkShift->is_of_day = $request->is_of_day;
+            $employeeWorkShift->is_of_hour = $request->is_of_hour;
+            $employeeWorkShift->save();
+            $workshift = $employeeWorkShift->id;
            
-
-            $work_shift_details = $request->work_shift_details;
-            
+            $work_shift_details = $request->work_shift_details;   
             foreach ($work_shift_details as $shift) {
-              //  return $WorkShiftDetai;
-                $WorkShiftDetai = new WorkShiftDetail();
-                $WorkShiftDetai->work_shif_id = $workshift;
-                $WorkShiftDetai->from = $shift["from"];
-                $WorkShiftDetai->to = $shift["to"];
-                $WorkShiftDetai->save();
+             
+                $workShiftDetail = new WorkShiftDetail();
+                $workShiftDetail->work_shif_id = $workshift;
+                $workShiftDetail->from = $shift["from"];
+                $workShiftDetail->to = $shift["to"];
+                $workShiftDetail->save();
             }
 
             DB::commit();
 
             return response()->json([
                 "msg" => "allowedleaves Data",
-                "data" => $EmployeeWorkShift,
+                "data" => $employeeWorkShift,
             ], 201);
         } catch (\Throwable $e) {
             DB::rollback();
@@ -91,33 +93,22 @@ class EmployeeWorkShiftController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(EmployeeWorkShift $employeeWorkShift)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit($id)
+    public function getOne($id)
     {
         try {
-            $EmployeeWorkShift = DB::table('employee_work_shifts as ews')
+            $wmployeeWorkShift = DB::table('employee_work_shifts as ews')
                 ->select('ews.id', 'e.first_name as employee', 'ews.title', 'ews.date', 'ews.is_of_hour', 'ews.is_of_day')
                 // ->leftJoin('employee_work_shifts as ews','ews.id','=','wsd.work_shif_id')
                 ->leftJoin('employees as e', 'e.id', '=', 'ews.employee');
-            $EmployeeWorkShift = $EmployeeWorkShift->orderBy('ews.id', 'desc')->get()
+            $wmployeeWorkShift = $wmployeeWorkShift->orderBy('ews.id', 'desc')->get()
                 ->where('ews.id', $id)
                 ->first();
 
 
-            $EmployeeWorkShift = DB::table('work_shift_details as wsd')
+            $wmployeeWorkShift = DB::table('work_shift_details as wsd')
                 ->select('wse.id', 'e.first_name as employee', 'ews.title as title', 'ews.date as date', 'ews.date as date', 'ews.is_of_hour as is_of_hour', 'ews.is_of_day as is_of_day', 'wsd.from', 'wsd.to')
                 ->leftJoin('employee_work_shifts as ews', 'ews.id', '=', 'wsd.work_shif_id');
-            $EmployeeWorkShift = $EmployeeWorkShift->orderBy('l.id', 'desc')->get()->where('id', 'ews.id')->first();
+            $wmployeeWorkShift = $wmployeeWorkShift->orderBy('l.id', 'desc')->get()->where('id', 'ews.id')->first();
 
             //    $EmployeeWorkShift =[];
             // foreach ($EmployeeWorkShift as $WorkShift) {
@@ -125,7 +116,7 @@ class EmployeeWorkShiftController extends Controller
 
             return response()->json([
                 "message" => "work shift Data",
-                "data" => $EmployeeWorkShift,
+                "data" => $wmployeeWorkShift,
             ], 200);
         } catch (\Throwable $e) {
             return response()->json([
@@ -146,34 +137,32 @@ class EmployeeWorkShiftController extends Controller
                 'title' => 'required',
                 'employee' => 'required',
                 'date' => 'required',
-                //'count'=>'required',
+
             ]);
-            $EmployeeWorkShift =  EmployeeWorkShift::find($id);
-            $EmployeeWorkShift->title = $request->title;
-            $EmployeeWorkShift->employee = $request->employee;
-            $EmployeeWorkShift->date = $request->date;
-            $EmployeeWorkShift->is_of_day = $request->is_of_day;
-            $EmployeeWorkShift->is_of_hour = $request->is_of_hour;
-            // $allowedleaves->count = $request->count;
-            $EmployeeWorkShift->save();
-            // $workshift=$EmployeeWorkShift->id;
+            $employeeWorkShift =  EmployeeWorkShift::find($id);
+            $employeeWorkShift->title = $request->title;
+            $employeeWorkShift->employee = $request->employee;
+            $employeeWorkShift->date = $request->date;
+            $employeeWorkShift->is_of_day = $request->is_of_day;
+            $employeeWorkShift->is_of_hour = $request->is_of_hour;
+            $employeeWorkShift->save();
            
             WorkShiftDetail::where('work_shif_id', $id)->delete();
-          //  $workshift = $EmployeeWorkShift->id;
-            $WorkShiftDetail = $request->WorkShiftDetails;
-            foreach ($WorkShiftDetail as $WorkShiftDetai) {
-                $WorkShiftDetai = new WorkShiftDetail();
-                $WorkShiftDetai->work_shif_id = $id;
-                $WorkShiftDetai->from = $request->from;
-                $WorkShiftDetai->to = $request->to;
-                $WorkShiftDetai->save();
+          $work_shift_details = $request->work_shift_details;   
+          foreach ($work_shift_details as $shift) {
+           
+              $workShiftDetail = new WorkShiftDetail();
+              $workShiftDetail->work_shif_id = $id;
+              $workShiftDetail->from = $shift["from"];
+              $workShiftDetail->to = $shift["to"];
+              $workShiftDetail->save();
             }
             DB::commit();
 
             return response()->json([
-                "msg" => "allowedleaves Data",
-                "data" => $EmployeeWorkShift,
-            ], 201);
+                "msg" => "Work Shift Detail  Data Updated",
+                "data" => $employeeWorkShift,
+            ], 200);
         } catch (\Throwable $e) {
             DB::rollback();
             return response()->json([
@@ -183,11 +172,15 @@ class EmployeeWorkShiftController extends Controller
         }
     }
 
-    public function destroy($id)
+    public function delete($id)
     {
         try {
-            $WorkShiftDetail = WorkShiftDetail::find($id);
-            $WorkShiftDetail->delete();
+            $workShiftDetail = WorkShiftDetail::find($id);
+            $workShiftDetail->delete();
+             return response()->json([
+                "msg" => "Work Shift Detail Data Deleted",
+                "data" => $workShiftDetail,
+            ], 200);
         } catch (\Throwable $e) {
             return response()->json([
                 "message" => "Ooops Something went wrong please try again",
