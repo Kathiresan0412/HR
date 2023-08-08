@@ -253,21 +253,11 @@ Route::post('/EmployeeBenefitType', [EmployeeBenefitTypeController::class, 'stor
 Route::put('/EmployeeBenefitType/{id}', [EmployeeBenefitTypeController::class, 'update']);
 Route::delete('/EmployeeBenefitType/{id}', [EmployeeBenefitTypeController::class, 'destory']);
 
-
-<<<<<<< HEAD
-Route::get('/EmployeeBenefit', [EmployeeBenefitController::class, 'index']);
-Route::get('/EmployeeBenefit/{id}', [EmployeeBenefitController::class, 'edit']);
-Route::post('/EmployeeBenefit', [EmployeeBenefitController::class, 'store']);
-Route::put('/EmployeeBenefit/{id}', [EmployeeBenefitController::class, 'update']);
-Route::delete('/EmployeeBenefit/{id}', [EmployeeBenefitController::class, 'destory']);
-=======
-
 Route::get('/employee-benefits', [EmployeeBenefitController::class, 'getAll']);
 Route::get('/employee-benefits/{id}', [EmployeeBenefitController::class, 'getOne']);
 Route::post('/employee-benefits', [EmployeeBenefitController::class, 'save']);
 Route::put('/employee-benefits/{id}', [EmployeeBenefitController::class, 'update']);
 Route::delete('/employee-benefits/{id}', [EmployeeBenefitController::class, 'delete']);
->>>>>>> 2d69831d3e5d24733cd06fd0d859745b23639bb2
 
 Route::get('/employee-feedbacks', [EmployeeFeedbackController::class, 'getAll']);
 Route::get('/employee-feedbacks/{id}', [EmployeeFeedbackController::class, 'getOne']);

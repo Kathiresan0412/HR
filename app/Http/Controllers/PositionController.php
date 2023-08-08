@@ -24,15 +24,9 @@ class PositionController extends Controller
                     ->orWhere('p.type', 'LIKE', '%' . $search . '%')
                     ->orWhere('p.description', 'LIKE', '%' . $search . '%');
             }
-<<<<<<< HEAD
+
             
-            $filterParameters = [
-                'description' => 'p.description',
-                'type' => 'p.type', 
-                     
-            ];
-    
-=======
+
 
             $filterParameters = [
                 'name' => 'p.name',
@@ -41,7 +35,7 @@ class PositionController extends Controller
 
             ];
 
->>>>>>> 683e3a3b954193ee36196f711f2bde1a761f72c6
+
             foreach ($filterParameters as $parameter => $column) {
                 $value = $request->input($parameter);
                 if (isset($value) && $value !== '') {
@@ -49,11 +43,9 @@ class PositionController extends Controller
                 }
             }
 
-<<<<<<< HEAD
             $positions = $positions->orderBy('p.id', 'desc')->get();
-=======
             $positions = $positions->orderBy('p.created_at', 'desc')->get();
->>>>>>> 683e3a3b954193ee36196f711f2bde1a761f72c6
+
 
             return response()->json([
                 "Message" => "All Position Data",
