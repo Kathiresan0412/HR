@@ -43,7 +43,7 @@ class AllowedLeaveController extends Controller
             return response()->json([
                 "msg" => "allowedleaves Data",
                 "data" => $allowedleaves,
-            ], 201);
+            ], 200);
         } catch (\Throwable $e) {
             DB::rollback();
             return response()->json([
@@ -72,7 +72,7 @@ class AllowedLeaveController extends Controller
                 ->leftJoin('positions as p', 'p.id', '=', 'l.position')
                 ->leftJoin('leave_types as t', 't.id', '=', 'l.type');
 
-
+//Filter
             $search = $request->search;
             if (!is_null($search)) {
                 $allowedleaves = $allowedleaves
@@ -81,6 +81,7 @@ class AllowedLeaveController extends Controller
                     ->orWhere('l.type', 'LIKE', '%' . $search . '%')
                     ->orWhere('l.days', 'LIKE', '%' . $search . '%')
                     ->orWhere('l.term', 'LIKE', '%' . $search . '%');
+                    
             }
             $allowedleaves = $allowedleaves->orderBy('l.id', 'desc')->get();
             return response()->json([
@@ -101,8 +102,7 @@ class AllowedLeaveController extends Controller
             $allowedleaves = DB::table('allowed_leaves as l')
                 ->select('l.id', 'p.name as position', 't.name as type', 'l.days', 'l.term')
                 ->leftJoin('positions as p', 'p.id', '=', 'l.position')
-                ->leftJoin('leave_types as t', 't.id', '=', 'l.type');
-            $allowedleaves = $allowedleaves->orderBy('l.id', 'desc')
+                ->leftJoin('leave_types as t', 't.id', '=', 'l.type')
                 ->where('l.id', $id)
                 ->first();
 
@@ -141,7 +141,7 @@ class AllowedLeaveController extends Controller
             return response()->json([
                 "msg" => "allowedleaves Data",
                 "data" => $allowedleaves,
-            ], 201);
+            ], 200);
         } catch (\Throwable $e) {
             DB::rollback();
             return response()->json([
