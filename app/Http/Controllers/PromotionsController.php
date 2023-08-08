@@ -18,7 +18,7 @@ class PromotionsController extends Controller
         //
     }
 
-    public function index(Request $request)
+    public function getAll(Request $request)
     {
         //  try {
         $promotions = DB::table('promotions as b')
@@ -45,7 +45,7 @@ class PromotionsController extends Controller
         ], 200);
     }
 
-    public function edit($id)
+    public function getOne($id)
     {
         $promotions = DB::table('promotions as b')
         ->select('b.id', 'e.first_name as employee', 'b.previous_position', 'p.name as position', 'b.previous_salary', 'b.from', 'e.basic_salary as current_salary', 'b.status')
@@ -67,7 +67,7 @@ class PromotionsController extends Controller
 
     }
 
-    public function store(Request $request)
+    public function save(Request $request)
     {
         DB::beginTransaction();
         try {
@@ -109,12 +109,9 @@ class PromotionsController extends Controller
         }
     }
 
-    public function update(Request $request, $id)
-    {
-       
-    }
+  
 
-    public function destroy($id)
+    public function delete($id)
     {
         try {
             $promotions = Promotions::find($id);
