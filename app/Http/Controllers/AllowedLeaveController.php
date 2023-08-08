@@ -8,20 +8,6 @@ use Illuminate\Support\Facades\DB;
 
 class AllowedLeaveController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(AllowedLeave $allowedLeave)
-    {
-        //
-    }
-
-
     public function update(Request $request, $id)
     {
         DB::beginTransaction();
@@ -30,14 +16,12 @@ class AllowedLeaveController extends Controller
                 'position' => 'required',
                 'type' => 'required',
                 'term' => 'required',
-                // 'count'=>'required',
             ]);
             $allowedleaves = AllowedLeave::find($id);
             $allowedleaves->position = $request->position;
             $allowedleaves->type = $request->type;
             $allowedleaves->days = $request->days;
             $allowedleaves->term = $request->term;
-            //$allowedleaves->count = $request->count;
             $allowedleaves->save();
             DB::commit();
             return response()->json([
