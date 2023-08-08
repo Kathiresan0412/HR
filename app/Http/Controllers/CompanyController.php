@@ -4,63 +4,40 @@ namespace App\Http\Controllers;
 
 use App\Models\Company;
 use Illuminate\Http\Request;
-//use DB;
-use Illuminate\Support\Facades\DB;
+use DB;
+
 
 class CompanyController extends Controller
 {
-
-    public function create()
-    {
-        //
-    }
-
-    public function show(Company $company)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy($id)
-    {
-        try {
-            $company = Company::find($id);
-            $company->delete();
-        } catch (\Throwable $e) {
-            return response()->json([
-                "message" => "Ooops Something went wrong please try again",
-                "error" => $e->getMessage(),
-            ], 500);
-        }
-    }
-
-
-  public function index(Request $request)
+  public function getAll(Request $request)
   {
       try{
-          $company = DB::table('companies as c')
+          $companies= DB::table('companies as c')
           ->select('c.id','c.name','c.description');
-     
+
+          $filterParameters = [
+            'name' => 'c.name', 
+        ];
+
+        foreach ($filterParameters as $parameter => $column) {
+            $value = $request->input($parameter);
+            if (isset($value) && $value !== '') {
+                $companies->where($column, '=', $value);
+            }
+        }
           $search = $request->search;
 
           if (!is_null($search)){
-              $company = $company
+              $companies= $companies
               ->where('c.name','LIKE','%'.$search.'%')
               ->orWhere('c.description','LIKE','%'.$search.'%');
           }
 
-          $company = $company->orderBy('c.id','desc')->get();
+          $companies = $companies->orderBy('c.id','desc')->get();
 
           return response()->json([
-              "message" => "company Data",
-              "data" => $company,
+              "message" => "companies Data",
+              "data" => $companies,
           ],200);
       }catch(\Throwable $e){
           return response()->json([
@@ -70,7 +47,7 @@ class CompanyController extends Controller
       }
   }
 
-  public function edit($id)
+  public function getOne($id)
   {
       try{
           $company = DB::table('companies as c')
@@ -79,7 +56,7 @@ class CompanyController extends Controller
           ->first();
 
           return response()->json([
-              "message" => "company Data",
+              "message" => "Company Data",
               "data" => $company,
           ],200);
       }catch(\Throwable $e){
@@ -90,13 +67,13 @@ class CompanyController extends Controller
       }
   }
 
-  public function store(Request $request)
+  public function save(Request $request)
   {
       DB::beginTransaction();
       try{
       $request->validate([
-          'name'=>'required',
-          'description'=>'required'
+          'name'=>'required|string|alpha|max:30',
+          'description'=>'required|string|alpha|max:255'
       ]);
 
       $company = new Company();
@@ -107,7 +84,7 @@ class CompanyController extends Controller
       DB::commit();
 
       return response()->json([
-          "msg" => "company Data",
+          "msg" => "company Data saved",
           "data"=> $company,
       ],201);
   }catch(\Throwable $e) {
@@ -124,8 +101,8 @@ class CompanyController extends Controller
         DB::beginTransaction();
         try{
             $request->validate([
-                'name'=>'required',
-                'description'=>'required'
+                'name'=>'required|string|alpha|max:30',
+                 'description'=>'required|string|alpha|max:255'
             ]);
 
             $company = Company::find($id);
@@ -136,7 +113,7 @@ class CompanyController extends Controller
             DB::commit();
 
             return response()->json([
-            "msg" => "company Data",
+            "msg" => "Company Data updated",
             "data"=> $company,
         ],201);
         }catch(\Throwable $e) {
@@ -148,7 +125,21 @@ class CompanyController extends Controller
         }
     }
     
-
+    public function delete($id)
+    {
+        try {
+            $company = Company::find($id);
+            $company->delete();
+            return response()->json([
+                "message" => "Company  data deleted successfully",
+            ], 200);
+        } catch (\Throwable $e) {
+            return response()->json([
+                "message" => "Ooops Something went wrong please try again",
+                "error" => $e->getMessage(),
+            ], 500);
+        }
+    }
 
 }
 

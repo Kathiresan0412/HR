@@ -4,8 +4,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PositionController;
 use App\Http\Controllers\SalaryTypeController;
-use App\Http\Controllers\QualificationsController;
-use App\Http\Controllers\DepartmentsController;
+use App\Http\Controllers\QualificationController;
+use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\EmployeesController;
 use App\Http\Controllers\AnnouncementController;
@@ -59,23 +59,23 @@ Route::post('/salarytypes',[SalaryTypeController::class, 'store']);
 Route::put('/salarytypes/{id}',[SalaryTypeController::class, 'update']);
 Route::delete('/salarytypes/{id}',[SalaryTypeController::class, 'destory']);
 
-Route::get('/qualifications',[QualificationsController::class, 'index']);
-Route::get('/qualifications/{id}',[QualificationsController::class, 'edit']);
-Route::post('/qualifications',[QualificationsController::class, 'store']);
-Route::put('/qualifications/{id}',[QualificationsController::class, 'update']);
-Route::delete('/qualifications/{id}',[QualificationsController::class, 'destory']);
+Route::get('/qualification',[QualificationController::class, 'getAll']);
+Route::get('/qualification/{id}',[QualificationController::class, 'getOne']);
+Route::post('/qualification',[QualificationController::class, 'save']);
+Route::put('/qualification/{id}',[QualificationController::class, 'update']);
+Route::delete('/qualification/{id}',[QualificationController::class, 'delete']);
 
-Route::get ('/departments', [DepartmentsController::class, 'index']);
-Route::get ('/departments/{id}', [DepartmentsController::class, 'edit']);
-Route::POST('/departments', [DepartmentsController::class, 'store']);
-Route::put ('/departments/{id}', [DepartmentsController::class, 'update']);
-Route::delete ('/departments/{id}', [DepartmentsController::class, 'destroy']);
+Route::get ('/department', [DepartmentController::class, 'getAll']);
+Route::get ('/department/{id}', [DepartmentController::class, 'getOne']);
+Route::POST('/department', [DepartmentController::class, 'save']);
+Route::put ('/department/{id}', [DepartmentController::class, 'update']);
+Route::delete ('/department/{id}', [DepartmentController::class, 'delete']);
 
-Route::get ('/companies', [CompanyController::class, 'index']);
-Route::get ('/companies/{id}', [CompanyController::class, 'edit']);
-Route::POST('/companies', [CompanyController::class, 'store']);
+Route::get ('/companies', [CompanyController::class, 'getAll']);
+Route::get ('/companies/{id}', [CompanyController::class, 'getOne']);
+Route::POST('/companies', [CompanyController::class, 'save']);
 Route::put ('/companies/{id}', [CompanyController::class, 'update']);
-Route::delete ('/companies/{id}', [CompanyController::class, 'destroy']);
+Route::delete ('/companies/{id}', [CompanyController::class, 'delete']);
 
 Route::get ('/employees', [EmployeesController::class, 'index']);
 Route::get ('/employees/{id}', [EmployeesController::class, 'edit']);
@@ -95,11 +95,11 @@ Route::post('/salaryadvance', [SalarayAdvanceController::class, 'store']);
 Route::put('/salaryadvance/{id}', [SalarayAdvanceController::class, 'update']);
 Route::delete('/salaryadvance/{id}', [SalarayAdvanceController::class, 'destroy']);
 
-Route::get ('/allowedleaves', [AllowedLeaveController::class, 'index']);
-Route::get ('/allowedleaves/{id}', [AllowedLeaveController::class, 'edit']);
-Route::POST('/allowedleaves', [AllowedLeaveController::class, 'store']);
-Route::put ('/allowedleaves/{id}', [AllowedLeaveController::class, 'update']);
-Route::delete ('/allowedleaves/{id}', [AllowedLeaveController::class, 'destroy']);
+Route::get ('/allowed-leaves', [AllowedLeaveController::class, 'getAll']);
+Route::get ('/allowed-leaves/{id}', [AllowedLeaveController::class, 'getOne']);
+Route::POST('/allowed-leaves', [AllowedLeaveController::class, 'save']);
+Route::put ('/allowed-leaves/{id}', [AllowedLeaveController::class, 'update']);
+Route::delete ('/allowed-leaves/{id}', [AllowedLeaveController::class, 'delete']);
 
 Route::get ('/leave_requests', [LeaveRequestController::class, 'index']);
 Route::get ('/leave_requests/{id}', [LeaveRequestController::class, 'edit']);
@@ -140,11 +140,11 @@ Route::POST('/resignations', [ResignationsController::class, 'store']);
 Route::put ('/resignations/{id}', [ResignationsController::class, 'update']);
 Route::delete ('/resignations/{id}', [ResignationsController::class, 'destory']);
 
-Route::get ('/instructors', [InstructorController::class, 'index']);
-Route::get ('/instructors/{id}', [InstructorController::class, 'edit']);
-Route::POST('/instructors', [InstructorController::class, 'store']);
-Route::put ('/instructors/{id}', [InstructorController::class, 'update']);
-Route::delete ('/instructors/{id}', [InstructorController::class, 'destory']);
+Route::get ('/instructor', [InstructorController::class, 'getAll']);
+Route::get ('/instructor/{id}', [InstructorController::class, 'getOne']);
+Route::POST('/instructor', [InstructorController::class, 'save']);
+Route::put ('/instructor/{id}', [InstructorController::class, 'update']);
+Route::delete ('/instructor/{id}', [InstructorController::class, 'delete']);
 
 Route::get ('/employee_documents', [EmployeeDocumentController::class, 'index']);
 Route::get ('/employee_documents/{id}', [EmployeeDocumentController::class, 'edit']);
