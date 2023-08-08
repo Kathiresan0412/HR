@@ -159,11 +159,22 @@ class EmployeesController extends Controller
               ->leftJoin('positions as p', 'p.id', '=', 'e.position')
               ->leftJoin('departments as d', 'd.id', '=', 'e.department')
               ->leftJoin('users as u', 'u.id', '=', 'e.created_by')
-              ->where('e.id',$id)
-              ->first();
+              ->where('e.id',$id);
+               $EmployeeQualification = EmployeeQualifications::where('employee', $id)->get();
+              $EmployeeQualifications =[];
+         foreach ($EmployeeQualification as $employeeqalificatio) {
+            // $qualific= $employeeqalificatio->qualification;
+            // $qualific = DB::table('employee_qualifications as eq')
+            // ->select('qu.name as qualification')
+            // ->leftJoin('qualifications as qu', 'qu.id', '=', 'eq.qualification')
+            // ->where('eq.id',$qualification)
+            // ->first();
+            array_push($EmployeeQualifications, $employeeqalificatio->qualification);}
+
               return response()->json([
                   "message" => "Selected employee Data",
                   "data" => $employees,
+                  "EmployeeQualifications" =>$EmployeeQualifications
               ],200);
           }catch(\Throwable $e){
               return response()->json([
