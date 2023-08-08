@@ -8,78 +8,20 @@ use Illuminate\Support\Facades\DB;
 
 class SalarayAdvanceController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function index(Request $request)
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(SalarayAdvance $salarayAdvance)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(SalarayAdvance $salarayAdvance)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, SalarayAdvance $salarayAdvance)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(SalarayAdvance $salarayAdvance)
-    {
-        //
-    }
-    public function getAllSalaryAdvances(Request $request)
-    {
-
         try {
             $salary_advances = DB::table('salaray_advances as sad')
-                ->select('sad.id', 'emp.first_name as employee','sad.amount', 'sad.type', 'sad.from_date', 'sad.to_date', 'sad.description','sad.status')
+                ->select('sad.id', 'emp.first_name as employee', 'sad.amount', 'sad.type', 'sad.from_date', 'sad.to_date', 'sad.description', 'sad.status')
                 ->leftJoin('employees as emp', 'sad.employee', '=', 'emp.id');
-
             $search = $request->search;
-
             if (!is_null($search)) {
                 $salary_advances = $salary_advances
                     ->where('sad.id', 'LIKE', '%' . $search . '%')
                     ->orWhere('sad.type', 'LIKE', '%' . $search . '%');
+                    //missing columns and Filter
             }
             $salary_advances = $salary_advances->orderBy('sad.id')->get();
-
             return response()->json([
                 "message" => "salary_advances Data",
                 "data" => $salary_advances,
@@ -91,16 +33,14 @@ class SalarayAdvanceController extends Controller
             ], 500);
         }
     }
-    public function getSalaryAdavanceInfo($id)
+    public function edit($id)
     {
         try {
-
             $salary_advances = DB::table('salaray_advances as sad')
-            ->select('sad.id', 'emp.first_name as employee','sad.amount', 'sad.type', 'sad.from_date', 'sad.to_date', 'sad.description', 'sad.status')
-            ->leftJoin('employees as emp', 'sad.employee', '=', 'emp.id')
+                ->select('sad.id', 'emp.first_name as employee', 'sad.amount', 'sad.type', 'sad.from_date', 'sad.to_date', 'sad.description', 'sad.status')
+                ->leftJoin('employees as emp', 'sad.employee', '=', 'emp.id')
                 ->where('sad.id', $id)
                 ->first();
-
             return response()->json([
                 "message" => "salary_advances Data",
                 "data" => $salary_advances,
@@ -112,7 +52,7 @@ class SalarayAdvanceController extends Controller
             ], 500);
         }
     }
-    public function saveSalaryAdvance(Request $request)
+    public function store(Request $request)
     {
         DB::beginTransaction();
         try {
@@ -124,7 +64,6 @@ class SalarayAdvanceController extends Controller
                 // 'to_date' => 'required',
                 // 'description' => 'required'
             ]);
-
             $salary_advances = new SalarayAdvance();
             $salary_advances->employee = $request->employee;
             $salary_advances->amount = $request->amount;
@@ -134,9 +73,7 @@ class SalarayAdvanceController extends Controller
             $salary_advances->status = $request->status;
             $salary_advances->description = $request->description;
             $salary_advances->save();
-
             DB::commit();
-
             return response()->json([
                 "msg" => "salary_advances Data",
                 "data" => $salary_advances,
@@ -149,19 +86,17 @@ class SalarayAdvanceController extends Controller
             ], 500);
         }
     }
-    public function updateSalaryAdvance(Request $request, $id)
+    public function update(Request $request, $id)
     {
         DB::beginTransaction();
         try {
             $request->validate([
-              //  ' employee' => 'required',
                 'amount' => 'required',
                 'type' => 'required',
                 'from_date' => 'required',
                 'to_date' => 'required',
                 'description' => 'required'
             ]);
-
             $salary_advances = SalarayAdvance::find($id);
             $salary_advances->employee = $request->employee;
             $salary_advances->amount = $request->amount;
@@ -170,9 +105,7 @@ class SalarayAdvanceController extends Controller
             $salary_advances->to_date = $request->to_date;
             $salary_advances->description = $request->description;
             $salary_advances->save();
-
             DB::commit();
-
             return response()->json([
                 "msg" => "salary_advances Data",
                 "data" => $salary_advances,
@@ -185,7 +118,7 @@ class SalarayAdvanceController extends Controller
             ], 500);
         }
     }
-    public function destroySalaryAdvance($id)
+    public function destroy($id)
     {
         try {
             $salary_advances = SalarayAdvance::find($id);
@@ -197,5 +130,4 @@ class SalarayAdvanceController extends Controller
             ], 500);
         }
     }
-
 }

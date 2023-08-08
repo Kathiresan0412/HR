@@ -8,62 +8,14 @@ use Illuminate\Support\Facades\DB;
 
 class LeaveRequestController extends Controller
 {
-    public function index()
-    {
-        //
-    }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
     public function show(LeaveRequest $leaveRequest)
     {
         //
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(LeaveRequest $leaveRequest)
+    public function index(Request $request)
     {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, LeaveRequest $leaveRequest)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(LeaveRequest $leaveRequest)
-    {
-        //
-    }
-
-    public function getAllLeave_requests(Request $request)
-    {
-        //  try {
+         try {
         $leave_requests = DB::table('leave_requests as l')
             ->select('l.id', 'e.bio_code as bio_code', 'e.first_name as employee','a.name as leave_type', 'l.request_on', 'l.dates', 'l.days', 'l.reason', 'l.status', 'u.name as approved_by')
             ->leftJoin('employees as e', 'e.id', '=', 'l.employee')
@@ -80,25 +32,25 @@ class LeaveRequestController extends Controller
                 ->orWhere('l.reason', 'LIKE', '%' . $search . '%');
         }
 
-        $leave_requests = $leave_requests->orderBy('id', 'asc')
+        $leave_requests = $leave_requests->orderBy('id', 'asc') // created at - orderby, desc
             ->get();
 
         return response()->json([
             "message" => "leave_requests Data",
             "data" => $leave_requests,
         ], 200);
-        //  } catch (\Throwable $e) {
-        //      return response()->json([
-        //          "message" => "Oops somthing went wrong please try again",
-        //          "error" => $e->getMessage(),
-        //      ], 500);
-        //  }
+         } catch (\Throwable $e) {
+             return response()->json([
+                 "message" => "Oops somthing went wrong please try again",
+                 "error" => $e->getMessage(),
+             ], 500);
+         }
 
     }
 
-    public function getAllLeave_requestInfo($id)
+    public function edit($id)
     {
-        //  try {
+         try {
             $leave_requests = DB::table('leave_requests as l')
             ->select('l.id', 'e.bio_code as bio_code', 'e.first_name as employee','a.name as type', 'l.request_on', 'l.dates', 'l.days', 'l.reason', 'l.status', 'u.name as approved_by')
             ->leftJoin('employees as e', 'e.id', '=', 'l.employee')
@@ -111,16 +63,16 @@ class LeaveRequestController extends Controller
             "message" => "leave_requests Data",
             "data" => $leave_requests,
         ], 200);
-        //  } catch (\Throwable $e) {
-        //      return response()->json([
-        //          "message" => "Oops somthing went wrong please try again",
-        //          "error" => $e->getMessage(),
-        //      ], 500);
-        //  }
+         } catch (\Throwable $e) {
+             return response()->json([
+                 "message" => "Oops somthing went wrong please try again",
+                 "error" => $e->getMessage(),
+             ], 500);
+         }
 
     }
 
-    public function saveLeave_requestInfo(Request $request)
+    public function store(Request $request)
     {
         DB::beginTransaction();
         try {
@@ -164,7 +116,7 @@ class LeaveRequestController extends Controller
         }
     }
 
-    public function updateLeave_requestInfo(Request $request, $id)
+    public function update(Request $request, $id)
     {
         DB::beginTransaction();
         try {
@@ -195,7 +147,7 @@ class LeaveRequestController extends Controller
             return response()->json([
                 "msg" => "leave_request Data",
                 "data" => $leave_request,
-            ], 201);
+            ], 200);
         } catch (\Throwable $e) {
             DB::rollback();
             return response()->json([
@@ -204,12 +156,11 @@ class LeaveRequestController extends Controller
             ], 500);
         }
     }
-    public function destroyLeave_request($id)
+    public function destroy($id)
     {
         try {
             $leave_request = LeaveRequest::find($id);
             $leave_request->delete();
-
         } catch (\Throwable $e) {
             return response()->json([
                 "message" => "Ooops Something went wrong please try again",

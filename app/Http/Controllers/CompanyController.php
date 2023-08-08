@@ -9,33 +9,12 @@ use Illuminate\Support\Facades\DB;
 
 class CompanyController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
     public function show(Company $company)
     {
         //
@@ -44,25 +23,13 @@ class CompanyController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Company $company)
-    {
-        //
-    }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Company $company)
-    {
-        //
-    }
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy($id)
     {
-        
         try {
             $company = Company::find($id);
             $company->delete();
@@ -75,22 +42,20 @@ class CompanyController extends Controller
     }
 
 
-
-
-      /**************************API functions**********************************/
-  public function getAllCompany(Request $request,)
+  public function index(Request $request)
   {
-   
       try{
           $company = DB::table('companies as c')
           ->select('c.id','c.name','c.description');
      
           $search = $request->search;
+
           if (!is_null($search)){
               $company = $company
               ->where('c.name','LIKE','%'.$search.'%')
               ->orWhere('c.description','LIKE','%'.$search.'%');
           }
+
           $company = $company->orderBy('c.id','desc')->get();
 
           return response()->json([
@@ -105,10 +70,9 @@ class CompanyController extends Controller
       }
   }
 
-  public function getCompanyInfo($id)
+  public function edit($id)
   {
       try{
-
           $company = DB::table('companies as c')
           ->select('c.id','c.name','c.description')
           ->where('c.id',$id)
@@ -126,7 +90,7 @@ class CompanyController extends Controller
       }
   }
 
-  public function saveCompany(Request $request)
+  public function store(Request $request)
   {
       DB::beginTransaction();
       try{
@@ -155,7 +119,7 @@ class CompanyController extends Controller
   }
   }
 
-  public function updateCompany(Request $request, $id)
+  public function update(Request $request, $id)
     {
         DB::beginTransaction();
         try{
