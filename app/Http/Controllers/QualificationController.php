@@ -2,32 +2,41 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Qualifications;
+use App\Models\Qualification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class QualificationsController extends Controller
+class QualificationController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index(Request $request)
+
+    public function getAll(Request $request)
     {
         try {
-            $qualification = DB::table('qualifications as q')
+            $qualifications = DB::table('qualifications as q')
                 ->select('q.id', 'q.name', 'q.description');
 
+                $filterParameters = [
+                    'name' => 'q.name', 
+                ];
+
+                foreach ($filterParameters as $parameter => $column) {
+                    $value = $request->input($parameter);
+                    if (isset($value) && $value !== '') {
+                        $qualifications->where($column, '=', $value);
+                    }
+                }
+                
             $search = $request->search;
             if (!is_null($search)) {
-                $qualification = $qualification
+                $qualifications = $qualifications
                     ->where('q.name', 'LIKE', '%' . $search . '%')
                     ->orWhere('q.description', 'LIKE', '%' . $search . '%');
             }
-            $qualification = $qualification->orderBy('q.id', 'desc')->get();
+            $qualifications = $qualifications->orderBy('q.id', 'desc')->get();
 
             return response()->json([
                 "message" => "qualification Data",
-                "data" => $qualification,
+                "data" => $qualifications,
             ], 200);
         } catch (\Throwable $e) {
             return response()->json([
@@ -36,38 +45,9 @@ class QualificationsController extends Controller
             ], 500);
         }
     }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Qualifications $qualifications)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit($id)
+    public function getOne($id)
     {
         try {
-
             $qualification = DB::table('qualifications as q')
                 ->select('q.id', 'q.name', 'q.description')
                 ->where('q.id', $id)
@@ -85,34 +65,7 @@ class QualificationsController extends Controller
         }
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Qualifications $qualifications)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy($id)
-    {
-        $qualification = Qualifications::find($id);
-        $qualification->delete();
-    }
-
-
-
-
-    /**************************API functions**********************************/
-
-    public function getQualificationInfo($id)
-    {
-
-    }
-
-    public function saveQualification(Request $request)
+    public function save(Request $request)
     {
         DB::beginTransaction();
         try {
@@ -121,7 +74,7 @@ class QualificationsController extends Controller
                 'description' => 'required'
             ]);
 
-            $qualification = new Qualifications();
+            $qualification = new Qualification();
             $qualification->name = $request->name;
             $qualification->description = $request->description;
             $qualification->save();
@@ -141,7 +94,7 @@ class QualificationsController extends Controller
         }
     }
 
-    public function updateQualification(Request $request, $id)
+    public function upade(Request $request, $id)
     {
         DB::beginTransaction();
         try {
@@ -149,8 +102,8 @@ class QualificationsController extends Controller
                 'name' => 'required',
                 'description' => 'required'
             ]);
-
-            $qualification = Qualifications::find($id);
+            
+            $qualification = Qualification::find($id);
             $qualification->name = $request->name;
             $qualification->description = $request->description;
             $qualification->save();
@@ -171,5 +124,21 @@ class QualificationsController extends Controller
     }
 
 
+    public function delete($id)
+    {
+        try{
+            $qualification = Qualification::find($id);
+             $qualification->delete();
+            return response()->json([
+                "message" => "qualification record deleted successfully",
+            ], 200);
+        }
+        catch(\Throwable $e){
+        return response()->json([
+            "message"=>"Ooops Something went wrong please try again",
+            "error"=> $e->getMessage(),
+        ],500);
+    }
+    }
 
 }
