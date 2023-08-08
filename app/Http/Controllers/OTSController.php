@@ -10,7 +10,7 @@ class OTSController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function getAll(Request $request)
     {
         try {
             $ot = DB::table('o_t_s as o')
@@ -23,10 +23,24 @@ class OTSController extends Controller
                ->where('o.id','LIKE','%'.$search.'%')
                ->orWhere('o.employee','LIKE','%'.$search.'%');
            }
-           $ot = $ot->orderBy('o.id','desc')->get();
+
+           $filterParameters = [
+            'basic_salary' => 'o.basic_salary',
+            'ot_hour' => 'o.ot_hour',
+            'hour_payment' => 'o.hour_payment',
+            'total' => 'o.total',           
+        ];
+    
+        foreach ($filterParameters as $parameter => $column) {
+            $value = $request->input($parameter);
+            if (isset($value) && $value !== '') {
+                $ot->where($column, '=', $value);
+            }
+        }
+           $ot = $ot->orderBy('o.created_at','desc')->get();
 
            return response()->json([
-               "message" => "instructor Data",
+               "message" => "All Overtime Data",
                "data" => $ot,
            ],200);
        }catch(\Throwable $e){
@@ -37,18 +51,7 @@ class OTSController extends Controller
        }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function save(Request $request)
     {
         DB::beginTransaction();
         try {
@@ -72,9 +75,9 @@ class OTSController extends Controller
             DB::commit();
 
             return response()->json([
-                "msg" => "ot Data",
+                "msg" => "Saved Overtime Data",
                 "data" => $ot,
-            ], 201);
+            ], 200);
         } catch (\Throwable $e) {
             DB::rollback();
             return response()->json([
@@ -84,18 +87,7 @@ class OTSController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(OTS $oTS)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit( $id)
+    public function getOne( $id)
     {
         try {
             $ot = DB::table('o_t_s as o')
@@ -107,7 +99,7 @@ class OTSController extends Controller
       
 
            return response()->json([
-               "message" => "instructor Data",
+               "message" => "Overtime Data",
                "data" => $ot,
            ],200);
        }catch(\Throwable $e){
@@ -123,7 +115,6 @@ class OTSController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
         DB::beginTransaction();
         try {
             $request->validate([
@@ -131,8 +122,6 @@ class OTSController extends Controller
                'ot_hour'=>'required',
                'hour_payment'=>'required',
                'total'=>'required'
-
-
             ]);
 
             $ot = OTS::find($id);
@@ -140,15 +129,14 @@ class OTSController extends Controller
             $ot->hour_payment = $request->hour_payment;
             $ot->ot_hour = $request->ot_hour;
             $ot->total = $request->total;
-           
             $ot->save();
 
             DB::commit();
 
             return response()->json([
-                "msg" => "ot Data",
+                "msg" => "Overtime Data Updated",
                 "data" => $ot,
-            ], 201);
+            ], 200);
         } catch (\Throwable $e) {
             DB::rollback();
             return response()->json([
@@ -161,11 +149,17 @@ class OTSController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy( $id)
+    public function delete( $id)
     {
         try {
             $ot = OTS::find($id);
             $ot->delete();
+
+            return response()->json([
+                "msg" => "Overtime Data Deleted",
+                "data" => $ot,
+            ], 200);
+
         } catch (\Throwable $e) {
             return response()->json([
                 "message" => "Ooops Something went wrong please try again",

@@ -7,29 +7,37 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 class InstructorController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index(Request $request)
+    public function getAll(Request $request)
     {
         try {
-            $instructor = DB::table('instructors as i')
+            $instructors= DB::table('instructors as i')
         ->select('i.id','e.first_name as employee','d.name as department')
         ->leftJoin('employees as e', 'e.id', '=', 'i.employee')
         ->leftJoin('departments as d', 'd.id', '=', 'i.department');
 
+        $filterParameters = [
+            'employee' => 'i.employee', 
+            'department' => 'i.department', 
+        ];
+
+        foreach ($filterParameters as $parameter => $column) {
+            $value = $request->input($parameter);
+            if (isset($value) && $value !== '') {
+                $companies->where($column, '=', $value);
+            }
+        }
            $search = $request->search;
            if (!is_null($search)){
-               $instructor = $instructor
+               $instructors = $instructors
                ->where('i.id','LIKE','%'.$search.'%')
                ->orWhere('i.employee','LIKE','%'.$search.'%')
                ->orWhere('i.department','LIKE','%'.$search.'%');
            }
-           $instructor = $instructor->orderBy('i.id','desc')->get();
+           $instructors = $instructors->orderBy('i.id','desc')->get();
 
            return response()->json([
                "message" => "instructor Data",
-               "data" => $instructor,
+               "data" => $instructors,
            ],200);
        }catch(\Throwable $e){
            return response()->json([
@@ -39,18 +47,7 @@ class InstructorController extends Controller
        }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function save(Request $request)
     {
         DB::beginTransaction();
         try{
@@ -81,18 +78,7 @@ class InstructorController extends Controller
     }
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Instructor $instructor)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit( $id)
+    public function getOne( $id)
     {
         try {
             $instructor = DB::table('instructors as i')
@@ -113,10 +99,6 @@ class InstructorController extends Controller
            ],500);
        }
     }
-
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request,  $id)
     {
         DB::beginTransaction();
@@ -126,11 +108,10 @@ class InstructorController extends Controller
             'department'=>'required',
         
         ]);
+
         $instructor = Instructor::find($id);
-       
         $instructor->employee = $request->employee;
         $instructor->department = $request->department;
-      
         $instructor->save();
 
         DB::commit();
@@ -148,15 +129,14 @@ class InstructorController extends Controller
     }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy( $id)
+    public function delete($id)
     {
         try{
             $instructor = Instructor::find($id);
             $instructor ->delete();
-
+            return response()->json([
+                "message" => "Instructor record deleted successfully",
+            ], 200);
         }
         catch(\Throwable $e){
         return response()->json([
