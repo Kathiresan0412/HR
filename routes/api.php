@@ -183,13 +183,6 @@ Route::put ('/training-programs/{id}', [TrainingProgramController::class, 'updat
 Route::delete ('/training-programs/{id}', [TrainingProgramController::class, 'delete']);
 
 
-Route::get('/promotions', [PromotionsController::class, 'getAll']);
-Route::get('/promotions/{id}', [PromotionsController::class, 'getOne']);
-Route::post('/promotions', [PromotionsController::class, 'save']);
-Route::put('/promotions/{id}', [PromotionsController::class, 'update']);
-Route::delete('/promotions/{id}', [PromotionsController::class, 'delete']);
-
-
 Route::get ('/training-records', [TrainingRecordController::class, 'getAll']);
 Route::get ('/training-records/{id}', [TrainingRecordController::class, 'getOne']);
 Route::POST('/training-records', [TrainingRecordController::class, 'save']);
