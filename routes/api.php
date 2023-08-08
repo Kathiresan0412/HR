@@ -222,6 +222,3 @@ Route::get('/EmployeeDisciplinary/{id}', [EmployeeDisciplinaryController::class,
 Route::post('/EmployeeDisciplinary', [EmployeeDisciplinaryController::class, 'store']);
 Route::put('/EmployeeDisciplinary/{id}', [EmployeeDisciplinaryController::class, 'update']);
 Route::delete('/EmployeeDisciplinary/{id}', [EmployeeDisciplinaryController::class, 'destory']);
-
-
-
