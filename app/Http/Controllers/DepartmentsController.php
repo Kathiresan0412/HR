@@ -11,7 +11,7 @@ class DepartmentsController extends Controller
 
     public function create()
     {
-  
+
     }
     public function destroy($id)
     {
@@ -26,12 +26,14 @@ class DepartmentsController extends Controller
         }
     }
 
-    public function index(Request $request,)
+    public function index(Request $request)
     {
         try {
             $department = DB::table('departments as d')
                 ->select('d.id', 'd.name', 'd.description');
+
             $search = $request->search;
+
             if (!is_null($search)) {
                 $department = $department
                     ->where('d.name', 'LIKE', '%' . $search . '%')
@@ -40,7 +42,7 @@ class DepartmentsController extends Controller
             $department = $department->orderBy('d.id', 'desc')->get();
 
             return response()->json([
-                "message" => "qualification Data",
+                "message" => "All Departments Data",
                 "data" => $department,
             ], 200);
         } catch (\Throwable $e) {
@@ -78,11 +80,14 @@ class DepartmentsController extends Controller
                 'name' => 'required',
                 'description' => 'required'
             ]);
+
             $department = new Departments();
             $department->name = $request->name;
             $department->description = $request->description;
             $department->save();
+
             DB::commit();
+
             return response()->json([
                 "msg" => "department Data",
                 "data" => $department,
@@ -104,11 +109,14 @@ class DepartmentsController extends Controller
                 'name' => 'required',
                 'description' => 'required'
             ]);
+
             $department = Departments::find($id);
             $department->name = $request->name;
             $department->description = $request->description;
             $department->save();
+
             DB::commit();
+            
             return response()->json([
                 "msg" => "department Data",
                 "data" => $department,

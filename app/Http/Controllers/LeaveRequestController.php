@@ -15,7 +15,7 @@ class LeaveRequestController extends Controller
     }
     public function index(Request $request)
     {
-        //  try {
+         try {
         $leave_requests = DB::table('leave_requests as l')
             ->select('l.id', 'e.bio_code as bio_code', 'e.first_name as employee','a.name as leave_type', 'l.request_on', 'l.dates', 'l.days', 'l.reason', 'l.status', 'u.name as approved_by')
             ->leftJoin('employees as e', 'e.id', '=', 'l.employee')
@@ -32,25 +32,25 @@ class LeaveRequestController extends Controller
                 ->orWhere('l.reason', 'LIKE', '%' . $search . '%');
         }
 
-        $leave_requests = $leave_requests->orderBy('id', 'asc')
+        $leave_requests = $leave_requests->orderBy('id', 'asc') // created at - orderby, desc
             ->get();
 
         return response()->json([
             "message" => "leave_requests Data",
             "data" => $leave_requests,
         ], 200);
-        //  } catch (\Throwable $e) {
-        //      return response()->json([
-        //          "message" => "Oops somthing went wrong please try again",
-        //          "error" => $e->getMessage(),
-        //      ], 500);
-        //  }
+         } catch (\Throwable $e) {
+             return response()->json([
+                 "message" => "Oops somthing went wrong please try again",
+                 "error" => $e->getMessage(),
+             ], 500);
+         }
 
     }
 
     public function edit($id)
     {
-        //  try {
+         try {
             $leave_requests = DB::table('leave_requests as l')
             ->select('l.id', 'e.bio_code as bio_code', 'e.first_name as employee','a.name as type', 'l.request_on', 'l.dates', 'l.days', 'l.reason', 'l.status', 'u.name as approved_by')
             ->leftJoin('employees as e', 'e.id', '=', 'l.employee')
@@ -63,12 +63,12 @@ class LeaveRequestController extends Controller
             "message" => "leave_requests Data",
             "data" => $leave_requests,
         ], 200);
-        //  } catch (\Throwable $e) {
-        //      return response()->json([
-        //          "message" => "Oops somthing went wrong please try again",
-        //          "error" => $e->getMessage(),
-        //      ], 500);
-        //  }
+         } catch (\Throwable $e) {
+             return response()->json([
+                 "message" => "Oops somthing went wrong please try again",
+                 "error" => $e->getMessage(),
+             ], 500);
+         }
 
     }
 
@@ -147,7 +147,7 @@ class LeaveRequestController extends Controller
             return response()->json([
                 "msg" => "leave_request Data",
                 "data" => $leave_request,
-            ], 201);
+            ], 200);
         } catch (\Throwable $e) {
             DB::rollback();
             return response()->json([

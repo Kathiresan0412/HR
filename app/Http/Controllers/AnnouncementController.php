@@ -52,113 +52,107 @@ class AnnouncementController extends Controller
             ], 500);
         }
     }
-     public function index(Request $request,)
+    public function index(Request $request, )
     {
-     
-        try{
+
+        try {
             $announcement = DB::table('announcements as a')
-            ->select('a.id','a.date','a.attachment','a.description','a.title');
-       
+                ->select('a.id', 'a.date', 'a.attachment', 'a.description', 'a.title');
+
             $search = $request->search;
-            if (!is_null($search)){
+            if (!is_null($search)) {
                 $announcement = $announcement
-                ->where('a.date','LIKE','%'.$search.'%')
-                ->orWhere('a.attachment','LIKE','%'.$search.'%')
-                ->orWhere('a.description','LIKE','%'.$search.'%')
-                ->orWhere('a.title','LIKE','%'.$search.'%');
+                    ->where('a.date', 'LIKE', '%' . $search . '%')
+                    ->orWhere('a.description', 'LIKE', '%' . $search . '%')
+                    ->orWhere('a.title', 'LIKE', '%' . $search . '%');
             }
-            $announcement = $announcement->orderBy('a.id','desc')->get();
+            $announcement = $announcement->orderBy('a.id', 'desc')->get();
 
             return response()->json([
                 "message" => "announcement Data",
                 "data" => $announcement,
-            ],200);
-        }catch(\Throwable $e){
+            ], 200);
+        } catch (\Throwable $e) {
             return response()->json([
-                "message"=>"oops something went wrong",
-                "error"=> $e->getMessage(),
-            ],500);
+                "message" => "oops something went wrong",
+                "error" => $e->getMessage(),
+            ], 500);
         }
     }
 
     public function edit($id)
     {
-        try{
+        try {
 
             $announcement = DB::table('announcements as a')
-            ->select('a.id','a.date','a.attachment','a.description','a.title')
-            ->where('a.id',$id)
-            ->first();
+                ->select('a.id', 'a.date', 'a.attachment', 'a.description', 'a.title')
+                ->where('a.id', $id)
+                ->first();
 
             return response()->json([
                 "message" => "announcement Data",
                 "data" => $announcement,
-            ],200);
-        }catch(\Throwable $e){
+            ], 200);
+        } catch (\Throwable $e) {
             return response()->json([
-                "message"=>"oops something went wrong",
-                "error"=> $e->getMessage(),
-            ],500);
+                "message" => "oops something went wrong",
+                "error" => $e->getMessage(),
+            ], 500);
         }
     }
 
     public function store(Request $request)
     {
         DB::beginTransaction();
-        try{
-       
+        try {
+            $announcement = new Announcement();
+            $announcement->date = $request->date;
+            $announcement->attachment = $request->attachment;
+            $announcement->description = $request->description;
+            $announcement->title = $request->title;
+            $announcement->save();
 
-        $announcement = new Announcement();
-        $announcement->date = $request->date;
-        $announcement->attachment = $request->attachment;
-        $announcement->description = $request->description;
-        $announcement->title = $request->title;
-        $announcement->save();
+            DB::commit();
 
-        DB::commit();
-
-        return response()->json([
-            "msg" => "announcement Data",
-            "data"=> $announcement,
-        ],201);
-    }catch(\Throwable $e) {
-        DB::rollback();
-        return response()->json([
-            "msg"=>"oops something went wrong",
-            "error"=> $e->getMessage(),
-        ],500);
-    }
+            return response()->json([
+                "msg" => "announcement Data",
+                "data" => $announcement,
+            ], 201);
+        } catch (\Throwable $e) {
+            DB::rollback();
+            return response()->json([
+                "msg" => "oops something went wrong",
+                "error" => $e->getMessage(),
+            ], 500);
+        }
     }
 
     public function update(Request $request, $id)
     {
         DB::beginTransaction();
-        try{
-       
+        try {
+            $announcement = Announcement::find($id);
+            $announcement->date = $request->date;
+            $announcement->attachment = $request->attachment;
+            $announcement->description = $request->description;
+            $announcement->title = $request->title;
+            $announcement->save();
 
-        $announcement = Announcement::find($id);
-        $announcement->date = $request->date;
-        $announcement->attachment = $request->attachment;
-        $announcement->description = $request->description;
-        $announcement->title = $request->title;
-        $announcement->save(); 
-     
-      DB::commit();
+            DB::commit();
 
-      return response()->json([
-        "msg" => "announcement Data",
-        "data"=> $announcement,
-    ],201);
-}catch(\Throwable $e) {
-    DB::rollback();
-    return response()->json([
-        "msg"=>"oops something went wrong",
-        "error"=> $e->getMessage(),
-    ],500);
-}
+            return response()->json([
+                "msg" => "announcement Data",
+                "data" => $announcement,
+            ], 201);
+        } catch (\Throwable $e) {
+            DB::rollback();
+            return response()->json([
+                "msg" => "oops something went wrong",
+                "error" => $e->getMessage(),
+            ], 500);
+        }
     }
-    
+
 
 
 }
-
