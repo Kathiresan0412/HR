@@ -31,7 +31,7 @@ class DepartmentController extends Controller
                     ->where('d.name', 'LIKE', '%' . $search . '%')
                     ->orWhere('d.description', 'LIKE', '%' . $search . '%');
             }
-            $departments = $departments->orderBy('d.id', 'desc')->get();
+            $departments = $departments->orderBy('d.created_at', 'desc')->get();
 
             return response()->json([
                 "message" => "All Departments Data",

@@ -25,14 +25,14 @@ class QualificationController extends Controller
                         $qualifications->where($column, '=', $value);
                     }
                 }
-                
+
             $search = $request->search;
             if (!is_null($search)) {
                 $qualifications = $qualifications
                     ->where('q.name', 'LIKE', '%' . $search . '%')
                     ->orWhere('q.description', 'LIKE', '%' . $search . '%');
             }
-            $qualifications = $qualifications->orderBy('q.id', 'desc')->get();
+            $qualifications = $qualifications->orderBy('q.created_at', 'desc')->get();
 
             return response()->json([
                 "message" => "qualification Data",

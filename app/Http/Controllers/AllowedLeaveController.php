@@ -43,7 +43,7 @@ class AllowedLeaveController extends Controller
                     ->orWhere('l.term', 'LIKE', '%' . $search . '%');
                     
             }
-            $allowedleaves = $allowedleaves->orderBy('l.id', 'desc')->get();
+            $allowedleaves = $allowedleaves->orderBy('l.created_at', 'desc')->get();
             return response()->json([
                 "message" => "Allowed Leave Data",
                 "data" => $allowedleaves,

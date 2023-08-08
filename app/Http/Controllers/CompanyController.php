@@ -33,7 +33,7 @@ class CompanyController extends Controller
               ->orWhere('c.description','LIKE','%'.$search.'%');
           }
 
-          $companies = $companies->orderBy('c.id','desc')->get();
+          $companies = $companies->orderBy('c.created_at','desc')->get();
 
           return response()->json([
               "message" => "companies Data",

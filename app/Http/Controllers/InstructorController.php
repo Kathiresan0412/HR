@@ -33,7 +33,7 @@ class InstructorController extends Controller
                ->orWhere('i.employee','LIKE','%'.$search.'%')
                ->orWhere('i.department','LIKE','%'.$search.'%');
            }
-           $instructors = $instructors->orderBy('i.id','desc')->get();
+           $instructors = $instructors->orderBy('i.created_at','desc')->get();
 
            return response()->json([
                "message" => "instructor Data",
