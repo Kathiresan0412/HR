@@ -13,11 +13,9 @@ class DepartmentController extends Controller
         try {
             $departments = DB::table('departments as d')
                 ->select('d.id', 'd.name', 'd.description');
-
                 $filterParameters = [
                     'name' => 'd.name', 
                 ];
-
                 foreach ($filterParameters as $parameter => $column) {
                     $value = $request->input($parameter);
                     if (isset($value) && $value !== '') {
@@ -25,14 +23,12 @@ class DepartmentController extends Controller
                     }
                 }
             $search = $request->search;
-
             if (!is_null($search)) {
                 $departments = $departments
                     ->where('d.name', 'LIKE', '%' . $search . '%')
                     ->orWhere('d.description', 'LIKE', '%' . $search . '%');
             }
             $departments = $departments->orderBy('d.created_at', 'desc')->get();
-
             return response()->json([
                 "message" => "All Departments Data",
                 "data" => $departments,
@@ -52,7 +48,6 @@ class DepartmentController extends Controller
                 ->select('d.id', 'd.name', 'd.description')
                 ->where('d.id', $id)
                 ->first();
-
             return response()->json([
                 "message" => "department Data",
                 "data" => $department,
@@ -73,7 +68,6 @@ class DepartmentController extends Controller
                 'name' => 'required',
                 'description' => 'required'
             ]);
-
             $department = new Department();
             $department->name = $request->name;
             $department->description = $request->description;
@@ -82,13 +76,13 @@ class DepartmentController extends Controller
             DB::commit();
 
             return response()->json([
-                "msg" => "department Data saved",
+                "message" => "department Data saved",
                 "data" => $department,
             ], 200);
         } catch (\Throwable $e) {
             DB::rollback();
             return response()->json([
-                "msg" => "oops something went wrong",
+                "message" => "oops something went wrong",
                 "error" => $e->getMessage(),
             ], 500);
         }
@@ -102,16 +96,15 @@ class DepartmentController extends Controller
                 'name' => 'required',
                 'description' => 'required'
             ]);
-
             $department = Department::find($id);
             $department->name = $request->name;
             $department->description = $request->description;
             $department->save();
 
-            DB::commit();
+            DB::commit(); 
             
             return response()->json([
-                "msg" => "department Data Updated",
+                "message" => "department Data Updated",
                 "data" => $department,
             ], 200);
         } catch (\Throwable $e) {
@@ -128,7 +121,7 @@ class DepartmentController extends Controller
             $department = Department::find($id);
             $department->delete();
             return response()->json([
-                "message" => "Department data deleted successfully",
+                "message" => "Department data deleted",
             ], 200);
         } catch (\Throwable $e) {
             return response()->json([
