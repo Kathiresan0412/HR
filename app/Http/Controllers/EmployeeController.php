@@ -233,14 +233,12 @@ class EmployeeController extends Controller
 
             $employee_id = $employee->id;
 
-            if ($request->has('qualifications') && is_array($request->qualifications)) {
-                $qualifications = $request->qualifications;
-                foreach ($qualifications as $qualification) {
-                    $com = new EmployeeQualification();
-                    $com->employee = $employee_id;
-                    $com->qualification = $qualification;
-                    $com->save();
-                }
+            $qualifications = $request->qualification;
+            foreach($qualifications as $qualification){
+                $EQ=new EmployeeQualification();
+                $EQ->employee = $employee_id;
+                $EQ->qualification = $qualification;
+                $EQ->save();
             }
 
             DB::commit();
