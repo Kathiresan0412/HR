@@ -8,9 +8,7 @@ use DB;
 
 class EmployeeDocumentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function getAll(Request $request)
     {
         try {
@@ -42,17 +40,6 @@ class EmployeeDocumentController extends Controller
         }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function save(Request $request)
     {
         DB::beginTransaction();
@@ -80,7 +67,7 @@ class EmployeeDocumentController extends Controller
             return response()->json([
                 "message" => "Saved Employee Documents Data",
                 "data" => $documents,
-            ], 201);
+            ], 200);
         } catch (\Throwable $e) {
             DB::rollback();
             return response()->json([
@@ -90,17 +77,6 @@ class EmployeeDocumentController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(EmployeeDocument $employeeDocument)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function getOne($id)
     {
         try {
@@ -152,7 +128,7 @@ class EmployeeDocumentController extends Controller
         return response()->json([
             "message" => "Employee Documents Data Update",
             "data" => $documents,
-        ], 201);
+        ], 200);
     } catch (\Throwable $e) {
         DB::rollback();
         return response()->json([

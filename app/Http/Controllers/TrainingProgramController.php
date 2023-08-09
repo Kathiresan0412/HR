@@ -59,17 +59,6 @@ class TrainingProgramController extends Controller
         }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function save(Request $request)
     {
         DB::beginTransaction();
@@ -97,7 +86,7 @@ class TrainingProgramController extends Controller
         return response()->json([
             "msg" => "Training program Data Saved",
             "data"=> $training,
-        ],201);
+        ],200);
     }catch(\Throwable $e) {
         DB::rollback();
         return response()->json([
@@ -107,17 +96,6 @@ class TrainingProgramController extends Controller
     }
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(TrainingProgram $trainingProgram)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function getOne($id)
     {
         try{
@@ -139,9 +117,6 @@ class TrainingProgramController extends Controller
         }
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, $id)
     {
         DB::beginTransaction();
@@ -169,7 +144,7 @@ class TrainingProgramController extends Controller
       return response()->json([
         "msg" => "Training program Data updated",
         "data"=> $training,
-    ],201);
+    ],200);
 }catch(\Throwable $e) {
     DB::rollback();
     return response()->json([
@@ -179,9 +154,6 @@ class TrainingProgramController extends Controller
 }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function delete($id)
     {
          try {
@@ -190,7 +162,7 @@ class TrainingProgramController extends Controller
 
             return response()->json([
                 "msg" => "Training program Data Deleted",
-            ], 201);
+            ], 200);
 
         } catch (\Throwable $e) {
             return response()->json([

@@ -8,77 +8,79 @@ use Illuminate\Support\Facades\DB;
 
 class EmployeeEmergencyContactController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index(Request $request)
+    public function getAll(Request $request)
     {
-        try{
-            $empEmergenCon = DB::table('employee_emergency_contacts as e')
-            ->select('e.id','em.id as employee','e.contact_name', 'e.relationship_to_employee','e.mobile_number','e.email')
-            ->leftJoin('employees as em', 'em.id', '=', 'e.employee');
-       
+        try {
+            $empEmergenContacts = DB::table('employee_emergency_contacts as e')
+                ->select('e.id', 'em.id as employee', 'e.contact_name', 'e.relationship_to_employee', 'e.mobile_number', 'e.email')
+                ->leftJoin('employees as em', 'em.id', '=', 'e.employee');
+
             $search = $request->search;
-            if (!is_null($search)){
-                $empEmergenCon = $empEmergenCon
-                ->where('e.contact_name','LIKE','%'.$search.'%')
-                ->orWhere('e.relationship_to_employee','LIKE','%'.$search.'%')
-                ->orWhere('e.mobile_number','LIKE','%'.$search.'%')
-                ->orWhere('e.email','LIKE','%'.$search.'%');
+            if (!is_null($search)) {
+                $empEmergenContacts = $empEmergenContacts
+                    ->where('e.contact_name', 'LIKE', '%' . $search . '%')
+                    ->orWhere('e.relationship_to_employee', 'LIKE', '%' . $search . '%')
+                    ->orWhere('e.mobile_number', 'LIKE', '%' . $search . '%')
+                    ->orWhere('e.email', 'LIKE', '%' . $search . '%');
             }
-            $empEmergenCon = $empEmergenCon->orderBy('e.id','desc')->get();
-  
+
+            $filterParameters = [
+                'relationship_to_employee' => 'e.relationship_to_employee'
+            ];
+
+            foreach ($filterParameters as $parameter => $column) {
+                $value = $request->input($parameter);
+                if (isset($value) && $value !== '') {
+                    $empEmergenContacts->where($column, '=', $value);
+                }
+            }
+
+            $empEmergenContacts = $empEmergenContacts->orderBy('e.created_at', 'desc')->get();
+
             return response()->json([
-                "message" => "Employee Emergency Contact Data",
-                "data" => $empEmergenCon,
-            ],200);
-        }catch(\Throwable $e){
+                "message" => "All Employee Emergency Contact Data",
+                "data" => $empEmergenContacts,
+            ], 200);
+        } catch (\Throwable $e) {
             return response()->json([
-                "message"=>"oops something went wrong",
-                "error"=> $e->getMessage(),
-            ],500);
+                "message" => "oops something went wrong",
+                "error" => $e->getMessage(),
+            ], 500);
         }
     }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function edit($id)
+    public function getOne($id)
     {
-        try{
+        try {
 
-            $empEmergenCon = DB::table('employee_emergency_contacts as e')
-            ->select('e.id','em.id as employee','e.contact_name', 'e.relationship_to_employee','e.mobile_number','e.email')
-            ->leftJoin('employees as em', 'em.id', '=', 'e.employee')
-            ->where('e.id',$id)
-            ->first();
+            $empEmergenContact = DB::table('employee_emergency_contacts as e')
+                ->select('e.id', 'em.id as employee', 'e.contact_name', 'e.relationship_to_employee', 'e.mobile_number', 'e.email')
+                ->leftJoin('employees as em', 'em.id', '=', 'e.employee')
+                ->where('e.id', $id)
+                ->first();
 
             return response()->json([
                 "message" => "Employee Emergency Contact Data",
-                "data" => $empEmergenCon,
-            ],200);
-        }catch(\Throwable $e){
+                "data" => $empEmergenContact,
+            ], 200);
+        } catch (\Throwable $e) {
             return response()->json([
-                "message"=>"oops something went wrong",
-                "error"=> $e->getMessage(),
-            ],500);
+                "message" => "oops something went wrong",
+                "error" => $e->getMessage(),
+            ], 500);
         }
     }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function save(Request $request)
     {
         DB::beginTransaction();
-        try{
+        try {
             $request->validate([
-                'contact_name'=>'required',
-                'relationship_to_employee'=>'required',
-                'mobile_number'=>'required',
-                'email'=>'required'
+                'employee' => 'required',
+                'contact_name' => 'required',
+                'relationship_to_employee' => 'required',
+                'mobile_number' => 'required',
+                'email' => 'required'
             ]);
-    
+
             $empEmergenCon = new EmployeeEmergencyContact();
             $empEmergenCon->employee = $request->employee;
             $empEmergenCon->contact_name = $request->contact_name;
@@ -86,52 +88,33 @@ class EmployeeEmergencyContactController extends Controller
             $empEmergenCon->mobile_number = $request->mobile_number;
             $empEmergenCon->email = $request->email;
             $empEmergenCon->save();
-    
+
             DB::commit();
-    
+
             return response()->json([
-                "message" => "Employee Emergency Contact Data",
+                "message" => "Employee Emergency Contact Data Saved",
                 "data" => $empEmergenCon,
-            ],201);
-        }catch(\Throwable $e) {
+            ], 200);
+        } catch (\Throwable $e) {
             DB::rollback();
             return response()->json([
-                "msg"=>"oops something went wrong",
-                "error"=> $e->getMessage(),
-            ],500);
+                "msg" => "oops something went wrong",
+                "error" => $e->getMessage(),
+            ], 500);
         }
     }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(EmployeeEmergencyContact $employeeEmergencyContact)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function create(EmployeeEmergencyContact $employeeEmergencyContact)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, EmployeeEmergencyContact $employeeEmergencyContact, $id)
     {
         DB::beginTransaction();
-        try{
+        try {
             $request->validate([
-                'contact_name'=>'required',
-                'relationship_to_employee'=>'required',
-                'mobile_number'=>'required',
-                'email'=>'required'
+                'employee' => 'required',
+                'contact_name' => 'required',
+                'relationship_to_employee' => 'required',
+                'mobile_number' => 'required',
+                'email' => 'required'
             ]);
-    
+
             $empEmergenCon = EmployeeEmergencyContact::find($id);
             $empEmergenCon->employee = $request->employee;
             $empEmergenCon->contact_name = $request->contact_name;
@@ -139,30 +122,30 @@ class EmployeeEmergencyContactController extends Controller
             $empEmergenCon->mobile_number = $request->mobile_number;
             $empEmergenCon->email = $request->email;
             $empEmergenCon->save();
-        
+
             DB::commit();
-        
+
             return response()->json([
-                "message" => "Employee Emergency Contact Data",
+                "message" => "Employee Emergency Contact Data Updated",
                 "data" => $empEmergenCon,
-            ],201);
-        }catch(\Throwable $e) {
+            ], 200);
+        } catch (\Throwable $e) {
             DB::rollback();
             return response()->json([
-                "msg"=>"oops something went wrong",
-                "error"=> $e->getMessage(),
-            ],500);
+                "msg" => "oops something went wrong",
+                "error" => $e->getMessage(),
+            ], 500);
         }
     }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy($id)
+    public function delete($id)
     {
-         try {
+        try {
             $empEmergenCon = EmployeeEmergencyContact::find($id);
             $empEmergenCon->delete();
+
+            return response()->json([
+                "msg" => "Employee Emergency Contact Data Deleted"
+            ], 200);
         } catch (\Throwable $e) {
             return response()->json([
                 "message" => "Ooops Something went wrong please try again",

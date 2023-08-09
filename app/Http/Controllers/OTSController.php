@@ -23,7 +23,7 @@ class OTSController extends Controller
                ->where('o.id','LIKE','%'.$search.'%')
                ->orWhere('o.employee','LIKE','%'.$search.'%');
            }
-           
+
            $filterParameters = [
             'basic_salary' => 'o.basic_salary',
             'ot_hour' => 'o.ot_hour',
@@ -49,24 +49,8 @@ class OTSController extends Controller
                "error"=> $e->getMessage(),
            ],500);
        }
-
-    
-
     }
 
-    
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function save(Request $request)
     {
         DB::beginTransaction();
@@ -93,7 +77,7 @@ class OTSController extends Controller
             return response()->json([
                 "msg" => "Saved Overtime Data",
                 "data" => $ot,
-            ], 201);
+            ], 200);
         } catch (\Throwable $e) {
             DB::rollback();
             return response()->json([
@@ -103,17 +87,6 @@ class OTSController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(OTS $oTS)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function getOne( $id)
     {
         try {
@@ -163,7 +136,7 @@ class OTSController extends Controller
             return response()->json([
                 "msg" => "Overtime Data Updated",
                 "data" => $ot,
-            ], 201);
+            ], 200);
         } catch (\Throwable $e) {
             DB::rollback();
             return response()->json([
@@ -185,7 +158,7 @@ class OTSController extends Controller
             return response()->json([
                 "msg" => "Overtime Data Deleted",
                 "data" => $ot,
-            ], 201);
+            ], 200);
 
         } catch (\Throwable $e) {
             return response()->json([

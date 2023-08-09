@@ -55,17 +55,6 @@ class TrainingRecordController extends Controller
         }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function save(Request $request)
     {
         DB::beginTransaction();
@@ -89,7 +78,7 @@ class TrainingRecordController extends Controller
         return response()->json([
             "msg" => "training record Data Saved",
             "data"=> $training,
-        ],201);
+        ],200);
     }catch(\Throwable $e) {
         DB::rollback();
         return response()->json([
@@ -99,17 +88,6 @@ class TrainingRecordController extends Controller
     }
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(TrainingRecord $trainingRecord)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function getOne(TrainingRecord $trainingRecord, $id)
     {
         try{
@@ -132,9 +110,6 @@ class TrainingRecordController extends Controller
         }
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, $id)
     {
         DB::beginTransaction();
@@ -158,7 +133,7 @@ class TrainingRecordController extends Controller
       return response()->json([
         "msg" => "training record Data Updated",
         "data"=> $training,
-    ],201);
+    ],200);
     }catch(\Throwable $e) {
     DB::rollback();
     return response()->json([
@@ -179,7 +154,7 @@ class TrainingRecordController extends Controller
 
             return response()->json([
                 "msg" => "Training Record Data Deleted",
-            ], 201);
+            ], 200);
 
         } catch (\Throwable $e) {
             return response()->json([
