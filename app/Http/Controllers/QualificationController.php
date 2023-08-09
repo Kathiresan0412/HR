@@ -32,10 +32,10 @@ class QualificationController extends Controller
                     ->where('q.name', 'LIKE', '%' . $search . '%')
                     ->orWhere('q.description', 'LIKE', '%' . $search . '%');
             }
-            $qualifications = $qualifications->orderBy('q.id', 'desc')->get();
+            $qualifications = $qualifications->orderBy('q.created_at', 'desc')->get();
 
             return response()->json([
-                "message" => "qualification Data",
+                "message" => "All qualification Data",
                 "data" => $qualifications,
             ], 200);
         } catch (\Throwable $e) {
@@ -82,9 +82,9 @@ class QualificationController extends Controller
             DB::commit();
 
             return response()->json([
-                "msg" => "Qualification Data",
+                "msg" => "Qualification Data Saved",
                 "data" => $qualification,
-            ], 201);
+            ], 200);
         } catch (\Throwable $e) {
             DB::rollback();
             return response()->json([
@@ -130,7 +130,7 @@ class QualificationController extends Controller
             $qualification = Qualification::find($id);
              $qualification->delete();
             return response()->json([
-                "message" => "qualification record deleted successfully",
+                "message" => "qualification data deleted successfully",
             ], 200);
         }
         catch(\Throwable $e){

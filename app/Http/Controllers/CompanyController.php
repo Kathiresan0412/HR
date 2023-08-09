@@ -33,10 +33,10 @@ class CompanyController extends Controller
               ->orWhere('c.description','LIKE','%'.$search.'%');
           }
 
-          $companies = $companies->orderBy('c.id','desc')->get();
+          $companies = $companies->orderBy('c.created_at','desc')->get();
 
           return response()->json([
-              "message" => "companies Data",
+              "message" => "All companies Data",
               "data" => $companies,
           ],200);
       }catch(\Throwable $e){
@@ -86,7 +86,7 @@ class CompanyController extends Controller
       return response()->json([
           "msg" => "company Data saved",
           "data"=> $company,
-      ],201);
+      ],200);
   }catch(\Throwable $e) {
       DB::rollback();
       return response()->json([
@@ -102,7 +102,7 @@ class CompanyController extends Controller
         try{
             $request->validate([
                 'name'=>'required|string|alpha|max:30',
-                 'description'=>'required|string|alpha|max:255'
+                'description'=>'required|string|alpha|max:255'
             ]);
 
             $company = Company::find($id);
@@ -115,7 +115,7 @@ class CompanyController extends Controller
             return response()->json([
             "msg" => "Company Data updated",
             "data"=> $company,
-        ],201);
+        ],200);
         }catch(\Throwable $e) {
             DB::rollback();
             return response()->json([
@@ -131,7 +131,7 @@ class CompanyController extends Controller
             $company = Company::find($id);
             $company->delete();
             return response()->json([
-                "message" => "Company  data deleted successfully",
+                "message" => "Company data deleted successfully",
             ], 200);
         } catch (\Throwable $e) {
             return response()->json([

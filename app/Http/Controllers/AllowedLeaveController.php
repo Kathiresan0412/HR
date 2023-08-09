@@ -43,9 +43,9 @@ class AllowedLeaveController extends Controller
                     ->orWhere('l.term', 'LIKE', '%' . $search . '%');
                     
             }
-            $allowedleaves = $allowedleaves->orderBy('l.id', 'desc')->get();
+            $allowedleaves = $allowedleaves->orderBy('l.created_at', 'desc')->get();
             return response()->json([
-                "message" => "Allowed Leave Data",
+                "message" => "All Allowed Leave Data",
                 "data" => $allowedleaves,
             ], 200);
         } catch (\Throwable $e) {
@@ -70,7 +70,7 @@ class AllowedLeaveController extends Controller
                 "message" => "Allowed Leave Data",
                 "data" => $allowedleave,
             ], 200);
-        } catch (\Throwable $e) {
+            } catch (\Throwable $e) {
             return response()->json([
                 "message" => "oops something went wrong",
                 "error" => $e->getMessage(),
@@ -100,7 +100,7 @@ class AllowedLeaveController extends Controller
                 "msg" => "Allowed Leaves Data Saved",
                 "data" => $allowedleave,
             ], 200);
-        } catch (\Throwable $e) {
+            } catch (\Throwable $e) {
             DB::rollback();
             return response()->json([
                 "msg" => "oops something went wrong",
@@ -128,7 +128,7 @@ class AllowedLeaveController extends Controller
             DB::commit();
 
             return response()->json([
-                "msg" => "Allowed Leave Data",
+                "msg" => "Allowed Leave Data Updated",
                 "data" => $allowedleave,
             ], 200);
         } catch (\Throwable $e) {
@@ -147,7 +147,7 @@ class AllowedLeaveController extends Controller
             return response()->json([
                 "message" => "Allowed leave record deleted successfully",
             ], 200);
-        } catch (\Throwable $e) {
+            } catch (\Throwable $e) {
             return response()->json([
                 "message" => "Ooops Something went wrong please try again",
                 "error" => $e->getMessage(),

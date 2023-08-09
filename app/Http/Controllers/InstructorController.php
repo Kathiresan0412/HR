@@ -23,7 +23,7 @@ class InstructorController extends Controller
         foreach ($filterParameters as $parameter => $column) {
             $value = $request->input($parameter);
             if (isset($value) && $value !== '') {
-                $companies->where($column, '=', $value);
+                $instructors->where($column, '=', $value);
             }
         }
            $search = $request->search;
@@ -33,10 +33,10 @@ class InstructorController extends Controller
                ->orWhere('i.employee','LIKE','%'.$search.'%')
                ->orWhere('i.department','LIKE','%'.$search.'%');
            }
-           $instructors = $instructors->orderBy('i.id','desc')->get();
+           $instructors = $instructors->orderBy('i.created_at','desc')->get();
 
            return response()->json([
-               "message" => "instructor Data",
+               "message" => "All instructor Data",
                "data" => $instructors,
            ],200);
        }catch(\Throwable $e){
@@ -66,9 +66,9 @@ class InstructorController extends Controller
         DB::commit();
 
         return response()->json([
-            "msg" => "instructor Data",
+            "msg" => "instructor Data Saved",
             "data"=> $instructor,
-        ],201);
+        ],200);
     }catch(\Throwable $e) {
         DB::rollback();
         return response()->json([
@@ -117,9 +117,9 @@ class InstructorController extends Controller
         DB::commit();
 
         return response()->json([
-            "msg" => "instructor Data",
+            "msg" => "instructor Data Updated",
             "data"=> $instructor,
-        ],201);
+        ],200);
     }catch(\Throwable $e) {
         DB::rollback();
         return response()->json([
@@ -135,7 +135,7 @@ class InstructorController extends Controller
             $instructor = Instructor::find($id);
             $instructor ->delete();
             return response()->json([
-                "message" => "Instructor record deleted successfully",
+                "message" => "Instructor data deleted successfully",
             ], 200);
         }
         catch(\Throwable $e){

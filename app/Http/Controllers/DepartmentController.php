@@ -21,7 +21,7 @@ class DepartmentController extends Controller
                 foreach ($filterParameters as $parameter => $column) {
                     $value = $request->input($parameter);
                     if (isset($value) && $value !== '') {
-                        $departments->where($column, '=', $value);
+                    $departments->where($column, '=', $value);
                     }
                 }
             $search = $request->search;
@@ -31,7 +31,7 @@ class DepartmentController extends Controller
                     ->where('d.name', 'LIKE', '%' . $search . '%')
                     ->orWhere('d.description', 'LIKE', '%' . $search . '%');
             }
-            $departments = $departments->orderBy('d.id', 'desc')->get();
+            $departments = $departments->orderBy('d.created_at', 'desc')->get();
 
             return response()->json([
                 "message" => "All Departments Data",
@@ -84,7 +84,7 @@ class DepartmentController extends Controller
             return response()->json([
                 "msg" => "department Data saved",
                 "data" => $department,
-            ], 201);
+            ], 200);
         } catch (\Throwable $e) {
             DB::rollback();
             return response()->json([
@@ -113,7 +113,7 @@ class DepartmentController extends Controller
             return response()->json([
                 "msg" => "department Data Updated",
                 "data" => $department,
-            ], 201);
+            ], 200);
         } catch (\Throwable $e) {
             DB::rollback();
             return response()->json([
@@ -128,7 +128,7 @@ class DepartmentController extends Controller
             $department = Department::find($id);
             $department->delete();
             return response()->json([
-                "message" => "Department  record deleted successfully",
+                "message" => "Department data deleted successfully",
             ], 200);
         } catch (\Throwable $e) {
             return response()->json([
