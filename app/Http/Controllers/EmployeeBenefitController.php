@@ -8,9 +8,6 @@ use Illuminate\Support\Facades\DB;
 
 class EmployeeBenefitController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function getAll(Request $request)
     {
         try {
@@ -29,7 +26,6 @@ class EmployeeBenefitController extends Controller
                     ->orWhere('eb.coverage_details', 'LIKE', '%' . $search . '%')
                     ->orWhere('eb.premiums', 'LIKE', '%' . $search . '%')
                     ->orWhere('eb.beneficiary_information', 'LIKE', '%' . $search . '%');
-
             }
 
             $filterParameters = [
@@ -37,7 +33,6 @@ class EmployeeBenefitController extends Controller
                 'coverage_details' => 'eb.coverage_details',
                 'attendees' => 'eb.attendees',
                 'benefit_type' => 'eb.benefit_type',
-
             ];
 
             foreach ($filterParameters as $parameter => $column) {
@@ -46,8 +41,6 @@ class EmployeeBenefitController extends Controller
                     $employeeBenefits->where($column, '=', $value);
                 }
             }
-
-
             $employeeBenefits = $employeeBenefits->orderBy('eb.created_at', 'desc')->get();
 
             return response()->json([
