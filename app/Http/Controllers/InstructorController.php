@@ -14,16 +14,14 @@ class InstructorController extends Controller
         ->select('i.id','e.first_name as employee','d.name as department')
         ->leftJoin('employees as e', 'e.id', '=', 'i.employee')
         ->leftJoin('departments as d', 'd.id', '=', 'i.department');
-
         $filterParameters = [
             'employee' => 'i.employee', 
             'department' => 'i.department', 
         ];
-
         foreach ($filterParameters as $parameter => $column) {
             $value = $request->input($parameter);
             if (isset($value) && $value !== '') {
-                $companies->where($column, '=', $value);
+                $instructors->where($column, '=', $value);
             }
         }
            $search = $request->search;
@@ -34,9 +32,8 @@ class InstructorController extends Controller
                ->orWhere('i.department','LIKE','%'.$search.'%');
            }
            $instructors = $instructors->orderBy('i.created_at','desc')->get();
-
            return response()->json([
-               "message" => "instructor Data",
+               "message" => "All instructor Data",
                "data" => $instructors,
            ],200);
        }catch(\Throwable $e){
@@ -53,26 +50,23 @@ class InstructorController extends Controller
         try{
         $request->validate([
             'employee'=>'required',
-            'department'=>'required',
-        
+            'department'=>'required',  
         ]);
-
         $instructor = new Instructor();
         $instructor->employee = $request->employee;
         $instructor->department = $request->department;
-      
         $instructor->save();
 
         DB::commit();
 
         return response()->json([
-            "msg" => "instructor Data",
+            "message" => "instructor Data Saved",
             "data"=> $instructor,
-        ],201);
+        ],200);
     }catch(\Throwable $e) {
         DB::rollback();
         return response()->json([
-            "msg"=>"oops something went wrong",
+            "message"=>"oops something went wrong",
             "error"=> $e->getMessage(),
         ],500);
     }
@@ -87,7 +81,6 @@ class InstructorController extends Controller
         ->leftJoin('departments as d', 'd.id', '=', 'i.department')
         ->where('i.id',$id)
         ->first();
-
            return response()->json([
                "message" => "instructor Data",
                "data" => $instructor,
@@ -99,6 +92,7 @@ class InstructorController extends Controller
            ],500);
        }
     }
+
     public function update(Request $request,  $id)
     {
         DB::beginTransaction();
@@ -106,9 +100,7 @@ class InstructorController extends Controller
         $request->validate([
             'employee'=>'required',
             'department'=>'required',
-        
         ]);
-
         $instructor = Instructor::find($id);
         $instructor->employee = $request->employee;
         $instructor->department = $request->department;
@@ -117,13 +109,13 @@ class InstructorController extends Controller
         DB::commit();
 
         return response()->json([
-            "msg" => "instructor Data",
+            "message" => "instructor Data Updated",
             "data"=> $instructor,
-        ],201);
+        ],200);
     }catch(\Throwable $e) {
         DB::rollback();
         return response()->json([
-            "msg"=>"oops something went wrong",
+            "message"=>"oops something went wrong",
             "error"=> $e->getMessage(),
         ],500);
     }
@@ -135,7 +127,7 @@ class InstructorController extends Controller
             $instructor = Instructor::find($id);
             $instructor ->delete();
             return response()->json([
-                "message" => "Instructor record deleted successfully",
+                "message" => "Instructor data deleted",
             ], 200);
         }
         catch(\Throwable $e){

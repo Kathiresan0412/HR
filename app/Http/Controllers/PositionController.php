@@ -8,17 +8,14 @@ use Illuminate\Support\Facades\DB;
 
 class PositionController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function getAll(Request $request)
     {
-
         try {
             $positions = DB::table('positions as p')
                 ->select('p.id', 'p.name', 'p.type', 'p.workable_time', 'p.workable_time_period', 'p.description');
 
             $search = $request->search;
+
             if (!is_null($search)) {
                 $positions = $positions
                     ->where('p.name', 'LIKE', '%' . $search . '%')
@@ -28,9 +25,7 @@ class PositionController extends Controller
 
             $filterParameters = [
                 'name' => 'p.name',
-                'description' => 'p.description',
                 'type' => 'p.type',
-
             ];
 
             foreach ($filterParameters as $parameter => $column) {
@@ -53,17 +48,27 @@ class PositionController extends Controller
             ], 500);
         }
     }
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function getOne($id)
     {
-        //
-    }
+        try {
+            $position = DB::table('positions as p')
+                ->select('p.id', 'p.name', 'p.type', 'p.workable_time', 'p.workable_time_period', 'p.description');
 
-    /**
-     * Store a newly created resource in storage.
-     */
+            $position = $position->orderBy('p.created_at', 'desc')
+                ->where('p.id', $id)
+                ->first();
+
+            return response()->json([
+                "Message" => "Position Data",
+                "Data" => $position,
+            ], 200);
+        } catch (\Throwable $e) {
+            return response()->json([
+                "Message" => "oops something went wrong",
+                "Error" => $e->getMessage(),
+            ], 500);
+        }
+    }
     public function save(Request $request)
     {
         DB::beginTransaction();
@@ -88,7 +93,7 @@ class PositionController extends Controller
 
             return response()->json([
                 "Message" => "Position Data Saved",
-                "Data" => $position,
+                "Data" => $position
             ], 200);
         } catch (\Throwable $e) {
             DB::rollback();
@@ -98,59 +103,6 @@ class PositionController extends Controller
             ], 500);
         }
     }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(position $position)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function getOne($id)
-    {
-        try {
-            $position = DB::table('positions as p')
-                ->select('p.id', 'p.name', 'p.type', 'p.workable_time', 'p.workable_time_period', 'p.description');
-
-            $position = $position->orderBy('p.created_at', 'desc')
-                ->where('p.id', $id)
-                ->first();
-
-            return response()->json([
-                "Message" => "Position Data",
-                "Data" => $position,
-            ], 200);
-        } catch (\Throwable $e) {
-            return response()->json([
-                "Message" => "oops something went wrong",
-                "Error" => $e->getMessage(),
-            ], 500);
-        }
-    }
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function delete($id)
-    {
-        try {
-            $positions = Position::find($id);
-            $positions->delete();
-            return response()->json([
-                "Message" => "Position Data Deleted",
-            ], 200);
-        } catch (\Throwable $e) {
-            return response()->json([
-                "Message" => "Ooops Something went wrong please try again",
-                "Error" => $e->getMessage(),
-            ], 500);
-        }
-    }
-
-
     public function update(Request $request, $id)
     {
         DB::beginTransaction();
@@ -162,6 +114,7 @@ class PositionController extends Controller
                 'workable_time_period' => 'required',
                 'description' => 'required'
             ]);
+
             $position = Position::find($id);
             $position->name = $request->name;
             $position->type = $request->type;
@@ -174,12 +127,27 @@ class PositionController extends Controller
 
             return response()->json([
                 "Message" => "Position Data Updated",
-                "Data" => $position,
+                "Data" => $position
             ], 200);
         } catch (\Throwable $e) {
             DB::rollback();
             return response()->json([
                 "Message" => "oops something went wrong",
+                "Error" => $e->getMessage(),
+            ], 500);
+        }
+    }
+    public function delete($id)
+    {
+        try {
+            $position = Position::find($id);
+            $position->delete();
+            return response()->json([
+                "Message" => "Position Data Deleted"
+            ], 200);
+        } catch (\Throwable $e) {
+            return response()->json([
+                "Message" => "Ooops Something went wrong please try again",
                 "Error" => $e->getMessage(),
             ], 500);
         }

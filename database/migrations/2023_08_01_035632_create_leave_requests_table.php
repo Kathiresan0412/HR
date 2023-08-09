@@ -18,8 +18,8 @@ return new class extends Migration
 
             $table->bigInteger('type')->unsigned()->index()->nullable();
             $table->foreign('type')->references('id')->on('leave_types')->onDelete('set null');
+            
             $table->date('request_on');
-            $table->date('dates');
             $table->integer('days');
             $table->string('reason');
             $table->string('status');

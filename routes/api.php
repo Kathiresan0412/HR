@@ -7,22 +7,22 @@ use App\Http\Controllers\SalaryTypeController;
 use App\Http\Controllers\QualificationController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\CompanyController;
-use App\Http\Controllers\EmployeesController;
+use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\AnnouncementController;
 use App\Http\Controllers\LeaveRequestController;
 use App\Http\Controllers\SalarayAdvanceController;
 use App\Http\Controllers\AllowedLeaveController;
-use App\Http\Controllers\ShortLeavesController;
+use App\Http\Controllers\ShortLeaveController;
 use App\Http\Controllers\LeaveTypeController;
-use App\Http\Controllers\EmployeeQualificationsController;
+use App\Http\Controllers\EmployeeQualificationController;
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\RecruitmentCandidateController;
-use App\Http\Controllers\ResignationsController;
+use App\Http\Controllers\ResignationController;
 use App\Http\Controllers\EmployeeBenefitTypeController;
 use App\Http\Controllers\TrainingRecordController;
 use App\Http\Controllers\TrainingProgramController;
 use App\Http\Controllers\InstructorController;
-use App\Http\Controllers\PromotionsController;
+use App\Http\Controllers\PromotionController;
 use App\Http\Controllers\EmployeeWorkShiftController;
 use App\Http\Controllers\EmployeeFeedbackController;
 use App\Http\Controllers\EmployeeDocumentController;
@@ -35,6 +35,12 @@ use App\Http\Controllers\OTSController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
+|
+|
+|
+|
+|
+|
 |--------------------------------------------------------------------------
 |
 | Here is where you can register API routes for your application. These
@@ -47,54 +53,63 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+//Checked by vishwa //Cross Checked by saji
 Route::get('/positions', [PositionController::class, 'getAll']);
 Route::get('/positions/{id}', [PositionController::class, 'getOne']);
 Route::post('/positions', [PositionController::class, 'save']);
 Route::put('/positions/{id}', [PositionController::class, 'update']);
 Route::delete('/positions/{id}', [PositionController::class, 'delete']);
 
+//Checked by abarnan //Cross Checked by jathusan
 Route::get('/salary-types',[SalaryTypeController::class, 'getAll']);
 Route::get('/salary-types/{id}',[SalaryTypeController::class, 'getOne']);
 Route::post('/salary-types',[SalaryTypeController::class, 'save']);
 Route::put('/salary-types/{id}',[SalaryTypeController::class, 'update']);
 Route::delete('/salary-types/{id}',[SalaryTypeController::class, 'delete']);
 
-Route::get('/qualification',[QualificationController::class, 'getAll']);
-Route::get('/qualification/{id}',[QualificationController::class, 'getOne']);
-Route::post('/qualification',[QualificationController::class, 'save']);
-Route::put('/qualification/{id}',[QualificationController::class, 'update']);
-Route::delete('/qualification/{id}',[QualificationController::class, 'delete']);
+//Checked by sangetha //Cross Checked by abarnan
+Route::get('/qualifications',[QualificationController::class, 'getAll']);
+Route::get('/qualifications/{id}',[QualificationController::class, 'getOne']);
+Route::post('/qualifications',[QualificationController::class, 'save']);
+Route::put('/qualifications/{id}',[QualificationController::class, 'update']);
+Route::delete('/qualifications/{id}',[QualificationController::class, 'delete']);
 
-Route::get ('/department', [DepartmentController::class, 'getAll']);
-Route::get ('/department/{id}', [DepartmentController::class, 'getOne']);
-Route::POST('/department', [DepartmentController::class, 'save']);
-Route::put ('/department/{id}', [DepartmentController::class, 'update']);
-Route::delete ('/department/{id}', [DepartmentController::class, 'delete']);
+//Checked by sangetha //Cross Checked by abarnan
+Route::get ('/departments', [DepartmentController::class, 'getAll']);
+Route::get ('/departments/{id}', [DepartmentController::class, 'getOne']);
+Route::POST('/departments', [DepartmentController::class, 'save']);
+Route::put ('/departments/{id}', [DepartmentController::class, 'update']);
+Route::delete ('/departments/{id}', [DepartmentController::class, 'delete']);
 
+//Checked by sangetha //Cross Checked by abarnan
 Route::get ('/companies', [CompanyController::class, 'getAll']);
 Route::get ('/companies/{id}', [CompanyController::class, 'getOne']);
 Route::POST('/companies', [CompanyController::class, 'save']);
 Route::put ('/companies/{id}', [CompanyController::class, 'update']);
 Route::delete ('/companies/{id}', [CompanyController::class, 'delete']);
 
-Route::get('/employees', [EmployeesController::class, 'index']);
-Route::get('/employees/{id}', [EmployeesController::class, 'edit']);
-Route::POST('/employees', [EmployeesController::class, 'store']);
-Route::put('/employees/{id}', [EmployeesController::class, 'update']);
-Route::delete('/employees/{id}', [EmployeesController::class, 'destroy']);
+//Checked by saji //Cross Checked by sangeetha
+Route::get ('/employees', [EmployeeController::class, 'getAll']);
+Route::get ('/employees/{id}', [EmployeeController::class, 'getOne']);
+Route::POST('/employees', [EmployeeController::class, 'save']);
+Route::put ('/employees/{id}', [EmployeeController::class, 'update']);
+Route::delete ('/employees/{id}', [EmployeeController::class, 'delete']);
 
+//Checked by vishwa //Cross Checked by saji
 Route::get('/announcements', [AnnouncementController::class, 'getAll']);
 Route::get('/announcements/{id}', [AnnouncementController::class, 'getOne']);
 Route::POST('/announcements', [AnnouncementController::class, 'save']);
 Route::put('/announcements/{id}', [AnnouncementController::class, 'update']);
 Route::delete('/announcements/{id}', [AnnouncementController::class, 'delete']);
 
-Route::get('/salaryadvance', [SalarayAdvanceController::class, 'getAll']);
-Route::get('/salaryadvance/{id}', [SalarayAdvanceController::class, 'getOne']);
-Route::post('/salaryadvance', [SalarayAdvanceController::class, 'save']);
-Route::put('/salaryadvance/{id}', [SalarayAdvanceController::class, 'update']);
-Route::delete('/salaryadvance/{id}', [SalarayAdvanceController::class, 'delete']);
+//Checked by vishwa //Cross Checked by saji
+Route::get('/salary-advances', [SalarayAdvanceController::class, 'getAll']);
+Route::get('/salary-advances/{id}', [SalarayAdvanceController::class, 'getOne']);
+Route::post('/salary-advances', [SalarayAdvanceController::class, 'save']);
+Route::put('/salary-advances/{id}', [SalarayAdvanceController::class, 'update']);
+Route::delete('/salary-advances/{id}', [SalarayAdvanceController::class, 'delete']);
 
+//Checked by sangetha //Cross Checked by abarnan
 Route::get ('/allowed-leaves', [AllowedLeaveController::class, 'getAll']);
 Route::get ('/allowed-leaves/{id}', [AllowedLeaveController::class, 'getOne']);
 Route::POST('/allowed-leaves', [AllowedLeaveController::class, 'save']);
@@ -108,20 +123,16 @@ Route::POST('/leave-requests', [LeaveRequestController::class, 'save']);
 Route::put ('/leave-requests/{id}', [LeaveRequestController::class, 'update']);
 Route::delete ('/leave-requests/{id}', [LeaveRequestController::class, 'delete']);
 
-Route::get('/leavetypes', [LeaveTypeController::class, 'getAll']);
-Route::get('/leavetypes/{id}', [LeaveTypeController::class, 'getOne']);
-Route::POST('/leavetypes', [LeaveTypeController::class, 'save']);
-Route::put('/leavetypes/{id}', [LeaveTypeController::class, 'update']);
-Route::delete('/leavetypes/{id}', [LeaveTypeController::class, 'delete']);
+//Checked by vishwa //Cross Checked by saji
+Route::get('/leave-types', [LeaveTypeController::class, 'getAll']);
+Route::get('/leave-types/{id}', [LeaveTypeController::class, 'getOne']);
+Route::POST('/leave-types', [LeaveTypeController::class, 'save']);
+Route::put('/leave-types/{id}', [LeaveTypeController::class, 'update']);
+Route::delete('/leave-types/{id}', [LeaveTypeController::class, 'delete']);
 
-Route::get('/shortLeaves', [ShortLeavesController::class, 'index']);
-Route::get('/shortLeaves/{id}', [ShortLeavesController::class, 'edit']);
-Route::POST('/shortLeaves', [ShortLeavesController::class, 'store']);
-Route::put('/shortLeaves/{id}', [ShortLeavesController::class, 'update']);
-Route::delete('/shortLeaves/{id}', [ShortLeavesController::class, 'destroy']);
-
-Route::get('/EmployeeQualifications', [EmployeeQualificationsController::class, 'getAll']);
-Route::get('/EmployeeQualifications/{id}', [EmployeeQualificationsController::class, 'getOne']);
+//Checked by vishwa //Cross Checked by saji
+Route::get('/employee-qualifications', [EmployeeQualificationController::class, 'getAll']);
+Route::get('/employee-qualifications/{id}', [EmployeeQualificationController::class, 'getOne']);
 
 //Checked by Achsuthan //Cross Checked by Viswa
 Route::get('/attendances', [AttendanceController::class, 'getAll']);
@@ -137,82 +148,96 @@ Route::POST('/recruitment-candidates', [RecruitmentCandidateController::class, '
 Route::put ('/recruitment-candidates/{id}', [RecruitmentCandidateController::class, 'update']);
 Route::delete ('/recruitment-candidates/{id}', [RecruitmentCandidateController::class, 'delete']);
 
-Route::get('/resignations', [ResignationsController::class, 'index']);
-Route::get('/resignations/{id}', [ResignationsController::class, 'edit']);
-Route::POST('/resignations', [ResignationsController::class, 'store']);
-Route::put('/resignations/{id}', [ResignationsController::class, 'update']);
-Route::delete('/resignations/{id}', [ResignationsController::class, 'destory']);
+//Checked by Jathushan //Cross Checked by Achsuthan
+Route::get('/resignations', [ResignationController::class, 'getAll']);
+Route::get('/resignations/{id}', [ResignationController::class, 'getOne']);
+Route::POST('/resignations', [ResignationController::class, 'save']);
+Route::put('/resignations/{id}', [ResignationController::class, 'update']);
+Route::delete('/resignations/{id}', [ResignationController::class, 'delete']);
 
-Route::get ('/instructor', [InstructorController::class, 'getAll']);
-Route::get ('/instructor/{id}', [InstructorController::class, 'getOne']);
-Route::POST('/instructor', [InstructorController::class, 'save']);
-Route::put ('/instructor/{id}', [InstructorController::class, 'update']);
-Route::delete ('/instructor/{id}', [InstructorController::class, 'delete']);
+//Checked by Jathushan //Cross Checked by Achsuthan
+Route::get('/employee-work-shifts', [EmployeeWorkShiftController::class, 'getAll']);
+Route::get('/employee-work-shifts/{id}', [EmployeeWorkShiftController::class, 'getOne']);
+Route::POST('/employee-work-shifts', [EmployeeWorkShiftController::class, 'save']);
+Route::put('/employee-work-shifts/{id}', [EmployeeWorkShiftController::class, 'update']);
+Route::delete('/employee-work-shifts/{id}', [EmployeeWorkShiftController::class, 'delete']);
 
+//Checked by Jathushan //Cross Checked by Achsuthan
+Route::get('/short-leaves', [ShortLeaveController::class, 'getAll']);
+Route::get('/short-leaves/{id}', [ShortLeaveController::class, 'getOne']);
+Route::POST('/short-leaves', [ShortLeaveController::class, 'save']);
+Route::put('/short-leaves/{id}', [ShortLeaveController::class, 'update']);
+Route::delete('/short-leaves/{id}', [ShortLeaveController::class, 'delete']);
+
+//Checked by Jathushan //Cross Checked by Achsuthan
+Route::get('/promotions', [PromotionController::class, 'getAll']);
+Route::get('/promotions/{id}', [PromotionController::class, 'getOne']);
+Route::post('/promotions', [PromotionController::class, 'save']);
+Route::put('/promotions/{id}', [PromotionController::class, 'update']);
+Route::delete('/promotions/{id}', [PromotionController::class, 'delete']);
+
+//Checked by Jathushan //Cross Checked by Achsuthan
+Route::get('/employee-benefit-types', [EmployeeBenefitTypeController::class, 'getAll']);
+Route::get('/employee-benefit-types/{id}', [EmployeeBenefitTypeController::class, 'getOne']);
+Route::post('/employee-benefit-types', [EmployeeBenefitTypeController::class, 'save']);
+Route::put('/employee-benefit-types/{id}', [EmployeeBenefitTypeController::class, 'update']);
+Route::delete('/employee-benefit-types/{id}', [EmployeeBenefitTypeController::class, 'delete']);
+
+//Checked by sangetha //Cross Checked by abarnan
+Route::get ('/instructors', [InstructorController::class, 'getAll']);
+Route::get ('/instructors/{id}', [InstructorController::class, 'getOne']);
+Route::POST('/instructors', [InstructorController::class, 'save']);
+Route::put ('/instructors/{id}', [InstructorController::class, 'update']);
+Route::delete ('/instructors/{id}', [InstructorController::class, 'delete']);
+
+//Checked by abarnan //Cross Checked by jathusan
 Route::get ('/employee-documents', [EmployeeDocumentController::class, 'getAll']);
 Route::get ('/employee-documents/{id}', [EmployeeDocumentController::class, 'getOne']);
 Route::POST('/employee-documents', [EmployeeDocumentController::class, 'save']);
 Route::put ('/employee-documents/{id}', [EmployeeDocumentController::class, 'update']);
 Route::delete ('/employee-documents/{id}', [EmployeeDocumentController::class, 'delete']);
-//aparnan
 
-//achuthan
+//Checked by abarnan //Cross Checked by jathusan
 Route::get ('/training-programs', [TrainingProgramController::class, 'getAll']);
 Route::get ('/training-programs/{id}', [TrainingProgramController::class, 'getOne']);
 Route::POST('/training-programs', [TrainingProgramController::class, 'save']);
 Route::put ('/training-programs/{id}', [TrainingProgramController::class, 'update']);
 Route::delete ('/training-programs/{id}', [TrainingProgramController::class, 'delete']);
 
-Route::get('/work-shifts', [EmployeeWorkShiftController::class, 'index']);
-Route::get('/work-shifts/{id}', [EmployeeWorkShiftController::class, 'edit']);
-Route::POST('/work-shifts', [EmployeeWorkShiftController::class, 'store']);
-Route::put('/work-shifts/{id}', [EmployeeWorkShiftController::class, 'update']);
-Route::delete('/work-shifts/{id}', [EmployeeWorkShiftController::class, 'destory']);
-
-Route::get('/promotions', [PromotionsController::class, 'getAll']);
-Route::get('/promotions/{id}', [PromotionsController::class, 'getOne']);
-Route::post('/promotions', [PromotionsController::class, 'save']);
-Route::put('/promotions/{id}', [PromotionsController::class, 'update']);
-Route::delete('/promotions/{id}', [PromotionsController::class, 'delete']);
-
-
+//Checked by abarnan //Cross Checked by jathusan
 Route::get ('/training-records', [TrainingRecordController::class, 'getAll']);
 Route::get ('/training-records/{id}', [TrainingRecordController::class, 'getOne']);
 Route::POST('/training-records', [TrainingRecordController::class, 'save']);
 Route::put ('/training-records/{id}', [TrainingRecordController::class, 'update']);
 Route::delete ('/training-records/{id}', [TrainingRecordController::class, 'delete']);
-//sangi
+
+//Checked by abarnan //Cross Checked by jathusan
 Route::get('/ots', [OTSController::class, 'getAll']);
 Route::get('/ots/{id}', [OTSController::class, 'getOne']);
 Route::post('/ots', [OTSController::class, 'save']);
 Route::put('/ots/{id}', [OTSController::class, 'update']);
 Route::delete('/ots/{id}', [OTSController::class, 'delete']);
 
-Route::get('/EmployeeBenefitType', [EmployeeBenefitTypeController::class, 'index']);
-Route::get('/EmployeeBenefitType/{id}', [EmployeeBenefitTypeController::class, 'edit']);
-Route::post('/EmployeeBenefitType', [EmployeeBenefitTypeController::class, 'store']);
-Route::put('/EmployeeBenefitType/{id}', [EmployeeBenefitTypeController::class, 'update']);
-Route::delete('/EmployeeBenefitType/{id}', [EmployeeBenefitTypeController::class, 'destory']);
+//Checked by saji //Cross Checked by sangeetha
+Route::get('/employee-benefits', [EmployeeBenefitController::class, 'getAll']);
+Route::get('/employee-benefits/{id}', [EmployeeBenefitController::class, 'getOne']);
+Route::post('/employee-benefits', [EmployeeBenefitController::class, 'save']);
+Route::put('/employee-benefits/{id}', [EmployeeBenefitController::class, 'update']);
+Route::delete('/employee-benefits/{id}', [EmployeeBenefitController::class, 'delete']);
 
+//Checked by saji //Cross Checked by sangeetha
+Route::get('/employee-feedbacks', [EmployeeFeedbackController::class, 'getAll']);
+Route::get('/employee-feedbacks/{id}', [EmployeeFeedbackController::class, 'getOne']);
+Route::post('/employee-feedbacks', [EmployeeFeedbackController::class, 'save']);
+Route::put('/employee-feedbacks/{id}', [EmployeeFeedbackController::class, 'update']);
+Route::delete('/employee-feedbacks/{id}', [EmployeeFeedbackController::class, 'delete']);
 
-
-Route::get('/EmployeeBenefit', [EmployeeBenefitController::class, 'index']);
-Route::get('/EmployeeBenefit/{id}', [EmployeeBenefitController::class, 'edit']);
-Route::post('/EmployeeBenefit', [EmployeeBenefitController::class, 'store']);
-Route::put('/EmployeeBenefit/{id}', [EmployeeBenefitController::class, 'update']);
-Route::delete('/EmployeeBenefit/{id}', [EmployeeBenefitController::class, 'destory']);
-
-Route::get('/EmployeeFeedback', [EmployeeFeedbackController::class, 'index']);
-Route::get('/EmployeeFeedback/{id}', [EmployeeFeedbackController::class, 'edit']);
-Route::post('/EmployeeFeedback', [EmployeeFeedbackController::class, 'store']);
-Route::put('/EmployeeFeedback/{id}', [EmployeeFeedbackController::class, 'update']);
-Route::delete('/EmployeeFeedback/{id}', [EmployeeFeedbackController::class, 'destory']);
-
-Route::get('/EmployeeHealth', [EmployeeHealthController::class, 'index']);
-Route::get('/EmployeeHealth/{id}', [EmployeeHealthController::class, 'edit']);
-Route::post('/EmployeeHealth', [EmployeeHealthController::class, 'store']);
-Route::put('/EmployeeHealth/{id}', [EmployeeHealthController::class, 'update']);
-Route::delete('/EmployeeHealth/{id}', [EmployeeHealthController::class, 'destory']);
+//Checked by saji //Cross Checked by sangeetha
+Route::get('/employee-healths', [EmployeeHealthController::class, 'getAll']);
+Route::get('/employee-healths/{id}', [EmployeeHealthController::class, 'getOne']);
+Route::post('/employee-healths', [EmployeeHealthController::class, 'save']);
+Route::put('/employee-healths/{id}', [EmployeeHealthController::class, 'update']);
+Route::delete('/employee-healths/{id}', [EmployeeHealthController::class, 'delete']);
 
 //Checked by Achsuthan //Cross Checked by Viswa
 Route::get('/employee-emergency-contacts', [EmployeeEmergencyContactController::class, 'getAll']);

@@ -5,111 +5,54 @@ namespace App\Http\Controllers;
 use App\Models\EmployeeBenefit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+
 class EmployeeBenefitController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function getAll(Request $request)
     {
         try {
-            $eemployeeBenefits = DB::table('employee_benefits as eb')
-        ->select('eb.id','e.first_name as attendees','ebt.name as benefit_type','eb.enrollment_date','eb.coverage_details','eb.premiums','eb.beneficiary_information')
-        ->leftJoin('employees as e', 'e.id', '=', 'eb.attendees')
-        ->leftJoin('employee_benefit_types as ebt', 'ebt.id', '=','eb.benefit_type');
-        
+            $employeeBenefits = DB::table('employee_benefits as eb')
+                ->select('eb.id', 'e.first_name as attendees', 'ebt.name as benefit_type', 'eb.enrollment_date', 'eb.coverage_details', 'eb.premiums', 'eb.beneficiary_information')
+                ->leftJoin('employees as e', 'e.id', '=', 'eb.attendees')
+                ->leftJoin('employee_benefit_types as ebt', 'ebt.id', '=', 'eb.benefit_type');
 
-           $search = $request->search;
-           if (!is_null($search)){
-               $eemployeeBenefits = $eemployeeBenefits
-               ->where('eb.id','LIKE','%'.$search.'%')
-               ->orWhere('eb.attendees','LIKE','%'.$search.'%')
-               ->orWhere('eb.benefit_type','LIKE','%'.$search.'%')
-               ->orWhere('eb.coverage_details','LIKE','%'.$search.'%')
-               ->orWhere('eb.premiums','LIKE','%'.$search.'%')
-               ->orWhere('eb.beneficiary_information','LIKE','%'.$search.'%');
 
-           }
-           $eemployeeBenefits = $eemployeeBenefits->orderBy('eb.id','desc')->get();
+            $search = $request->search;
+            if (!is_null($search)) {
+                $employeeBenefits = $employeeBenefits
+                    ->where('eb.id', 'LIKE', '%' . $search . '%')
+                    ->orWhere('eb.attendees', 'LIKE', '%' . $search . '%')
+                    ->orWhere('eb.benefit_type', 'LIKE', '%' . $search . '%')
+                    ->orWhere('eb.coverage_details', 'LIKE', '%' . $search . '%')
+                    ->orWhere('eb.premiums', 'LIKE', '%' . $search . '%')
+                    ->orWhere('eb.beneficiary_information', 'LIKE', '%' . $search . '%');
 
-           return response()->json([
-               "message" => "Employee benefits Data",
-               "data" => $eemployeeBenefits,
-           ],200);
-       }catch(\Throwable $e){
-           return response()->json([
-               "message"=>"oops something went wrong",
-               "error"=> $e->getMessage(),
-           ],500);
-       }
-    }
+            }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
+            $filterParameters = [
+                'enrollment_date' => 'eb.enrollment_date',
+                'coverage_details' => 'eb.coverage_details',
+                'attendees' => 'eb.attendees',
+                'benefit_type' => 'eb.benefit_type',
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        DB::beginTransaction();
-        try {
-           
+            ];
 
-            $eemployeeBenefits = new EmployeeBenefit();
-            $eemployeeBenefits->attendees = $request->attendees;
-            $eemployeeBenefits->benefit_type = $request->benefit_type;
-            $eemployeeBenefits->enrollment_date = $request->enrollment_date;
-            $eemployeeBenefits->coverage_details = $request->coverage_details;
-            $eemployeeBenefits->premiums = $request->premiums;
-            $eemployeeBenefits->beneficiary_information = $request->beneficiary_information;
-            $eemployeeBenefits->save();
+            foreach ($filterParameters as $parameter => $column) {
+                $value = $request->input($parameter);
+                if (isset($value) && $value !== '') {
+                    $employeeBenefits->where($column, '=', $value);
+                }
+            }
 
-            DB::commit();
+
+            $employeeBenefits = $employeeBenefits->orderBy('eb.created_at', 'desc')->get();
 
             return response()->json([
-                "msg" => "Employee benefits Data",
-                "data" => $eemployeeBenefits,
-            ], 201);
-        } catch (\Throwable $e) {
-            DB::rollback();
-            return response()->json([
-                "msg" => "oops something went wrong",
-                "error" => $e->getMessage(),
-            ], 500);
-        }
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(EmployeeBenefit $employeeBenefit)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit( $id)
-    {
-        try {
-
-            $eemployeeBenefits = DB::table('employee_benefits as eb')
-            ->select('eb.id','e.first_name as attendees','ebt.name as benefit_type','eb.enrollment_date','eb.coverage_details','eb.premiums','eb.beneficiary_information')
-            ->leftJoin('employees as e', 'e.id', '=', 'eb.attendees')
-            ->leftJoin('employee_benefit_types as ebt', 'ebt.id', '=','eb.benefit_type')
-                ->where('eb.id', $id)
-                ->first();
-
-            return response()->json([
-                "message" => "Employee benefits Data",
-                "data" => $eemployeeBenefits,
+                "message" => "Employee Benefits Data",
+                "data" => $employeeBenefits,
             ], 200);
         } catch (\Throwable $e) {
             return response()->json([
@@ -119,29 +62,25 @@ class EmployeeBenefitController extends Controller
         }
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request,  $id)
+    public function save(Request $request)
     {
         DB::beginTransaction();
         try {
-          
-            $EmployeeBenefit =EmployeeBenefit ::find($id);
-            $EmployeeBenefit->attendees = $request->attendees;
-            $EmployeeBenefit->benefit_type = $request->benefit_type;
-            $EmployeeBenefit->enrollment_date = $request->enrollment_date;
-            $EmployeeBenefit->coverage_details = $request->coverage_details;
-            $EmployeeBenefit->premiums = $request->premiums;
-            $EmployeeBenefit->beneficiary_information = $request->beneficiary_information;
-            $EmployeeBenefit->save();
+            $employeeBenefit = new EmployeeBenefit();
+            $employeeBenefit->attendees = $request->attendees;
+            $employeeBenefit->benefit_type = $request->benefit_type;
+            $employeeBenefit->enrollment_date = $request->enrollment_date;
+            $employeeBenefit->coverage_details = $request->coverage_details;
+            $employeeBenefit->premiums = $request->premiums;
+            $employeeBenefit->beneficiary_information = $request->beneficiary_information;
+            $employeeBenefit->save();
 
             DB::commit();
 
             return response()->json([
-                "msg" => "Employee benefits Data",
-                "data" => $EmployeeBenefit,
-            ], 201);
+                "msg" => "Employee Benefit Data Saved",
+                "data" => $employeeBenefit,
+            ], 200);
         } catch (\Throwable $e) {
             DB::rollback();
             return response()->json([
@@ -151,15 +90,69 @@ class EmployeeBenefitController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy( $id)
+    public function getOne($id)
     {
-        {
+        try {
+
+            $employeeBenefit = DB::table('employee_benefits as eb')
+                ->select('eb.id', 'e.first_name as attendees', 'ebt.name as benefit_type', 'eb.enrollment_date', 'eb.coverage_details', 'eb.premiums', 'eb.beneficiary_information')
+                ->leftJoin('employees as e', 'e.id', '=', 'eb.attendees')
+                ->leftJoin('employee_benefit_types as ebt', 'ebt.id', '=', 'eb.benefit_type')
+                ->where('eb.id', $id)
+                ->first();
+
+            return response()->json([
+                "message" => "Employee benefit Data",
+                "data" => $employeeBenefit,
+            ], 200);
+
+        } catch (\Throwable $e) {
+            return response()->json([
+                "message" => "oops something went wrong",
+                "error" => $e->getMessage(),
+            ], 500);
+        }
+    }
+
+    public function update(Request $request, $id)
+    {
+        DB::beginTransaction();
+        try {
+
+            $employeeBenefit = EmployeeBenefit::find($id);
+            $employeeBenefit->attendees = $request->attendees;
+            $employeeBenefit->benefit_type = $request->benefit_type;
+            $employeeBenefit->enrollment_date = $request->enrollment_date;
+            $employeeBenefit->coverage_details = $request->coverage_details;
+            $employeeBenefit->premiums = $request->premiums;
+            $employeeBenefit->beneficiary_information = $request->beneficiary_information;
+            $employeeBenefit->save();
+
+            DB::commit();
+
+            return response()->json([
+                "msg" => "Employee Benefit Data Updated",
+                "data" => $employeeBenefit,
+            ], 200);
+        } catch (\Throwable $e) {
+            DB::rollback();
+            return response()->json([
+                "msg" => "oops something went wrong",
+                "error" => $e->getMessage(),
+            ], 500);
+        }
+    }
+
+    public function delete($id)
+    { {
             try {
                 $EEmployeeBenefit = EmployeeBenefit::find($id);
                 $EEmployeeBenefit->delete();
+
+                return response()->json([
+                    "message" => "Employee Benefit Data Deleted"
+                ], 200);
+
             } catch (\Throwable $e) {
                 return response()->json([
                     "message" => "Ooops Something went wrong please try again",

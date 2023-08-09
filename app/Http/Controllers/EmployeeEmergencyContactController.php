@@ -38,13 +38,13 @@ class EmployeeEmergencyContactController extends Controller
             $empEmergenContacts = $empEmergenContacts->orderBy('e.created_at', 'desc')->get();
 
             return response()->json([
-                "message" => "All Employee Emergency Contact Data",
-                "data" => $empEmergenContacts,
+                "Message" => "All Employee Emergency Contact Data",
+                "Data" => $empEmergenContacts,
             ], 200);
         } catch (\Throwable $e) {
             return response()->json([
-                "message" => "oops something went wrong",
-                "error" => $e->getMessage(),
+                "Message" => "oops something went wrong",
+                "Error" => $e->getMessage(),
             ], 500);
         }
     }
@@ -59,13 +59,13 @@ class EmployeeEmergencyContactController extends Controller
                 ->first();
 
             return response()->json([
-                "message" => "Employee Emergency Contact Data",
-                "data" => $empEmergenContact,
+                "Message" => "Employee Emergency Contact Data",
+                "Data" => $empEmergenContact,
             ], 200);
         } catch (\Throwable $e) {
             return response()->json([
-                "message" => "oops something went wrong",
-                "error" => $e->getMessage(),
+                "Message" => "oops something went wrong",
+                "Error" => $e->getMessage(),
             ], 500);
         }
     }
@@ -81,19 +81,19 @@ class EmployeeEmergencyContactController extends Controller
                 'email' => 'required'
             ]);
 
-            $empEmergenCon = new EmployeeEmergencyContact();
-            $empEmergenCon->employee = $request->employee;
-            $empEmergenCon->contact_name = $request->contact_name;
-            $empEmergenCon->relationship_to_employee = $request->relationship_to_employee;
-            $empEmergenCon->mobile_number = $request->mobile_number;
-            $empEmergenCon->email = $request->email;
-            $empEmergenCon->save();
+            $empEmergenContact = new EmployeeEmergencyContact();
+            $empEmergenContact->employee = $request->employee;
+            $empEmergenContact->contact_name = $request->contact_name;
+            $empEmergenContact->relationship_to_employee = $request->relationship_to_employee;
+            $empEmergenContact->mobile_number = $request->mobile_number;
+            $empEmergenContact->email = $request->email;
+            $empEmergenContact->save();
 
             DB::commit();
 
             return response()->json([
-                "message" => "Employee Emergency Contact Data Saved",
-                "data" => $empEmergenCon,
+                "Message" => "Employee Emergency Contact Data Saved",
+                "Data" => $empEmergenContact,
             ], 200);
         } catch (\Throwable $e) {
             DB::rollback();
@@ -115,41 +115,41 @@ class EmployeeEmergencyContactController extends Controller
                 'email' => 'required'
             ]);
 
-            $empEmergenCon = EmployeeEmergencyContact::find($id);
-            $empEmergenCon->employee = $request->employee;
-            $empEmergenCon->contact_name = $request->contact_name;
-            $empEmergenCon->relationship_to_employee = $request->relationship_to_employee;
-            $empEmergenCon->mobile_number = $request->mobile_number;
-            $empEmergenCon->email = $request->email;
-            $empEmergenCon->save();
+            $empEmergenContact = EmployeeEmergencyContact::find($id);
+            $empEmergenContact->employee = $request->employee;
+            $empEmergenContact->contact_name = $request->contact_name;
+            $empEmergenContact->relationship_to_employee = $request->relationship_to_employee;
+            $empEmergenContact->mobile_number = $request->mobile_number;
+            $empEmergenContact->email = $request->email;
+            $empEmergenContact->save();
 
             DB::commit();
 
             return response()->json([
-                "message" => "Employee Emergency Contact Data Updated",
-                "data" => $empEmergenCon,
+                "Message" => "Employee Emergency Contact Data Updated",
+                "Data" => $empEmergenContact,
             ], 200);
         } catch (\Throwable $e) {
             DB::rollback();
             return response()->json([
-                "msg" => "oops something went wrong",
-                "error" => $e->getMessage(),
+                "Message" => "oops something went wrong",
+                "Error" => $e->getMessage(),
             ], 500);
         }
     }
     public function delete($id)
     {
         try {
-            $empEmergenCon = EmployeeEmergencyContact::find($id);
-            $empEmergenCon->delete();
+            $empEmergenContact = EmployeeEmergencyContact::find($id);
+            $empEmergenContact->delete();
 
             return response()->json([
-                "msg" => "Employee Emergency Contact Data Deleted"
+                "Message" => "Employee Emergency Contact Data Deleted"
             ], 200);
         } catch (\Throwable $e) {
             return response()->json([
-                "message" => "Ooops Something went wrong please try again",
-                "error" => $e->getMessage(),
+                "Message" => "Ooops Something went wrong please try again",
+                "Error" => $e->getMessage(),
             ], 500);
         }
     }

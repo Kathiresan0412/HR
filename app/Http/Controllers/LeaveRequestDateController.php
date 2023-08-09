@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\AttendenceAdjusment;
+use App\Models\LeaveRequestDate;
 use Illuminate\Http\Request;
 
-class AttendenceAdjusmentController extends Controller
+class LeaveRequestDateController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -34,7 +34,7 @@ class AttendenceAdjusmentController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(AttendenceAdjusment $attendenceAdjusment)
+    public function show(LeaveRequestDate $leaveRequestDate)
     {
         //
     }
@@ -42,7 +42,7 @@ class AttendenceAdjusmentController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(AttendenceAdjusment $attendenceAdjusment)
+    public function edit(LeaveRequestDate $leaveRequestDate)
     {
         //
     }
@@ -50,7 +50,7 @@ class AttendenceAdjusmentController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, AttendenceAdjusment $attendenceAdjusment)
+    public function update(Request $request, LeaveRequestDate $leaveRequestDate)
     {
         //
     }
@@ -58,7 +58,7 @@ class AttendenceAdjusmentController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy( $id)
+    public function destroy(LeaveRequestDate $leaveRequestDate)
     {
         //
     }

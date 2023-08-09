@@ -12,28 +12,6 @@ class LeaveTypeController extends Controller
      * Display a listing of the resource.
      */
 
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(LeaveType $leaveType)
-    {
-        //
-    }
-
     public function getAll(Request $request)
     {
         try {
@@ -49,7 +27,6 @@ class LeaveTypeController extends Controller
                     ->orWhere('t.description', 'LIKE', '%' . $search . '%');
             }
 
-
             $filterParameters = [
                 'is_no_pay' => 't.is_no_pay',
                 'description' => 't.description',
@@ -62,10 +39,11 @@ class LeaveTypeController extends Controller
                     $leaveTypes->where($column, '=', $value);
                 }
             }
+
             $leaveTypes = $leaveTypes->orderBy('t.created_at', 'desc')->get();
 
             return response()->json([
-                "Message" => " All Leavetypes Data",
+                "Message" => " All Leavetype Data",
                 "Data" => $leaveTypes,
             ], 200);
         } catch (\Throwable $e) {
@@ -76,7 +54,6 @@ class LeaveTypeController extends Controller
         }
     }
 
-
     public function getOne($id)
     {
         try {
@@ -84,15 +61,15 @@ class LeaveTypeController extends Controller
             $leaveType = DB::table('leave_types as t')
                 ->select('t.id', 't.name', 't.is_no_pay', 't.description');
 
-
             $leaveType = $leaveType->orderBy('t.created_at', 'desc')
                 ->where('t.id', $id)
                 ->first();
 
             return response()->json([
-                "Message" => "Leavetype Data",
+                "Message" => "Leave Type Data",
                 "Data" => $leaveType,
             ], 200);
+
         } catch (\Throwable $e) {
             return response()->json([
                 "Message" => "Oops something went wrong",
@@ -100,7 +77,6 @@ class LeaveTypeController extends Controller
             ], 500);
         }
     }
-
 
     public function save(Request $request)
     {
@@ -125,6 +101,7 @@ class LeaveTypeController extends Controller
                 "Message" => "Leavetypes Data Saved",
                 "Data" => $leaveType,
             ], 200);
+
         } catch (\Throwable $e) {
             DB::rollback();
             return response()->json([
@@ -133,7 +110,6 @@ class LeaveTypeController extends Controller
             ], 500);
         }
     }
-
 
     public function update(Request $request, $id)
     {
@@ -155,13 +131,11 @@ class LeaveTypeController extends Controller
             DB::commit();
 
             return response()->json([
-                "Message" => "Leavetypes Data Updated",
+                "Message" => "Leave Types Data Updated",
                 "Data" => $leaveType,
             ], 200);
         } catch (\Throwable $e) {
-
             DB::rollback();
-
             return response()->json([
                 "Message" => "Oops something went wrong",
                 "Error" => $e->getMessage(),
@@ -175,7 +149,7 @@ class LeaveTypeController extends Controller
             $leavetype = LeaveType::find($id);
             $leavetype->delete();
             return response()->json([
-                "Message" => "LeaveTypes Data Deleted",
+                "Message" => "Leave Type Data Deleted",
             ], 200);
         } catch (\Throwable $e) {
             return response()->json([
