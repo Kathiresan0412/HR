@@ -2,21 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\EmployeeQualification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class EmployeeQualificationController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-
-    /**
-     * Show the form for creating a new resource.
-     */
-  
-    public function getAll(Request $request,)
+    public function getAll(Request $request, )
     {
         try {
             $employeeQualifications = DB::table('employee_qualifications as eq')
@@ -57,7 +48,6 @@ class EmployeeQualificationController extends Controller
             ], 500);
         }
     }
-
     public function getOne($id)
     {
         try {
