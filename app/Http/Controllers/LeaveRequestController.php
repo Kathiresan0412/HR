@@ -69,6 +69,8 @@ class LeaveRequestController extends Controller
 
     }
     public function getOne($id)
+
+    
     {
         try {
             $leaveRequest = DB::table('leave_requests as l')

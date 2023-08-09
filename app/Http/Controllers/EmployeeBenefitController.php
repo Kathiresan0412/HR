@@ -54,7 +54,6 @@ class EmployeeBenefitController extends Controller
             ], 500);
         }
     }
-
     public function save(Request $request)
     {
         DB::beginTransaction();
@@ -82,11 +81,9 @@ class EmployeeBenefitController extends Controller
             ], 500);
         }
     }
-
     public function getOne($id)
     {
         try {
-
             $employeeBenefit = DB::table('employee_benefits as eb')
                 ->select('eb.id', 'e.first_name as attendees', 'ebt.name as benefit_type', 'eb.enrollment_date', 'eb.coverage_details', 'eb.premiums', 'eb.beneficiary_information')
                 ->leftJoin('employees as e', 'e.id', '=', 'eb.attendees')
@@ -106,12 +103,10 @@ class EmployeeBenefitController extends Controller
             ], 500);
         }
     }
-
     public function update(Request $request, $id)
     {
         DB::beginTransaction();
         try {
-
             $employeeBenefit = EmployeeBenefit::find($id);
             $employeeBenefit->attendees = $request->attendees;
             $employeeBenefit->benefit_type = $request->benefit_type;
@@ -135,7 +130,6 @@ class EmployeeBenefitController extends Controller
             ], 500);
         }
     }
-
     public function delete($id)
     { {
             try {

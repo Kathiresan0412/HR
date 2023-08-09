@@ -8,9 +8,6 @@ use DB;
 
 class EmployeeFeedbackController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function getAll(Request $request)
     {
         try {
@@ -30,7 +27,6 @@ class EmployeeFeedbackController extends Controller
             $filterParameters = [
                 'employee' => 'ef.employee',
                 'feedback_date' => 'ef.feedback_date',
-
             ];
 
             foreach ($filterParameters as $parameter => $column) {
@@ -53,7 +49,6 @@ class EmployeeFeedbackController extends Controller
             ], 500);
         }
     }
-
     public function save(Request $request)
     {
         try {
@@ -86,7 +81,6 @@ class EmployeeFeedbackController extends Controller
             ], 500);
         }
     }
-
     public function getOne($id)
     {
         try {
@@ -108,10 +102,6 @@ class EmployeeFeedbackController extends Controller
             ], 500);
         }
     }
-
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, $id)
     {
         DB::beginTransaction();
@@ -131,6 +121,7 @@ class EmployeeFeedbackController extends Controller
             $employeeFeedback->save();
 
             DB::commit();
+
             return response()->json([
                 "msg" => "Employee Feedback Data Updated",
                 "data" => $employeeFeedback,
@@ -144,7 +135,6 @@ class EmployeeFeedbackController extends Controller
             ], 500);
         }
     }
-
     public function delete($id)
     {
         try {

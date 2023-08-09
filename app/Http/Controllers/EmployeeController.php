@@ -10,9 +10,6 @@ use Illuminate\Support\Facades\DB;
 
 class EmployeeController extends Controller
 {
-
-
-    /**************************API functions**********************************/
     public function getAll(Request $request)
     {
         try {
