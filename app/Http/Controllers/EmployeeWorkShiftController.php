@@ -15,7 +15,7 @@ class EmployeeWorkShiftController extends Controller
                 // ->leftJoin('employee_work_shifts as ews','ews.id','=','wsd.work_shif_id')
                 ->leftJoin('employees as e', 'e.id', '=', 'ews.employee');
 
-            $employeeWorkShifts = $employeeWorkShifts->orderBy('ews.created_at', 'desc')->get();
+         //   $employeeWorkShifts = $employeeWorkShifts->orderBy('ews.created_at', 'desc')->get();
             $filterParameters = [
                 'date' => 're.date',
                 'is_of_hour' => 'ews.is_of_hour',
@@ -31,13 +31,13 @@ class EmployeeWorkShiftController extends Controller
             }
             $search = $request->search;
             if (!is_null($search)) {
-                $promotions = $employeeWorkShifts
+                $employeeWorkShifts = $employeeWorkShifts
                     ->where('ews.employee', 'LIKE', '%' . $search . '%')
                     ->orWhere('ews.previous_position', 'LIKE', '%' . $search . '%')
                   //  ->orWhere('p.current_position', 'LIKE', '%' . $search . '%')
                     ->orWhere('ews.status', 'LIKE', '%' . $search . '%');
             }
-            $promotions = $promotions->orderBy('p.created_at', 'desc')->get();
+            $employeeWorkShifts = $employeeWorkShifts->orderBy('ews.created_at', 'desc')->get();
 
             return response()->json([
                 "message" => "All work shift Data",

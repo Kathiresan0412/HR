@@ -135,13 +135,6 @@ class EmployeeController extends Controller
                 ->get();
             $EmployeeQualifications = [];
             foreach ($EmployeeQualification as $employeeqalificatio) {
-                // $qualific= $employeeqalificatio->qualification;
-                // $qualific = DB::table('employee_qualifications as eq')
-                // ->select('qu.name as qualification')
-                // ->leftJoin('qualifications as qu', 'qu.id', '=', 'eq.qualification')
-                // ->where('eq.id',$qualification)
-                // ->first();
-                // return $employeeqalificatio;
                 array_push($EmployeeQualifications, $employeeqalificatio->name);
 
             }

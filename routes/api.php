@@ -22,7 +22,7 @@ use App\Http\Controllers\EmployeeBenefitTypeController;
 use App\Http\Controllers\TrainingRecordController;
 use App\Http\Controllers\TrainingProgramController;
 use App\Http\Controllers\InstructorController;
-use App\Http\Controllers\PromotionsController;
+use App\Http\Controllers\PromotionController;
 use App\Http\Controllers\EmployeeWorkShiftController;
 use App\Http\Controllers\EmployeeFeedbackController;
 use App\Http\Controllers\EmployeeDocumentController;
@@ -114,8 +114,8 @@ Route::POST('/leave-types', [LeaveTypeController::class, 'save']);
 Route::put('/leave-types/{id}', [LeaveTypeController::class, 'update']);
 Route::delete('/leave-types/{id}', [LeaveTypeController::class, 'delete']);
 
-Route::get('/Employee-qualifications', [EmployeeQualificationsController::class, 'getAll']);
-Route::get('/Employee-qualifications/{id}', [EmployeeQualificationsController::class, 'getOne']);
+Route::get('/employee-qualifications', [EmployeeQualificationsController::class, 'getAll']);
+Route::get('/employee-qualifications/{id}', [EmployeeQualificationsController::class, 'getOne']);
 
 //Checked by Achsuthan //Cross Checked by Viswa
 Route::get('/attendances', [AttendanceController::class, 'getAll']);
@@ -148,18 +148,17 @@ Route::POST('/short-leaves', [ShortLeavesController::class, 'save']);
 Route::put('/short-leaves/{id}', [ShortLeavesController::class, 'update']);
 Route::delete('/short-leaves/{id}', [ShortLeavesController::class, 'delete']);
 
-Route::get('/promotions', [PromotionsController::class, 'getAll']);
-Route::get('/promotions/{id}', [PromotionsController::class, 'getOne']);
-Route::post('/promotions', [PromotionsController::class, 'save']);
-Route::put('/promotions/{id}', [PromotionsController::class, 'update']);
-Route::delete('/promotions/{id}', [PromotionsController::class, 'delete']);
+Route::get('/promotions', [PromotionController::class, 'getAll']);
+Route::get('/promotions/{id}', [PromotionController::class, 'getOne']);
+Route::post('/promotions', [PromotionController::class, 'save']);
+Route::put('/promotions/{id}', [PromotionController::class, 'update']);
+Route::delete('/promotions/{id}', [PromotionController::class, 'delete']);
 
 Route::get('/employee-benefit-types', [EmployeeBenefitTypeController::class, 'getAll']);
 Route::get('/employee-benefit-types/{id}', [EmployeeBenefitTypeController::class, 'getOne']);
 Route::post('/employee-benefit-types', [EmployeeBenefitTypeController::class, 'save']);
 Route::put('/employee-benefit-types/{id}', [EmployeeBenefitTypeController::class, 'update']);
 Route::delete('/employee-benefit-types/{id}', [EmployeeBenefitTypeController::class, 'delete']);
-
 //aparnan
 
 Route::get ('/instructors', [InstructorController::class, 'getAll']);

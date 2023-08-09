@@ -42,8 +42,6 @@ class PositionController extends Controller
                     $positions->where($column, '=', $value);
                 }
             }
-
-            $positions = $positions->orderBy('p.id', 'desc')->get();
             $positions = $positions->orderBy('p.created_at', 'desc')->get();
 
 
