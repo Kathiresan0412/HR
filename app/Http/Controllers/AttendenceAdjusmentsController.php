@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\AttendenceAdjusments;
+use App\Models\AttendenceAdjusment;
 use Illuminate\Http\Request;
 
-class AttendenceAdjusmentsController extends Controller
+class AttendenceAdjusmentController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -34,7 +34,7 @@ class AttendenceAdjusmentsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(AttendenceAdjusments $attendenceAdjusments)
+    public function show(AttendenceAdjusment $attendenceAdjusment)
     {
         //
     }
@@ -42,7 +42,7 @@ class AttendenceAdjusmentsController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(AttendenceAdjusments $attendenceAdjusments)
+    public function edit(AttendenceAdjusment $attendenceAdjusment)
     {
         //
     }
@@ -50,7 +50,7 @@ class AttendenceAdjusmentsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, AttendenceAdjusments $attendenceAdjusments)
+    public function update(Request $request, AttendenceAdjusment $attendenceAdjusment)
     {
         //
     }
@@ -58,7 +58,7 @@ class AttendenceAdjusmentsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(AttendenceAdjusments $attendenceAdjusments)
+    public function destroy( $id)
     {
         //
     }
