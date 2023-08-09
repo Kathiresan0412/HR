@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Employee;
 use Illuminate\Http\Request;
-use App\Models\EmployeeQualifications;
+use App\Models\EmployeeQualification;
 
 use Illuminate\Support\Facades\DB;
 
@@ -68,7 +68,14 @@ class EmployeeController extends Controller
             //filter----------------------------------------------
             $filterParameters = [
                 'type' => 'p.type',
-
+                'dob_date' => 'e.dob_date',
+                'gender' => 'e.gender',
+                'blood' => 'e.blood',
+                'company' => 'e.company',
+                'position' => 'e.position',
+                'department' => 'e.department',
+                'hire_date' => 'e.hire_date',
+                'reg_hiredate' => 'e.reg_hiredate'
 
             ];
 
@@ -137,7 +144,7 @@ class EmployeeController extends Controller
                 ->leftJoin('users as u', 'u.id', '=', 'e.created_by')
                 ->where('e.id', $id)
                 ->first();
-            $employeeQualification = employeeQualifications::leftJoin('qualifications as qu', 'qu.id', '=', 'employee_qualifications.qualification')
+            $employeeQualification = EmployeeQualification::leftJoin('qualifications as qu', 'qu.id', '=', 'employee_qualifications.qualification')
                 ->where('employee', $id)
                 ->get();
             $employeeQualifications = [];
@@ -229,7 +236,7 @@ class EmployeeController extends Controller
             if ($request->has('qualifications') && is_array($request->qualifications)) {
                 $qualifications = $request->qualifications;
                 foreach ($qualifications as $qualification) {
-                    $com = new EmployeeQualifications();
+                    $com = new EmployeeQualification();
                     $com->employee = $employee_id;
                     $com->qualification = $qualification;
                     $com->save();
@@ -316,12 +323,12 @@ class EmployeeController extends Controller
             $employee->status = $request->input('status');
             $employee->save();
 
-            EmployeeQualifications::where('employee', $id)->delete();
+            EmployeeQualification::where('employee', $id)->delete();
 
             $qualification = $request->qualification;
             if (!is_null($qualification)) {
                 foreach ($qualification as $qualification) {
-                    $com = new EmployeeQualifications();
+                    $com = new EmployeeQualification();
                     $com->employee = $employee->id;
                     $com->qualification = $qualification;
                     $com->save();
