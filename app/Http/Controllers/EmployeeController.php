@@ -235,10 +235,10 @@ class EmployeeController extends Controller
 
             $qualifications = $request->qualification;
             foreach($qualifications as $qualification){
-                $EQ=new EmployeeQualification();
-                $EQ->employee = $employee_id;
-                $EQ->qualification = $qualification;
-                $EQ->save();
+                $employeeQualification=new EmployeeQualification();
+                $employeeQualification->employee = $employee_id;
+                $employeeQualification->qualification = $qualification;
+                $employeeQualification->save();
             }
 
             DB::commit();
@@ -326,10 +326,10 @@ class EmployeeController extends Controller
             $qualification = $request->qualification;
             if (!is_null($qualification)) {
                 foreach ($qualification as $qualification) {
-                    $com = new EmployeeQualification();
-                    $com->employee = $employee->id;
-                    $com->qualification = $qualification;
-                    $com->save();
+                    $employeeQualification = new EmployeeQualification();
+                    $employeeQualification->employee = $employee->id;
+                    $employeeQualification->qualification = $qualification;
+                    $employeeQualification->save();
                 }
             }
 
