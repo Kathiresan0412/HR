@@ -93,14 +93,14 @@ class LeaveRequestController extends Controller
                 }
 
             return response()->json([
-                "message" => "Leave Request Data",
-                "data" => $leaveRequest,
-                "data leave request dates" => $leaveRequestDate
+                "Message" => "Leave Request Data",
+                "Data" => $leaveRequest,
+                "Data leave request dates" => $leaveRequestDate
             ], 200);
         } catch (\Throwable $e) {
             return response()->json([
-                "message" => "Oops somthing went wrong please try again",
-                "error" => $e->getMessage()
+                "Message" => "Oops somthing went wrong please try again",
+                "Error" => $e->getMessage()
             ], 500);
         }
 
@@ -141,14 +141,14 @@ class LeaveRequestController extends Controller
             DB::commit();
 
             return response()->json([
-                "message" => "Leave Request Data Saved",
-                "data" => $leaveRequest
+                "Message" => "Leave Request Data Saved",
+                "Data" => $leaveRequest
             ], 200);
 
         } catch (\Throwable $e) {
             return response()->json([
-                "message" => "Oops somthing went wrong please try again",
-                "error" => $e->getMessage(),
+                "Message" => "Oops somthing went wrong please try again",
+                "Error" => $e->getMessage(),
             ], 500);
         }
     }
@@ -188,14 +188,14 @@ class LeaveRequestController extends Controller
             DB::commit();
 
             return response()->json([
-                "msg" => "Leave Request Data Updated",
-                "data" => $leaveRequest
+                "Message" => "Leave Request Data Updated",
+                "Data" => $leaveRequest
             ], 200);
         } catch (\Throwable $e) {
             DB::rollback();
             return response()->json([
-                "msg" => "oops something went wrong",
-                "error" => $e->getMessage()
+                "Message" => "oops something went wrong",
+                "Error" => $e->getMessage()
             ], 500);
         }
     }
@@ -206,12 +206,12 @@ class LeaveRequestController extends Controller
             $leaveRequest->delete();
 
             return response()->json([
-                "msg" => "Leave Request Data Deleted"
+                "Message" => "Leave Request Data Deleted"
             ], 200);
         } catch (\Throwable $e) {
             return response()->json([
-                "message" => "Ooops Something went wrong please try again",
-                "error" => $e->getMessage(),
+                "Message" => "Ooops Something went wrong please try again",
+                "Error" => $e->getMessage(),
             ], 500);
         }
     }

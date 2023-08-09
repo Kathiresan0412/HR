@@ -15,17 +15,7 @@ class EmployeeDocumentController extends Controller
             $documents = DB::table('employee_documents as d')
                 ->select('d.id', 'emp.first_name as employee','d.ol_level_al_level_resheets', 'd.goverment_bank_book', 'd.work_experince', 'd.gs_charactet_certificate', 'd.nic')
                 ->leftJoin('employees as emp', 'd.employee', '=', 'emp.id');
-    
-            $search = $request->search;
-    
-            if (!is_null($search)) {
-                $documents = $documents
-                    ->where('d.id', 'LIKE', '%' . $search . '%')
-                    ->orWhere('d.employee', 'LIKE', '%' . $search . '%')
-                    ->orWhere('d.goverment_bank_book', 'LIKE', '%' . $search . '%')
-                    ->orWhere('d.work_experince', 'LIKE', '%' . $search . '%')
-                    ->orWhere('d.nic', 'LIKE', '%' . $search . '%');
-            }
+
             $documents = $documents->orderBy('d.created_at')->get();
     
             return response()->json([
@@ -80,7 +70,7 @@ class EmployeeDocumentController extends Controller
     public function getOne($id)
     {
         try {
-            $documents = DB::table('employee_documents as d')
+            $document = DB::table('employee_documents as d')
             ->select('d.id', 'emp.first_name as employee','d.ol_level_al_level_resheets', 'd.goverment_bank_book', 'd.work_experince', 'd.gs_charactet_certificate', 'd.nic')
             ->leftJoin('employees as emp', 'd.employee', '=', 'emp.id')
             ->where('d.id', $id)
@@ -88,7 +78,7 @@ class EmployeeDocumentController extends Controller
     
             return response()->json([
                 "message" => "employee documents Data",
-                "data" => $documents,
+                "data" => $document,
             ], 200);
         } catch (\Throwable $e) {
             return response()->json([
@@ -114,20 +104,20 @@ class EmployeeDocumentController extends Controller
            'nic'=>'required'
         ]);
 
-        $documents = EmployeeDocument::find($id);
-        $documents->employee = $request->employee;
-        $documents->ol_level_al_level_resheets = $request->ol_level_al_level_resheets;
-        $documents->goverment_bank_book = $request->goverment_bank_book;
-        $documents->work_experince = $request->work_experince;
-        $documents->gs_charactet_certificate = $request->gs_charactet_certificate;
-        $documents->nic = $request->nic;
-        $documents->save();
+        $document = EmployeeDocument::find($id);
+        $document->employee = $request->employee;
+        $document->ol_level_al_level_resheets = $request->ol_level_al_level_resheets;
+        $document->goverment_bank_book = $request->goverment_bank_book;
+        $document->work_experince = $request->work_experince;
+        $document->gs_charactet_certificate = $request->gs_charactet_certificate;
+        $document->nic = $request->nic;
+        $document->save();
 
         DB::commit();
 
         return response()->json([
-            "message" => "Employee Documents Data Update",
-            "data" => $documents,
+            "message" => "Employee Documents Data Updated",
+            "data" => $document,
         ], 200);
     } catch (\Throwable $e) {
         DB::rollback();
@@ -144,12 +134,11 @@ class EmployeeDocumentController extends Controller
     public function delete($id)
     {
         try {
-            $documents = EmployeeDocument::find($id);
-            $documents->delete();
-
+            $document = EmployeeDocument::find($id);
+            $document->delete();
             return response()->json([
                 "message" => "Employee Document Data Deleted",
-            ], 201);
+            ], 200);
 
         } catch (\Throwable $e) {
             return response()->json([

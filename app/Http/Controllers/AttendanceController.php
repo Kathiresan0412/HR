@@ -46,13 +46,13 @@ class AttendanceController extends Controller
             $attendances = $attendances->orderBy('at.created_at', 'desc')->get();
 
             return response()->json([
-                "message" => "All Attendence Data",
-                "data" => $attendances
+                "Message" => "All Attendence Data",
+                "Data" => $attendances
             ], 200);
         } catch (\Throwable $e) {
             return response()->json([
-                "message" => "oops something went wrong",
-                "error" => $e->getMessage()
+                "Message" => "oops something went wrong",
+                "Error" => $e->getMessage()
             ], 500);
         }
     }
@@ -66,13 +66,13 @@ class AttendanceController extends Controller
                 ->first();
 
             return response()->json([
-                "message" => "Attendence Data",
-                "data" => $attendance
+                "Message" => "Attendence Data",
+                "Data" => $attendance
             ], 200);
         } catch (\Throwable $e) {
             return response()->json([
-                "message" => "oops something went wrong",
-                "error" => $e->getMessage()
+                "Message" => "oops something went wrong",
+                "Error" => $e->getMessage()
             ], 500);
         }
     }
@@ -103,14 +103,14 @@ class AttendanceController extends Controller
             DB::commit();
 
             return response()->json([
-                "msg" => "Attendance Data Saved",
-                "data" => $attendance
+                "Message" => "Attendance Data Saved",
+                "Data" => $attendance
             ], 200);
         } catch (\Throwable $e) {
             DB::rollback();
             return response()->json([
-                "msg" => "oops something went wrong",
-                "error" => $e->getMessage()
+                "Message" => "oops something went wrong",
+                "Error" => $e->getMessage()
             ], 500);
         }
     }
@@ -141,14 +141,14 @@ class AttendanceController extends Controller
             DB::commit();
 
             return response()->json([
-                "msg" => "Attendance Data Updated",
-                "data" => $attendance
+                "Message" => "Attendance Data Updated",
+                "Data" => $attendance
             ], 200);
         } catch (\Throwable $e) {
             DB::rollback();
             return response()->json([
-                "msg" => "oops something went wrong",
-                "error" => $e->getMessage()
+                "Message" => "oops something went wrong",
+                "Error" => $e->getMessage()
             ], 500);
         }
     }
@@ -159,12 +159,12 @@ class AttendanceController extends Controller
             $attendance->delete();
 
             return response()->json([
-                "msg" => "Attendance Data Deleted",
+                "Message" => "Attendance Data Deleted",
             ], 200);
         } catch (\Throwable $e) {
             return response()->json([
-                "message" => "Ooops Something went wrong please try again",
-                "error" => $e->getMessage()
+                "Message" => "Ooops Something went wrong please try again",
+                "Error" => $e->getMessage()
             ], 500);
         }
     }

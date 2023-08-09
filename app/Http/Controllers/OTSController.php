@@ -25,10 +25,8 @@ class OTSController extends Controller
            }
 
            $filterParameters = [
-            'basic_salary' => 'o.basic_salary',
             'ot_hour' => 'o.ot_hour',
-            'hour_payment' => 'o.hour_payment',
-            'total' => 'o.total',           
+            'hour_payment' => 'o.hour_payment',          
         ];
     
         foreach ($filterParameters as $parameter => $column) {
@@ -61,7 +59,6 @@ class OTSController extends Controller
                'hour_payment'=>'required',
                'total'=>'required'
 
-
             ]);
 
             $ot = new OTS();
@@ -86,7 +83,6 @@ class OTSController extends Controller
             ], 500);
         }
     }
-
     public function getOne( $id)
     {
         try {
@@ -96,8 +92,6 @@ class OTSController extends Controller
         ->where('o.id', $id)
         ->first();
           
-      
-
            return response()->json([
                "message" => "Overtime Data",
                "data" => $ot,

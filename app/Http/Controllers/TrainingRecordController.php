@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Models\TrainingRecord;
 use Illuminate\Http\Request;
 use DB;
@@ -14,7 +13,7 @@ class TrainingRecordController extends Controller
     public function getAll(Request $request)
     {
         try{
-            $training = DB::table('training_records as t')
+            $trainingrecords = DB::table('training_records as t')
             ->select('t.id','p.name as training_program','e.first_name as employee ','t.score','t.certificate')
             ->leftJoin('training_programs as p', 't.training_program', '=', 'p.id')
             ->leftJoin('employees as e', 't.employee', '=', 'e.id');
@@ -22,7 +21,7 @@ class TrainingRecordController extends Controller
             $search = $request->search;
 
             if (!is_null($search)){
-                $training = $training
+                $trainingrecords = $trainingrecords
                 ->where('t.training_program','LIKE','%'.$search.'%')
                 ->orWhere('t.employee','LIKE','%'.$search.'%')
                 ->orWhere('t.score','LIKE','%'.$search.'%')
@@ -31,17 +30,16 @@ class TrainingRecordController extends Controller
             $filterParameters = [
                 'training_program' => 't.training_program',
                 'employee' => 't.employee',
-                'score' => 't.score',  
-                'certificate' => 't.certificate',                     
+                'score' => 't.score',                     
             ];
         
             foreach ($filterParameters as $parameter => $column) {
                 $value = $request->input($parameter);
                 if (isset($value) && $value !== '') {
-                    $training->where($column, '=', $value);
+                    $trainingrecords->where($column, '=', $value);
                 }
             }
-            $training = $training->orderBy('t.created_at','desc')->get();
+            $training = $trainingrecords->orderBy('t.created_at','desc')->get();
 
             return response()->json([
                 "message" => "training records Data",
@@ -66,23 +64,23 @@ class TrainingRecordController extends Controller
                 'certificate'=>'required'
             ]);
 
-        $training = new TrainingRecord();
-        $training->training_program = $request->training_program;
-        $training->employee = $request->employee;
-        $training->score = $request->score;
-        $training->certificate = $request->certificate;
-        $training->save();
+        $trainingrecord = new TrainingRecord();
+        $trainingrecord->training_program = $request->training_program;
+        $trainingrecord->employee = $request->employee;
+        $trainingrecord->score = $request->score;
+        $trainingrecord->certificate = $request->certificate;
+        $trainingrecord->save();
 
         DB::commit();
 
         return response()->json([
-            "msg" => "training record Data Saved",
-            "data"=> $training,
+            "message" => "training record Data Saved",
+            "data"=> $trainingrecord,
         ],200);
     }catch(\Throwable $e) {
         DB::rollback();
         return response()->json([
-            "msg"=>"oops something went wrong",
+            "message"=>"oops something went wrong",
             "error"=> $e->getMessage(),
         ],500);
     }
@@ -91,7 +89,7 @@ class TrainingRecordController extends Controller
     public function getOne(TrainingRecord $trainingRecord, $id)
     {
         try{
-            $training = DB::table('training_records as t')
+            $trainingrecord = DB::table('training_records as t')
             ->select('t.id','p.name as training_program','e.first_name as employee ','t.score','t.certificate')
             ->leftJoin('training_programs as p', 't.training_program', '=', 'p.id')
             ->leftJoin('employees as e', 't.employee', '=', 'e.id')
@@ -100,7 +98,7 @@ class TrainingRecordController extends Controller
 
             return response()->json([
                 "message" => "training record Data",
-                "data" => $training,
+                "data" => $trainingrecord
             ],200);
         }catch(\Throwable $e){
             return response()->json([
@@ -121,23 +119,23 @@ class TrainingRecordController extends Controller
                 'certificate'=>'required'
             ]);
 
-        $training = TrainingRecord::find($id);
-        $training->training_program = $request->training_program;
-        $training->employee = $request->employee;
-        $training->score = $request->score;
-        $training->certificate = $request->certificate;
-        $training->save();  
+        $trainingrecord = TrainingRecord::find($id);
+        $trainingrecord->training_program = $request->training_program;
+        $trainingrecord->employee = $request->employee;
+        $trainingrecord->score = $request->score;
+        $trainingrecord->certificate = $request->certificate;
+        $trainingrecord->save();  
      
         DB::commit();
 
       return response()->json([
-        "msg" => "training record Data Updated",
-        "data"=> $training,
+        "message" => "training record Data Updated",
+        "data"=> $trainingrecord,
     ],200);
     }catch(\Throwable $e) {
     DB::rollback();
     return response()->json([
-        "msg"=>"oops something went wrong",
+        "message"=>"oops something went wrong",
         "error"=> $e->getMessage(),
     ],500);
 }
@@ -149,11 +147,11 @@ class TrainingRecordController extends Controller
     public function delete($id)
     {
         try {
-            $training = TrainingRecord::find($id);
-            $training->delete();
+            $trainingrecord = TrainingRecord::find($id);
+            $trainingrecord->delete();
 
             return response()->json([
-                "msg" => "Training Record Data Deleted",
+                "message" => "Training Record Data Deleted",
             ], 200);
 
         } catch (\Throwable $e) {

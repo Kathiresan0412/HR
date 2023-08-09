@@ -45,13 +45,13 @@ class RecruitmentCandidateController extends Controller
             $recruitCandidates = $recruitCandidates->orderBy('r.created_at', 'desc')->get();
 
             return response()->json([
-                "message" => "All Recruitment candidate Data",
-                "data" => $recruitCandidates
+                "Message" => "All Recruitment candidate Data",
+                "Data" => $recruitCandidates
             ], 200);
         } catch (\Throwable $e) {
             return response()->json([
-                "message" => "oops something went wrong",
-                "error" => $e->getMessage()
+                "Message" => "oops something went wrong",
+                "Error" => $e->getMessage()
             ], 500);
         }
     }
@@ -65,13 +65,13 @@ class RecruitmentCandidateController extends Controller
                 ->first();
 
             return response()->json([
-                "message" => "Recruitment candidate Data",
-                "data" => $recruitCandidate
+                "Message" => "Recruitment candidate Data",
+                "Data" => $recruitCandidate
             ], 200);
         } catch (\Throwable $e) {
             return response()->json([
-                "message" => "oops something went wrong",
-                "error" => $e->getMessage()
+                "Message" => "oops something went wrong",
+                "Error" => $e->getMessage()
             ], 500);
         }
     }
@@ -104,14 +104,14 @@ class RecruitmentCandidateController extends Controller
             DB::commit();
 
             return response()->json([
-                "msg" => "Recruitment candidate Data Saved",
-                "data" => $recruitCandidate
+                "Message" => "Recruitment candidate Data Saved",
+                "Data" => $recruitCandidate
             ], 200);
         } catch (\Throwable $e) {
             DB::rollback();
             return response()->json([
-                "msg" => "oops something went wrong",
-                "error" => $e->getMessage(),
+                "Message" => "oops something went wrong",
+                "Error" => $e->getMessage(),
             ], 500);
         }
     }
@@ -144,14 +144,14 @@ class RecruitmentCandidateController extends Controller
             DB::commit();
 
             return response()->json([
-                "msg" => "Recruitment candidate Data Updated",
-                "data" => $recruitCandidate,
+                "Message" => "Recruitment candidate Data Updated",
+                "Data" => $recruitCandidate,
             ], 200);
         } catch (\Throwable $e) {
             DB::rollback();
             return response()->json([
-                "msg" => "oops something went wrong",
-                "error" => $e->getMessage(),
+                "Message" => "oops something went wrong",
+                "Error" => $e->getMessage(),
             ], 500);
         }
     }
@@ -162,12 +162,12 @@ class RecruitmentCandidateController extends Controller
             $recruitCandidate->delete();
 
             return response()->json([
-                "msg" => "Recruitment Candidate Data Deleted"
+                "Message" => "Recruitment Candidate Data Deleted"
             ], 200);
         } catch (\Throwable $e) {
             return response()->json([
-                "message" => "Ooops Something went wrong please try again",
-                "error" => $e->getMessage(),
+                "Message" => "Ooops Something went wrong please try again",
+                "Error" => $e->getMessage(),
             ], 500);
         }
     }
