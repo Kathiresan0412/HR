@@ -9,7 +9,7 @@ class PromotionController extends Controller
 {
 
 
-    public function index(Request $request)
+    public function getAll(Request $request)
     {
         
         $promotions = DB::table('promotions as p')
