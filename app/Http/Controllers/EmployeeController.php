@@ -66,11 +66,18 @@ class EmployeeController extends Controller
                     ->orWhere('e.nic', 'LIKE', '%' . $search . '%');
             }
             //filter----------------------------------------------
-            $type = $request->type;
-            if (isset($type) && $type != "") {
-                $employees->where('p.type', '=', $type);
-            }
+            $filterParameters = [
+                'type' => 'p.type',
 
+
+            ];
+
+            foreach ($filterParameters as $parameter => $column) {
+                $value = $request->input($parameter);
+                if (isset($value) && $value !== '') {
+                    $employees->where($column, '=', $value);
+                }
+            }
             //filter----------------------------------------------
 
             $employees = $employees->orderBy('e.created_at', 'desc')
@@ -183,6 +190,7 @@ class EmployeeController extends Controller
                 'created_by' => 'required',
                 'img' => 'required',
                 'status' => 'required',
+                'qualifications' => 'array',
                 'qualification' => 'required'
             ]);
 
@@ -215,6 +223,7 @@ class EmployeeController extends Controller
             $employee->img = $request->input('img');
             $employee->status = $request->input('status');
             $employee->save();
+
             $employee_id = $employee->id;
 
             if ($request->has('qualifications') && is_array($request->qualifications)) {
