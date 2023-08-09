@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Support\Facades\DB;
 use App\Models\EmployeeBenefitType;
 use Illuminate\Http\Request;
@@ -22,8 +23,8 @@ class EmployeeBenefitTypeController extends Controller
             $employeeBenefitTypes = $employeeBenefitTypes->orderBy('ebt.created_at', 'desc')->get();
 
             return response()->json([
-                "message" => "  All Employee benefit type Data Data",
-                "data" => $employeeBenefitTypes,
+                "message" => "All Employee Benefit Type Data",
+                "data" => $employeeBenefitTypes
             ], 200);
         } catch (\Throwable $e) {
             return response()->json([
@@ -32,7 +33,6 @@ class EmployeeBenefitTypeController extends Controller
             ], 500);
         }
     }
-
     public function getOne($id)
     {
         try {
@@ -43,7 +43,7 @@ class EmployeeBenefitTypeController extends Controller
 
             return response()->json([
                 "message" => "Employee Benefit Type Data",
-                "data" => $employeeBenefitType,
+                "data" => $employeeBenefitType
             ], 200);
         } catch (\Throwable $e) {
             return response()->json([
@@ -52,7 +52,6 @@ class EmployeeBenefitTypeController extends Controller
             ], 500);
         }
     }
-
     public function save(Request $request)
     {
         DB::beginTransaction();
@@ -70,9 +69,9 @@ class EmployeeBenefitTypeController extends Controller
             DB::commit();
 
             return response()->json([
-                "msg" => "Employee Benefit Type Data",
-                "data" => $employeeBenefitType,
-            ], 201);
+                "msg" => "Employee Benefit Type Data Saved",
+                "data" => $employeeBenefitType
+            ], 200);
         } catch (\Throwable $e) {
             DB::rollback();
             return response()->json([
@@ -81,8 +80,7 @@ class EmployeeBenefitTypeController extends Controller
             ], 500);
         }
     }
-
-    public function update(Request $request,  $id)
+    public function update(Request $request, $id)
     { {
             DB::beginTransaction();
             try {
@@ -100,8 +98,8 @@ class EmployeeBenefitTypeController extends Controller
 
                 return response()->json([
                     "msg" => "Employee Benefit Type Data Updated",
-                    "data" => $employeeBenefitType,
-                ], 201);
+                    "data" => $employeeBenefitType
+                ], 200);
             } catch (\Throwable $e) {
                 DB::rollback();
                 return response()->json([
@@ -111,7 +109,6 @@ class EmployeeBenefitTypeController extends Controller
             }
         }
     }
-
     public function delete($id)
     {
         try {
@@ -119,7 +116,6 @@ class EmployeeBenefitTypeController extends Controller
             $employeeBenefitType->delete();
             return response()->json([
                 "msg" => "Employee Benefit Type Data Deleted",
-                "data" => $employeeBenefitType,
             ], 200);
         } catch (\Throwable $e) {
             return response()->json([

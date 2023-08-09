@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\ShortLeave;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -13,13 +14,20 @@ class ShortLeaveController extends Controller
             $shortLeaves = DB::table('short_leaves as s')
                 ->select('s.id', 'e.id as employee', 's.date', 's.time_from', 's.time_to', 's.note')
                 ->leftJoin('employees as e', 'e.id', '=', 's.employee');
+
             $search = $request->search;
+
+            if (!is_null($search)) {
+                $shortLeaves = $shortLeaves
+                    ->where('employee', 'LIKE', '%' . $search . '%')
+                    ->orWhere('s.id', 'LIKE', '%' . $search . '%')
+                    ->orWhere('s.note', 'LIKE', '%' . $search . '%');
+            }
 
             $filterParameters = [
                 'date' => 's.date',
                 'time_from' => 's.time_from',
                 'time_to' => 's.time_to',
-
             ];
 
             foreach ($filterParameters as $parameter => $column) {
@@ -28,25 +36,18 @@ class ShortLeaveController extends Controller
                     $shortLeaves->where($column, '=', $value);
                 }
             }
-            if (!is_null($search)) {
-                $shortLeaves = $shortLeaves
-                    ->where('employee', 'LIKE', '%' . $search . '%')
-                    ->orWhere('s.id', 'LIKE', '%' . $search . '%')
-                    ->orWhere('s.note', 'LIKE', '%' . $search . '%');
-            }
             $shortLeaves = $shortLeaves->orderBy('s.created_at', 'desc')->get();
             return response()->json([
-                "message" => "Short Leaves Data",
-                "data" => $shortLeaves,
+                "message" => "All Short Leave Data",
+                "data" => $shortLeaves
             ], 200);
         } catch (\Throwable $e) {
             return response()->json([
                 "message" => "oops something went wrong",
-                "error" => $e->getMessage(),
+                "error" => $e->getMessage()
             ], 500);
         }
     }
-
     public function getOne($id)
     {
         try {
@@ -57,17 +58,16 @@ class ShortLeaveController extends Controller
                 ->first();
 
             return response()->json([
-                "message" => "short Leave Data",
+                "message" => "Short Leave Data",
                 "data" => $shortLeave,
             ], 200);
         } catch (\Throwable $e) {
             return response()->json([
                 "message" => "oops something went wrong",
-                "error" => $e->getMessage(),
+                "error" => $e->getMessage()
             ], 500);
         }
     }
-
     public function save(Request $request)
     {
         DB::beginTransaction();
@@ -91,9 +91,9 @@ class ShortLeaveController extends Controller
             DB::commit();
 
             return response()->json([
-                "msg" => "short Leaves Data Saved",
+                "msg" => "Short Leave Data Saved",
                 "data" => $shortLeave
-            ], 201);
+            ], 200);
         } catch (\Throwable $e) {
             DB::rollback();
             return response()->json([
@@ -113,6 +113,7 @@ class ShortLeaveController extends Controller
                 'time_to' => 'required',
                 'note' => 'required'
             ]);
+
             $shortLeave = ShortLeave::find($id);
             $shortLeave->employee = $request->employee;
             $shortLeave->date = $request->date;
@@ -120,10 +121,12 @@ class ShortLeaveController extends Controller
             $shortLeave->time_to = $request->time_to;
             $shortLeave->note = $request->note;
             $shortLeave->save();
+
             DB::commit();
+
             return response()->json([
-                "msg" => "short Leaves Data Updated",
-                "data" => $shortLeave,
+                "msg" => "Short Leave Data Updated",
+                "data" => $shortLeave
             ], 200);
         } catch (\Throwable $e) {
             DB::rollback();
@@ -138,8 +141,9 @@ class ShortLeaveController extends Controller
         try {
             $shortLeave = ShortLeave::find($id);
             $shortLeave->delete();
+
             return response()->json([
-                "msg" => "Short Leaves Data Deleted",
+                "msg" => "Short Leave Data Deleted",
             ], 200);
         } catch (\Throwable $e) {
             return response()->json([
