@@ -15,18 +15,7 @@ class AllowedLeaveController extends Controller
             $allowedleaves = DB::table('allowed_leaves as l')
                 ->select('l.id', 'p.name as position', 't.name as type', 'l.days', 'l.term')
                 ->leftJoin('positions as p', 'p.id', '=', 'l.position')
-                ->leftJoin('leave_types as t', 't.id', '=', 'l.type');
-                $filterParameters = [
-                    'term' => 'l.term', 
-                    'position' => 'l.position',    
-                    'type' => 'l.type',    
-                ];
-                foreach ($filterParameters as $parameter => $column) {
-                    $value = $request->input($parameter);
-                    if (isset($value) && $value !== '') {
-                        $allowedleaves->where($column, '=', $value);
-                    }
-                }    
+                ->leftJoin('leave_types as t', 't.id', '=', 'l.type'); 
             $search = $request->search;
             if (!is_null($search)) {
                 $allowedleaves = $allowedleaves
@@ -36,6 +25,18 @@ class AllowedLeaveController extends Controller
                     ->orWhere('l.days', 'LIKE', '%' . $search . '%')
                     ->orWhere('l.term', 'LIKE', '%' . $search . '%');         
             }
+            
+            $filterParameters = [
+                'term' => 'l.term', 
+                'position' => 'l.position',    
+                'type' => 'l.type',    
+            ];
+            foreach ($filterParameters as $parameter => $column) {
+                $value = $request->input($parameter);
+                if (isset($value) && $value !== '') {
+                    $allowedleaves->where($column, '=', $value);
+                }
+            }   
             $allowedleaves = $allowedleaves->orderBy('l.created_at', 'desc')->get();
             return response()->json([
                 "message" => "All Allowed Leave Data",
