@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\LeaveRequest;
+use App\Models\LeaveRequestDate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -12,10 +13,21 @@ class LeaveRequestController extends Controller
     {
         try {
             $leaveRequests = DB::table('leave_requests as l')
-                ->select('l.id', 'e.bio_code as bio_code', 'e.first_name as employee', 'a.name as type', 'l.request_on', 'l.dates', 'l.days', 'l.reason', 'l.status', 'u.name as approved_by')
+                ->select('l.id', 'e.bio_code as bio_code', 'e.first_name as employee', 'a.name as type', 'l.request_on', 'l.days', 'l.reason', 'l.status', 'u.name as approved_by')
                 ->leftJoin('employees as e', 'e.id', '=', 'l.employee')
                 ->leftJoin('leave_types as a', 'a.id', '=', 'l.type')
                 ->leftJoin('users as u', 'u.id', '=', 'l.approved_by');
+               
+            $leaveRequestDates = DB::table('leave_request_dates as ld')
+            ->select('ld.date')
+            ->where ('ld.leave_request_id','l.id')
+            ->get();
+
+            $leaveRequestDate = [];
+            foreach ($leaveRequestDates as $leaveDate) {
+                array_push($leaveRequestDate, $leaveDate->date);
+
+            }
 
             $search = $request->search;
 
@@ -45,7 +57,8 @@ class LeaveRequestController extends Controller
 
             return response()->json([
                 "message" => "All Leave Request Data",
-                "data" => $leaveRequests
+                "data" => $leaveRequests,$leaveRequestDates,
+                "data leave request dates" => $leaveRequestDate
             ], 200);
         } catch (\Throwable $e) {
             return response()->json([
@@ -59,16 +72,28 @@ class LeaveRequestController extends Controller
     {
         try {
             $leaveRequest = DB::table('leave_requests as l')
-                ->select('l.id', 'e.bio_code as bio_code', 'e.first_name as employee', 'a.name as type', 'l.request_on', 'l.dates', 'l.days', 'l.reason', 'l.status', 'u.name as approved_by')
+                ->select('l.id', 'e.bio_code as bio_code', 'e.first_name as employee', 'a.name as type', 'l.request_on', 'l.days', 'l.reason', 'l.status', 'u.name as approved_by')
                 ->leftJoin('employees as e', 'e.id', '=', 'l.employee')
                 ->leftJoin('leave_types as a', 'a.id', '=', 'l.type')
                 ->leftJoin('users as u', 'u.id', '=', 'l.approved_by')
                 ->where('l.id', $id)
                 ->first();
+            
+                $leaveRequestDates = DB::table('leave_request_dates as ld')
+                ->select('ld.date')
+                ->where ('ld.leave_request_id',$id)
+                ->get();
+    
+                $leaveRequestDate = [];
+                foreach ($leaveRequestDates as $leaveDate) {
+                    array_push($leaveRequestDate, $leaveDate->date);
+    
+                }
 
             return response()->json([
                 "message" => "Leave Request Data",
-                "data" => $leaveRequest
+                "data" => $leaveRequest,
+                "data leave request dates" => $leaveRequestDate
             ], 200);
         } catch (\Throwable $e) {
             return response()->json([
@@ -96,13 +121,20 @@ class LeaveRequestController extends Controller
             $leaveRequest->employee = $request->employee;
             $leaveRequest->type = $request->type;
             $leaveRequest->request_on = $request->request_on;
-            $leaveRequest->dates = $request->dates;
             $leaveRequest->days = $request->days;
             $leaveRequest->reason = $request->reason;
             $leaveRequest->status = $request->status;
             $leaveRequest->approved_by = $request->approved_by;
             $leaveRequest->created_at = new \DateTime();
             $leaveRequest->save();
+
+            $dates = $request->dates;
+            foreach($dates as $date){
+                $LRD=new LeaveRequestDate();
+                $LRD->leave_request_id = $leaveRequest->id;
+                $LRD->date = $date;
+                $LRD->save();
+            }
 
             DB::commit();
 
@@ -136,13 +168,21 @@ class LeaveRequestController extends Controller
             $leaveRequest->employee = $request->employee;
             $leaveRequest->type = $request->type;
             $leaveRequest->request_on = $request->request_on;
-            $leaveRequest->dates = $request->dates;
             $leaveRequest->days = $request->days;
             $leaveRequest->reason = $request->reason;
             $leaveRequest->status = $request->status;
             $leaveRequest->approved_by = $request->approved_by;
             $leaveRequest->created_at = new \DateTime();
             $leaveRequest->save();
+
+            $dates = $request->dates;
+            foreach($dates as $date){
+                $LRD=new LeaveRequestDate();
+                $LRD->leave_request_id = $leaveRequest->id;
+                $LRD->date = $date;
+                $LRD->save();
+            }
+
             DB::commit();
 
             return response()->json([
