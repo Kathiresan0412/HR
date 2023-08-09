@@ -8,7 +8,6 @@ use DB;
 
 class EmployeeHealthController extends Controller
 {
-
     public function getAll(Request $request)
     {
         try {
@@ -53,7 +52,6 @@ class EmployeeHealthController extends Controller
             ], 500);
         }
     }
-
     public function save(Request $request)
     {
         try {
@@ -65,8 +63,6 @@ class EmployeeHealthController extends Controller
                 'allergies' => 'required',
                 'prescription_details' => 'required'
             ]);
-
-
             $employeeHealth = new EmployeeHealth();
             $employeeHealth->employee = $request->employee;
             $employeeHealth->medical_examination_date = $request->medical_examination_date;
@@ -90,7 +86,6 @@ class EmployeeHealthController extends Controller
             ], 500);
         }
     }
-
     public function getOne($id)
     {
         try {
@@ -111,10 +106,8 @@ class EmployeeHealthController extends Controller
             ], 500);
         }
     }
-
     public function update(Request $request, $id)
     {
-
         DB::beginTransaction();
         try {
             $request->validate([
@@ -147,7 +140,6 @@ class EmployeeHealthController extends Controller
             ], 500);
         }
     }
-
     public function delete($id)
     {
         try {

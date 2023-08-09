@@ -8,9 +8,6 @@ use Illuminate\Support\Facades\DB;
 
 class EmployeeBenefitController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function getAll(Request $request)
     {
         try {
@@ -29,7 +26,6 @@ class EmployeeBenefitController extends Controller
                     ->orWhere('eb.coverage_details', 'LIKE', '%' . $search . '%')
                     ->orWhere('eb.premiums', 'LIKE', '%' . $search . '%')
                     ->orWhere('eb.beneficiary_information', 'LIKE', '%' . $search . '%');
-
             }
 
             $filterParameters = [
@@ -46,8 +42,6 @@ class EmployeeBenefitController extends Controller
                     $employeeBenefits->where($column, '=', $value);
                 }
             }
-
-
             $employeeBenefits = $employeeBenefits->orderBy('eb.created_at', 'desc')->get();
 
             return response()->json([
@@ -61,7 +55,6 @@ class EmployeeBenefitController extends Controller
             ], 500);
         }
     }
-
     public function save(Request $request)
     {
         DB::beginTransaction();
@@ -89,11 +82,9 @@ class EmployeeBenefitController extends Controller
             ], 500);
         }
     }
-
     public function getOne($id)
     {
         try {
-
             $employeeBenefit = DB::table('employee_benefits as eb')
                 ->select('eb.id', 'e.first_name as attendees', 'ebt.name as benefit_type', 'eb.enrollment_date', 'eb.coverage_details', 'eb.premiums', 'eb.beneficiary_information')
                 ->leftJoin('employees as e', 'e.id', '=', 'eb.attendees')
@@ -113,12 +104,10 @@ class EmployeeBenefitController extends Controller
             ], 500);
         }
     }
-
     public function update(Request $request, $id)
     {
         DB::beginTransaction();
         try {
-
             $employeeBenefit = EmployeeBenefit::find($id);
             $employeeBenefit->attendees = $request->attendees;
             $employeeBenefit->benefit_type = $request->benefit_type;
@@ -142,7 +131,6 @@ class EmployeeBenefitController extends Controller
             ], 500);
         }
     }
-
     public function delete($id)
     { {
             try {

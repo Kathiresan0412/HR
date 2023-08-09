@@ -17,21 +17,6 @@ class AllowedLeaveController extends Controller
                 ->select('l.id', 'p.name as position', 't.name as type', 'l.days', 'l.term')
                 ->leftJoin('positions as p', 'p.id', '=', 'l.position')
                 ->leftJoin('leave_types as t', 't.id', '=', 'l.type');
-<<<<<<< HEAD
-
-            $filterParameters = [
-                'term' => 'l.term',
-                'position' => 'l.position',
-                'type' => 'l.type',
-            ];
-
-            foreach ($filterParameters as $parameter => $column) {
-                $value = $request->input($parameter);
-                if (isset($value) && $value !== '') {
-                    $allowedleaves->where($column, '=', $value);
-                }
-            }
-=======
                 $filterParameters = [
                     'term' => 'l.term', 
                     'position' => 'l.position',    
@@ -43,7 +28,6 @@ class AllowedLeaveController extends Controller
                         $allowedleaves->where($column, '=', $value);
                     }
                 }    
->>>>>>> 080b5d22dd0d8ef223cf2d5e66cd1e149d391e61
             $search = $request->search;
             if (!is_null($search)) {
                 $allowedleaves = $allowedleaves
@@ -51,11 +35,7 @@ class AllowedLeaveController extends Controller
                     ->orWhere('l.position', 'LIKE', '%' . $search . '%')
                     ->orWhere('l.type', 'LIKE', '%' . $search . '%')
                     ->orWhere('l.days', 'LIKE', '%' . $search . '%')
-<<<<<<< HEAD
-                    ->orWhere('l.term', 'LIKE', '%' . $search . '%');
-=======
                     ->orWhere('l.term', 'LIKE', '%' . $search . '%');         
->>>>>>> 080b5d22dd0d8ef223cf2d5e66cd1e149d391e61
             }
             $allowedleaves = $allowedleaves->orderBy('l.created_at', 'desc')->get();
             return response()->json([
@@ -157,11 +137,7 @@ class AllowedLeaveController extends Controller
             $allowedleave = AllowedLeave::find($id);
             $allowedleave->delete();
             return response()->json([
-<<<<<<< HEAD
-                "message" => "Allowed Leave Record Deleted",
-=======
                 "message" => "Allowed leave data deleted",
->>>>>>> 080b5d22dd0d8ef223cf2d5e66cd1e149d391e61
             ], 200);
         } catch (\Throwable $e) {
             return response()->json([
