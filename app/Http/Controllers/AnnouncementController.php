@@ -12,53 +12,8 @@ class AnnouncementController extends Controller
      * Display a listing of the resource.
      */
 
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function getAll(Request $request, )
     {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Announcement $announcement)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function delete($id)
-    {
-        try {
-            $announcement = Announcement::find($id);
-            $announcement->delete();
-            return response()->json([
-                "Message" => "Announcement Data Deleted",
-
-            ], 200);
-        } catch (\Throwable $e) {
-            return response()->json([
-                "Message" => "Ooops Something went wrong please try again",
-                "Error" => $e->getMessage(),
-            ], 500);
-        }
-    }
-    public function getAll(Request $request,)
-    {
-
         try {
             $announcements = DB::table('announcements as a')
                 ->select('a.id', 'a.date', 'a.attachment', 'a.description', 'a.title');
@@ -172,6 +127,22 @@ class AnnouncementController extends Controller
             DB::rollback();
             return response()->json([
                 "Message" => "oops something went wrong",
+                "Error" => $e->getMessage(),
+            ], 500);
+        }
+    }
+
+    public function delete($id)
+    {
+        try {
+            $announcement = Announcement::find($id);
+            $announcement->delete();
+            return response()->json([
+                "Message" => "Announcement Data Deleted",
+            ], 200);
+        } catch (\Throwable $e) {
+            return response()->json([
+                "Message" => "Ooops Something went wrong please try again",
                 "Error" => $e->getMessage(),
             ], 500);
         }

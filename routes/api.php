@@ -47,6 +47,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+//Checked by vishwa //Cross Checked by saji
 Route::get('/positions', [PositionController::class, 'getAll']);
 Route::get('/positions/{id}', [PositionController::class, 'getOne']);
 Route::post('/positions', [PositionController::class, 'save']);
@@ -77,18 +78,21 @@ Route::POST('/companies', [CompanyController::class, 'save']);
 Route::put ('/companies/{id}', [CompanyController::class, 'update']);
 Route::delete ('/companies/{id}', [CompanyController::class, 'delete']);
 
+//Checked by saji //Cross Checked by 
 Route::get ('/employees', [EmployeeController::class, 'getAll']);
 Route::get ('/employees/{id}', [EmployeeController::class, 'getOne']);
 Route::POST('/employees', [EmployeeController::class, 'save']);
 Route::put ('/employees/{id}', [EmployeeController::class, 'update']);
 Route::delete ('/employees/{id}', [EmployeeController::class, 'delete']);
 
+//Checked by vishwa //Cross Checked by saji
 Route::get('/announcements', [AnnouncementController::class, 'getAll']);
 Route::get('/announcements/{id}', [AnnouncementController::class, 'getOne']);
 Route::POST('/announcements', [AnnouncementController::class, 'save']);
 Route::put('/announcements/{id}', [AnnouncementController::class, 'update']);
 Route::delete('/announcements/{id}', [AnnouncementController::class, 'delete']);
 
+//Checked by vishwa //Cross Checked by saji
 Route::get('/salary-advances', [SalarayAdvanceController::class, 'getAll']);
 Route::get('/salary-advances/{id}', [SalarayAdvanceController::class, 'getOne']);
 Route::post('/salary-advances', [SalarayAdvanceController::class, 'save']);
@@ -108,12 +112,14 @@ Route::POST('/leave-requests', [LeaveRequestController::class, 'save']);
 Route::put ('/leave-requests/{id}', [LeaveRequestController::class, 'update']);
 Route::delete ('/leave-requests/{id}', [LeaveRequestController::class, 'delete']);
 
+//Checked by vishwa //Cross Checked by saji
 Route::get('/leave-types', [LeaveTypeController::class, 'getAll']);
 Route::get('/leave-types/{id}', [LeaveTypeController::class, 'getOne']);
 Route::POST('/leave-types', [LeaveTypeController::class, 'save']);
 Route::put('/leave-types/{id}', [LeaveTypeController::class, 'update']);
 Route::delete('/leave-types/{id}', [LeaveTypeController::class, 'delete']);
 
+//Checked by vishwa //Cross Checked by saji
 Route::get('/employee-qualifications', [EmployeeQualificationController::class, 'getAll']);
 Route::get('/employee-qualifications/{id}', [EmployeeQualificationController::class, 'getOne']);
 
@@ -197,18 +203,21 @@ Route::post('/ots', [OTSController::class, 'save']);
 Route::put('/ots/{id}', [OTSController::class, 'update']);
 Route::delete('/ots/{id}', [OTSController::class, 'delete']);
 
+//Checked by saji //Cross Checked by 
 Route::get('/employee-benefits', [EmployeeBenefitController::class, 'getAll']);
 Route::get('/employee-benefits/{id}', [EmployeeBenefitController::class, 'getOne']);
 Route::post('/employee-benefits', [EmployeeBenefitController::class, 'save']);
 Route::put('/employee-benefits/{id}', [EmployeeBenefitController::class, 'update']);
 Route::delete('/employee-benefits/{id}', [EmployeeBenefitController::class, 'delete']);
 
+//Checked by saji //Cross Checked by 
 Route::get('/employee-feedbacks', [EmployeeFeedbackController::class, 'getAll']);
 Route::get('/employee-feedbacks/{id}', [EmployeeFeedbackController::class, 'getOne']);
 Route::post('/employee-feedbacks', [EmployeeFeedbackController::class, 'save']);
 Route::put('/employee-feedbacks/{id}', [EmployeeFeedbackController::class, 'update']);
 Route::delete('/employee-feedbacks/{id}', [EmployeeFeedbackController::class, 'delete']);
 
+//Checked by saji //Cross Checked by 
 Route::get('/employee-healths', [EmployeeHealthController::class, 'getAll']);
 Route::get('/employee-healths/{id}', [EmployeeHealthController::class, 'getOne']);
 Route::post('/employee-healths', [EmployeeHealthController::class, 'save']);

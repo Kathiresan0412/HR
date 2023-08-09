@@ -20,7 +20,6 @@ class SalarayAdvanceController extends Controller
                     ->where('sad.id', 'LIKE', '%' . $search . '%')
                     ->orWhere('sad.employee', 'LIKE', '%' . $search . '%')
                     ->orWhere('sad.description', 'LIKE', '%' . $search . '%');
-                //missing columns and Filter
             }
 
             $filterParameters = [

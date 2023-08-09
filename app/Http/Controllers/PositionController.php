@@ -13,20 +13,17 @@ class PositionController extends Controller
      */
     public function getAll(Request $request)
     {
-
         try {
             $positions = DB::table('positions as p')
                 ->select('p.id', 'p.name', 'p.type', 'p.workable_time', 'p.workable_time_period', 'p.description');
             $search = $request->search;
-            $type = $request->type;
-            if (!is_null($search) &&($type!="")) {
-                $positions = $positions->where('p.name', 'LIKE', '%' . $search . '%')
+
+            if (!is_null($search)) {
+                $positions = $positions
+                    ->where('p.name', 'LIKE', '%' . $search . '%')
                     ->orWhere('p.type', 'LIKE', '%' . $search . '%')
                     ->orWhere('p.description', 'LIKE', '%' . $search . '%');
             }
-
-            
-
 
             $filterParameters = [
                 'name' => 'p.name',
@@ -35,15 +32,14 @@ class PositionController extends Controller
 
             ];
 
-
             foreach ($filterParameters as $parameter => $column) {
                 $value = $request->input($parameter);
                 if (isset($value) && $value !== '') {
                     $positions->where($column, '=', $value);
                 }
             }
-            $positions = $positions->orderBy('p.created_at', 'desc')->get();
 
+            $positions = $positions->orderBy('p.created_at', 'desc')->get();
 
             return response()->json([
                 "Message" => "All Position Data",
@@ -56,17 +52,29 @@ class PositionController extends Controller
             ], 500);
         }
     }
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+
+    public function getOne($id)
     {
-        //
+        try {
+            $position = DB::table('positions as p')
+                ->select('p.id', 'p.name', 'p.type', 'p.workable_time', 'p.workable_time_period', 'p.description');
+
+            $position = $position->orderBy('p.created_at', 'desc')
+                ->where('p.id', $id)
+                ->first();
+
+            return response()->json([
+                "Message" => "Position Data",
+                "Data" => $position,
+            ], 200);
+        } catch (\Throwable $e) {
+            return response()->json([
+                "Message" => "oops something went wrong",
+                "Error" => $e->getMessage(),
+            ], 500);
+        }
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function save(Request $request)
     {
         DB::beginTransaction();
@@ -97,57 +105,6 @@ class PositionController extends Controller
             DB::rollback();
             return response()->json([
                 "Message" => "Oops something went wrong",
-                "Error" => $e->getMessage(),
-            ], 500);
-        }
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(position $position)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function getOne($id)
-    {
-        try {
-            $position = DB::table('positions as p')
-                ->select('p.id', 'p.name', 'p.type', 'p.workable_time', 'p.workable_time_period', 'p.description');
-
-            $position = $position->orderBy('p.created_at', 'desc')
-                ->where('p.id', $id)
-                ->first();
-
-            return response()->json([
-                "Message" => "Position Data",
-                "Data" => $position,
-            ], 200);
-        } catch (\Throwable $e) {
-            return response()->json([
-                "Message" => "oops something went wrong",
-                "Error" => $e->getMessage(),
-            ], 500);
-        }
-    }
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function delete($id)
-    {
-        try {
-            $positions = Position::find($id);
-            $positions->delete();
-            return response()->json([
-                "Message" => "Position Data Deleted",
-            ], 200);
-        } catch (\Throwable $e) {
-            return response()->json([
-                "Message" => "Ooops Something went wrong please try again",
                 "Error" => $e->getMessage(),
             ], 500);
         }
@@ -188,4 +145,21 @@ class PositionController extends Controller
             ], 500);
         }
     }
+
+    public function delete($id)
+    {
+        try {
+            $position = Position::find($id);
+            $position->delete();
+            return response()->json([
+                "Message" => "Position Data Deleted",
+            ], 200);
+        } catch (\Throwable $e) {
+            return response()->json([
+                "Message" => "Ooops Something went wrong please try again",
+                "Error" => $e->getMessage(),
+            ], 500);
+        }
+    }
+
 }
