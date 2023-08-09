@@ -8,10 +8,6 @@ use Illuminate\Support\Facades\DB;
 
 class AnnouncementController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-
     public function getAll(Request $request, )
     {
         try {
@@ -53,14 +49,11 @@ class AnnouncementController extends Controller
             ], 500);
         }
     }
-
     public function getOne($id)
     {
         try {
-
             $announcement = DB::table('announcements as a')
                 ->select('a.id', 'a.date', 'a.attachment', 'a.description', 'a.title');
-
 
             $announcement = $announcement->orderBy('a.created_at', 'desc')
                 ->where('a.id', $id)
@@ -77,7 +70,6 @@ class AnnouncementController extends Controller
             ], 500);
         }
     }
-
     public function save(Request $request)
     {
         DB::beginTransaction();
@@ -105,7 +97,6 @@ class AnnouncementController extends Controller
             ], 500);
         }
     }
-
     public function update(Request $request, $id)
     {
         DB::beginTransaction();
@@ -122,7 +113,7 @@ class AnnouncementController extends Controller
             return response()->json([
                 "Message" => "Announcement Data Updated",
                 "Data" => $announcement,
-            ], 201);
+            ], 200);
         } catch (\Throwable $e) {
             DB::rollback();
             return response()->json([
@@ -131,7 +122,6 @@ class AnnouncementController extends Controller
             ], 500);
         }
     }
-
     public function delete($id)
     {
         try {

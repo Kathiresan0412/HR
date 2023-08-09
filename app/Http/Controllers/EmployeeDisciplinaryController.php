@@ -40,13 +40,13 @@ class EmployeeDisciplinaryController extends Controller
             $empDisciplines = $empDisciplines->orderBy('e.created_at', 'desc')->get();
 
             return response()->json([
-                "message" => "All Employee Disciplinary Data",
-                "data" => $empDisciplines,
+                "Message" => "All Employee Disciplinary Data",
+                "Data" => $empDisciplines,
             ], 200);
         } catch (\Throwable $e) {
             return response()->json([
-                "message" => "oops something went wrong",
-                "error" => $e->getMessage()
+                "Message" => "oops something went wrong",
+                "Error" => $e->getMessage()
             ], 500);
         }
     }
@@ -60,13 +60,13 @@ class EmployeeDisciplinaryController extends Controller
                 ->first();
 
             return response()->json([
-                "message" => "Employee Disciplinary Data",
-                "data" => $empDiscipline,
+                "Message" => "Employee Disciplinary Data",
+                "Data" => $empDiscipline,
             ], 200);
         } catch (\Throwable $e) {
             return response()->json([
-                "message" => "oops something went wrong",
-                "error" => $e->getMessage()
+                "Message" => "oops something went wrong",
+                "Error" => $e->getMessage()
             ], 500);
         }
     }
@@ -91,14 +91,14 @@ class EmployeeDisciplinaryController extends Controller
             DB::commit();
 
             return response()->json([
-                "message" => "Employee Disciplinary Data Saved",
-                "data" => $empDiscipline
+                "Message" => "Employee Disciplinary Data Saved",
+                "Data" => $empDiscipline
             ], 200);
         } catch (\Throwable $e) {
             DB::rollback();
             return response()->json([
-                "msg" => "oops something went wrong",
-                "error" => $e->getMessage()
+                "Message" => "oops something went wrong",
+                "Error" => $e->getMessage()
             ], 500);
         }
     }
@@ -123,14 +123,14 @@ class EmployeeDisciplinaryController extends Controller
             DB::commit();
 
             return response()->json([
-                "message" => "Employee Disciplinary Data Updated",
-                "data" => $empDiscipline,
+                "Message" => "Employee Disciplinary Data Updated",
+                "Data" => $empDiscipline,
             ], 200);
         } catch (\Throwable $e) {
             DB::rollback();
             return response()->json([
-                "msg" => "oops something went wrong",
-                "error" => $e->getMessage()
+                "Message" => "oops something went wrong",
+                "Error" => $e->getMessage()
             ], 500);
         }
     }
@@ -141,12 +141,12 @@ class EmployeeDisciplinaryController extends Controller
             $empDiscipline->delete();
 
             return response()->json([
-                "msg" => "Employee Disciplinary Data Deleted"
+                "Message" => "Employee Disciplinary Data Deleted"
             ], 200);
         } catch (\Throwable $e) {
             return response()->json([
-                "message" => "Ooops Something went wrong please try again",
-                "error" => $e->getMessage()
+                "Message" => "Ooops Something went wrong please try again",
+                "Error" => $e->getMessage()
             ], 500);
         }
     }
