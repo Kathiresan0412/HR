@@ -12,12 +12,12 @@ use App\Http\Controllers\AnnouncementController;
 use App\Http\Controllers\LeaveRequestController;
 use App\Http\Controllers\SalarayAdvanceController;
 use App\Http\Controllers\AllowedLeaveController;
-use App\Http\Controllers\ShortLeavesController;
+use App\Http\Controllers\ShortLeaveController;
 use App\Http\Controllers\LeaveTypeController;
-use App\Http\Controllers\EmployeeQualificationsController;
+use App\Http\Controllers\EmployeeQualificationController;
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\RecruitmentCandidateController;
-use App\Http\Controllers\ResignationsController;
+use App\Http\Controllers\ResignationController;
 use App\Http\Controllers\EmployeeBenefitTypeController;
 use App\Http\Controllers\TrainingRecordController;
 use App\Http\Controllers\TrainingProgramController;
@@ -114,8 +114,8 @@ Route::POST('/leave-types', [LeaveTypeController::class, 'save']);
 Route::put('/leave-types/{id}', [LeaveTypeController::class, 'update']);
 Route::delete('/leave-types/{id}', [LeaveTypeController::class, 'delete']);
 
-Route::get('/employee-qualifications', [EmployeeQualificationsController::class, 'getAll']);
-Route::get('/employee-qualifications/{id}', [EmployeeQualificationsController::class, 'getOne']);
+Route::get('/employee-qualifications', [EmployeeQualificationController::class, 'getAll']);
+Route::get('/employee-qualifications/{id}', [EmployeeQualificationController::class, 'getOne']);
 
 //Checked by Achsuthan //Cross Checked by Viswa
 Route::get('/attendances', [AttendanceController::class, 'getAll']);
@@ -130,11 +130,11 @@ Route::POST('/recruitment-candidates', [RecruitmentCandidateController::class, '
 Route::put ('/recruitment-candidates/{id}', [RecruitmentCandidateController::class, 'update']);
 Route::delete ('/recruitment-candidates/{id}', [RecruitmentCandidateController::class, 'delete']);
 
-Route::get('/resignations', [ResignationsController::class, 'getAll']);
-Route::get('/resignations/{id}', [ResignationsController::class, 'getOne']);
-Route::POST('/resignations', [ResignationsController::class, 'save']);
-Route::put('/resignations/{id}', [ResignationsController::class, 'update']);
-Route::delete('/resignations/{id}', [ResignationsController::class, 'delete']);
+Route::get('/resignations', [ResignationController::class, 'getAll']);
+Route::get('/resignations/{id}', [ResignationController::class, 'getOne']);
+Route::POST('/resignations', [ResignationController::class, 'save']);
+Route::put('/resignations/{id}', [ResignationController::class, 'update']);
+Route::delete('/resignations/{id}', [ResignationController::class, 'delete']);
 
 Route::get('/work-shifts', [EmployeeWorkShiftController::class, 'getAll']);
 Route::get('/work-shifts/{id}', [EmployeeWorkShiftController::class, 'getOne']);
@@ -142,11 +142,11 @@ Route::POST('/work-shifts', [EmployeeWorkShiftController::class, 'save']);
 Route::put('/work-shifts/{id}', [EmployeeWorkShiftController::class, 'update']);
 Route::delete('/work-shifts/{id}', [EmployeeWorkShiftController::class, 'delete']);
 
-Route::get('/short-leaves', [ShortLeavesController::class, 'getAll']);
-Route::get('/short-leaves/{id}', [ShortLeavesController::class, 'getOne']);
-Route::POST('/short-leaves', [ShortLeavesController::class, 'save']);
-Route::put('/short-leaves/{id}', [ShortLeavesController::class, 'update']);
-Route::delete('/short-leaves/{id}', [ShortLeavesController::class, 'delete']);
+Route::get('/short-leaves', [ShortLeaveController::class, 'getAll']);
+Route::get('/short-leaves/{id}', [ShortLeaveController::class, 'getOne']);
+Route::POST('/short-leaves', [ShortLeaveController::class, 'save']);
+Route::put('/short-leaves/{id}', [ShortLeaveController::class, 'update']);
+Route::delete('/short-leaves/{id}', [ShortLeaveController::class, 'delete']);
 
 Route::get('/promotions', [PromotionController::class, 'getAll']);
 Route::get('/promotions/{id}', [PromotionController::class, 'getOne']);

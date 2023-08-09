@@ -1,11 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\ShortLeaves;
+use App\Models\ShortLeave;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class ShortLeavesController extends Controller
+class ShortLeaveController extends Controller
 {
     public function getAll(Request $request)
     {
@@ -80,7 +80,7 @@ class ShortLeavesController extends Controller
                 'note' => 'required'
             ]);
 
-            $shortLeave = new ShortLeaves();
+            $shortLeave = new ShortLeave();
             $shortLeave->employee = $request->employee;
             $shortLeave->date = $request->date;
             $shortLeave->time_from = $request->time_from;
@@ -113,7 +113,7 @@ class ShortLeavesController extends Controller
                 'time_to' => 'required',
                 'note' => 'required'
             ]);
-            $shortLeave = ShortLeaves::find($id);
+            $shortLeave = ShortLeave::find($id);
             $shortLeave->employee = $request->employee;
             $shortLeave->date = $request->date;
             $shortLeave->time_from = $request->time_from;
@@ -136,7 +136,7 @@ class ShortLeavesController extends Controller
     public function delete($id)
     {
         try {
-            $shortLeave = ShortLeaves::find($id);
+            $shortLeave = ShortLeave::find($id);
             $shortLeave->delete();
             return response()->json([
                 "msg" => "Short Leaves Data Deleted",

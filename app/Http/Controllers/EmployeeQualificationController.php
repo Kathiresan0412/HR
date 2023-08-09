@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\EmployeeQualifications;
+use App\Models\EmployeeQualification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class EmployeeQualificationsController extends Controller
+class EmployeeQualificationController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,13 +15,7 @@ class EmployeeQualificationsController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
-        //
-    }
-    public function show(EmployeeQualifications $employeeQualifications)
-    {
-    }
+  
     public function getAll(Request $request,)
     {
         try {

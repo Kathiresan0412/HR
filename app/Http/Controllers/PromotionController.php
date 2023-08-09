@@ -1,24 +1,17 @@
 <?php
 namespace App\Http\Controllers;
-use App\Models\Promotions;
+use App\Models\Promotion;
 use App\Models\Employee;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class PromotionsController extends Controller
+class PromotionController extends Controller
 {
-    public function create()
-    {
-        //
-    }
-    public function show(Promotions $promotions)
-    {
-        //
-    }
+
 
     public function index(Request $request)
     {
-        //  try {
+        
         $promotions = DB::table('promotions as p')
             ->select('p.id', 'e.first_name as employee', 'p.previous_position', 'po.name as current_position', 'p.previous_salary', 'p.from', 'e.basic_salary as current_salary', 'p.status')
             ->leftJoin('employees as e', 'e.id', '=', 'p.employee')
@@ -90,7 +83,7 @@ class PromotionsController extends Controller
                 'previous_salary' => 'required',
                 'from' => 'required',
             ]);
-            $promotion = new Promotions();
+            $promotion = new Promotion();
             $promotion->employee = $request->employee; //RHS name form name and LHS name database 
             $promotion->previous_position = $request->previous_position;
             $promotion->previous_salary = $request->previous_salary;
@@ -127,7 +120,7 @@ class PromotionsController extends Controller
     public function destroy($id)
     {
         try {
-            $promotion = Promotions::find($id);
+            $promotion = Promotion::find($id);
             $promotion->delete();
             return response()->json([
                 "message" => "Promotion Data Deleted"

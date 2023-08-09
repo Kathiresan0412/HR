@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Resignations;
+use App\Models\Resignation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class ResignationsController extends Controller
+class ResignationController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -69,7 +69,7 @@ class ResignationsController extends Controller
              
             ]);
 
-            $resignation = new Resignations();
+            $resignation = new Resignation();
             $resignation->employee = $request->employee;
             $resignation->gratuity = $request->gratuity;
             $resignation->type = $request->type;
@@ -134,7 +134,7 @@ class ResignationsController extends Controller
                 'resigned_date' => 'required',
             ]);
 
-            $resignation =  Resignations::find($id);
+            $resignation =  Resignation::find($id);
             $resignation->employee = $request->employee;
             $resignation->gratuity = $request->gratuity;
             $resignation->type = $request->type;
@@ -165,7 +165,7 @@ class ResignationsController extends Controller
     public function delete($id)
     {
         try {
-            $resignation = Resignations::find($id);
+            $resignation = Resignation::find($id);
             $resignation->delete();
             return response()->json([
                 "msg" => "  Resignation Data Deleted",
