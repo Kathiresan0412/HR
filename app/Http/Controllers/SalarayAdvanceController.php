@@ -14,6 +14,7 @@ class SalarayAdvanceController extends Controller
             $salaryAdvances = DB::table('salaray_advances as sad')
                 ->select('sad.id', 'emp.first_name as employee', 'sad.amount', 'sad.type', 'sad.from_date', 'sad.to_date', 'sad.description', 'sad.status')
                 ->leftJoin('employees as emp', 'sad.employee', '=', 'emp.id');
+
             $search = $request->search;
             if (!is_null($search)) {
                 $salaryAdvances = $salaryAdvances
@@ -25,8 +26,8 @@ class SalarayAdvanceController extends Controller
             $filterParameters = [
                 'name' => 'p.name',
                 'employee' => 'sad.employee',
-                'description' => 'sad.description',
-
+                'from_date' => 'sad.from_date',
+                'to_date' => 'sad.to_date'
             ];
 
             foreach ($filterParameters as $parameter => $column) {
@@ -48,15 +49,12 @@ class SalarayAdvanceController extends Controller
             ], 500);
         }
     }
-
     public function getOne($id)
     {
         try {
             $salaryAdvance = DB::table('salaray_advances as sad')
                 ->select('sad.id', 'emp.first_name as employee', 'sad.amount', 'sad.type', 'sad.from_date', 'sad.to_date', 'sad.description', 'sad.status')
-                ->leftJoin('employees as emp', 'sad.employee', '=', 'emp.id');
-
-            $salaryAdvance = $salaryAdvance->orderBy('sad.created_at', 'desc')
+                ->leftJoin('employees as emp', 'sad.employee', '=', 'emp.id')
                 ->where('sad.id', $id)
                 ->first();
 
@@ -77,13 +75,15 @@ class SalarayAdvanceController extends Controller
 
         try {
             $request->validate([
-                ' bio_code' => 'required',
+                'bio_code' => 'required',
                 'amount' => 'required',
                 'type' => 'required',
                 'from_date' => 'required',
                 'to_date' => 'required',
                 'description' => 'required'
             ]);
+
+
             $salaryAdvance = new SalarayAdvance();
             $salaryAdvance->employee = $request->employee;
             $salaryAdvance->amount = $request->amount;
@@ -98,17 +98,16 @@ class SalarayAdvanceController extends Controller
 
             return response()->json([
                 "Message" => "Salary Advances Data Saved",
-                "Data" => $salaryAdvance,
+                "Data" => $salaryAdvance
             ], 200);
         } catch (\Throwable $e) {
             DB::rollback();
             return response()->json([
                 "Message" => "oops something went wrong",
-                "Error" => $e->getMessage(),
+                "Error" => $e->getMessage()
             ], 500);
         }
     }
-
     public function update(Request $request, $id)
     {
         DB::beginTransaction();
@@ -135,7 +134,7 @@ class SalarayAdvanceController extends Controller
 
             return response()->json([
                 "Message" => "Salary Advances Data Updated",
-                "Data" => $salaryAdvance,
+                "Data" => $salaryAdvance
             ], 200);
         } catch (\Throwable $e) {
 
@@ -147,8 +146,6 @@ class SalarayAdvanceController extends Controller
             ], 500);
         }
     }
-
-
     public function delete($id)
     {
         try {

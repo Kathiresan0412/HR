@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\DB;
 
 class EmployeeQualificationController extends Controller
 {
-
     public function getAll(Request $request, )
     {
         try {
@@ -49,7 +48,6 @@ class EmployeeQualificationController extends Controller
             ], 500);
         }
     }
-
     public function getOne($id)
     {
         try {
