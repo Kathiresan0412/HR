@@ -14,18 +14,15 @@ class QualificationController extends Controller
         try {
             $qualifications = DB::table('qualifications as q')
                 ->select('q.id', 'q.name', 'q.description');
-
                 $filterParameters = [
                     'name' => 'q.name', 
                 ];
-
                 foreach ($filterParameters as $parameter => $column) {
                     $value = $request->input($parameter);
                     if (isset($value) && $value !== '') {
                         $qualifications->where($column, '=', $value);
                     }
-                }
-                
+                }      
             $search = $request->search;
             if (!is_null($search)) {
                 $qualifications = $qualifications
@@ -33,7 +30,7 @@ class QualificationController extends Controller
                     ->orWhere('q.description', 'LIKE', '%' . $search . '%');
             }
             $qualifications = $qualifications->orderBy('q.created_at', 'desc')->get();
-
+            
             return response()->json([
                 "message" => "All qualification Data",
                 "data" => $qualifications,
@@ -45,6 +42,7 @@ class QualificationController extends Controller
             ], 500);
         }
     }
+
     public function getOne($id)
     {
         try {
@@ -52,7 +50,6 @@ class QualificationController extends Controller
                 ->select('q.id', 'q.name', 'q.description')
                 ->where('q.id', $id)
                 ->first();
-
             return response()->json([
                 "message" => "Qualification Data",
                 "data" => $qualification,
@@ -73,7 +70,6 @@ class QualificationController extends Controller
                 'name' => 'required',
                 'description' => 'required'
             ]);
-
             $qualification = new Qualification();
             $qualification->name = $request->name;
             $qualification->description = $request->description;
@@ -101,8 +97,7 @@ class QualificationController extends Controller
             $request->validate([
                 'name' => 'required',
                 'description' => 'required'
-            ]);
-            
+            ]); 
             $qualification = Qualification::find($id);
             $qualification->name = $request->name;
             $qualification->description = $request->description;
@@ -111,7 +106,7 @@ class QualificationController extends Controller
             DB::commit();
 
             return response()->json([
-                "msg" => "Qualification Data",
+                "msg" => "Qualification Data Updated",
                 "data" => $qualification,
             ], 201);
         } catch (\Throwable $e) {
@@ -130,7 +125,7 @@ class QualificationController extends Controller
             $qualification = Qualification::find($id);
              $qualification->delete();
             return response()->json([
-                "message" => "qualification data deleted successfully",
+                "message" => "qualification data deleted",
             ], 200);
         }
         catch(\Throwable $e){

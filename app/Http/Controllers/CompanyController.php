@@ -14,11 +14,9 @@ class CompanyController extends Controller
       try{
           $companies= DB::table('companies as c')
           ->select('c.id','c.name','c.description');
-
           $filterParameters = [
             'name' => 'c.name', 
         ];
-
         foreach ($filterParameters as $parameter => $column) {
             $value = $request->input($parameter);
             if (isset($value) && $value !== '') {
@@ -32,9 +30,7 @@ class CompanyController extends Controller
               ->where('c.name','LIKE','%'.$search.'%')
               ->orWhere('c.description','LIKE','%'.$search.'%');
           }
-
           $companies = $companies->orderBy('c.created_at','desc')->get();
-
           return response()->json([
               "message" => "All companies Data",
               "data" => $companies,
@@ -54,7 +50,6 @@ class CompanyController extends Controller
           ->select('c.id','c.name','c.description')
           ->where('c.id',$id)
           ->first();
-
           return response()->json([
               "message" => "Company Data",
               "data" => $company,
@@ -75,7 +70,6 @@ class CompanyController extends Controller
           'name'=>'required|string|alpha|max:30',
           'description'=>'required|string|alpha|max:255'
       ]);
-
       $company = new Company();
       $company->name = $request->name;
       $company->description = $request->description;
@@ -84,13 +78,13 @@ class CompanyController extends Controller
       DB::commit();
 
       return response()->json([
-          "msg" => "company Data saved",
+          "message" => "company Data saved",
           "data"=> $company,
       ],200);
   }catch(\Throwable $e) {
       DB::rollback();
       return response()->json([
-          "msg"=>"oops something went wrong",
+          "message"=>"oops something went wrong",
           "error"=> $e->getMessage(),
       ],500);
   }
@@ -104,7 +98,6 @@ class CompanyController extends Controller
                 'name'=>'required|string|alpha|max:30',
                 'description'=>'required|string|alpha|max:255'
             ]);
-
             $company = Company::find($id);
             $company->name = $request->name;
             $company->description = $request->description;
@@ -113,13 +106,13 @@ class CompanyController extends Controller
             DB::commit();
 
             return response()->json([
-            "msg" => "Company Data updated",
+            "message" => "Company Data updated",
             "data"=> $company,
         ],200);
         }catch(\Throwable $e) {
             DB::rollback();
             return response()->json([
-                "msg"=>"oops something went wrong",
+                "message"=>"oops something went wrong",
                 "error"=> $e->getMessage(),
             ],500);
         }
@@ -131,7 +124,7 @@ class CompanyController extends Controller
             $company = Company::find($id);
             $company->delete();
             return response()->json([
-                "message" => "Company data deleted successfully",
+                "message" => "Company data deleted",
             ], 200);
         } catch (\Throwable $e) {
             return response()->json([
@@ -140,7 +133,6 @@ class CompanyController extends Controller
             ], 500);
         }
     }
-
 }
 
 
