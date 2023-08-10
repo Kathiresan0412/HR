@@ -40,7 +40,7 @@
             <ul class="list-group list-group-flush ul-checklist">
                 <li class="list-group-item">
                     <div class="custom-control custom-checkbox" style="float: left; margin-right:10px">
-                        <input type="checkbox" class="custom-control-input" id="check_25a2428e-6ec4-49c7-9d8e-235833c95101" name="check_list[]" value="25a2428e-6ec4-49c7-9d8e-235833c95101" style="">
+                        <input type="checkbox" class="custom-control-input" id="check_25a2428e-6ec4-49c7-9d8e-235833c95101" name="check_list[]" value="25a2428e-6ec4-49c7-9d8e-235833c95101" >
                         <label class="custom-control-label" for="check_25a2428e-6ec4-49c7-9d8e-235833c95101">O/LEVEL &amp; A/LEVEL RESULTS SHEETS</label>
 
                     </div>
@@ -48,13 +48,13 @@
 
 
                     <div>
-                        <input onchange="updateCheck('25a2428e-6ec4-49c7-9d8e-235833c95101')" type="file" name="files[25a2428e-6ec4-49c7-9d8e-235833c95101]" id="file_25a2428e-6ec4-49c7-9d8e-235833c95101" style="">
+                        <input onchange="updateCheck('25a2428e-6ec4-49c7-9d8e-235833c95101')" type="file" name="files[25a2428e-6ec4-49c7-9d8e-235833c95101]" id="file_25a2428e-6ec4-49c7-9d8e-235833c95101" >
                     </div>
 
                 </li>
                 <li class="list-group-item">
                     <div class="custom-control custom-checkbox" style="float: left; margin-right:10px">
-                        <input type="checkbox" class="custom-control-input" id="check_2b8b3441-6e4b-47cf-b8f4-24b64946ad3c" name="check_list[]" value="2b8b3441-6e4b-47cf-b8f4-24b64946ad3c" style="">
+                        <input type="checkbox" class="custom-control-input" id="check_2b8b3441-6e4b-47cf-b8f4-24b64946ad3c" name="check_list[]" value="2b8b3441-6e4b-47cf-b8f4-24b64946ad3c" >
                         <label class="custom-control-label" for="check_2b8b3441-6e4b-47cf-b8f4-24b64946ad3c">BANK OF CEYLON BOOK</label>
 
                     </div>
@@ -62,13 +62,13 @@
 
 
                     <div>
-                        <input onchange="updateCheck('2b8b3441-6e4b-47cf-b8f4-24b64946ad3c')" type="file" name="files[2b8b3441-6e4b-47cf-b8f4-24b64946ad3c]" id="file_2b8b3441-6e4b-47cf-b8f4-24b64946ad3c" style="">
+                        <input onchange="updateCheck('2b8b3441-6e4b-47cf-b8f4-24b64946ad3c')" type="file" name="files[2b8b3441-6e4b-47cf-b8f4-24b64946ad3c]" id="file_2b8b3441-6e4b-47cf-b8f4-24b64946ad3c" >
                     </div>
 
                 </li>
                 <li class="list-group-item">
                     <div class="custom-control custom-checkbox" style="float: left; margin-right:10px">
-                        <input type="checkbox" class="custom-control-input" id="check_516c715a-ab17-430a-a226-58ffccdf9b66" name="check_list[]" value="516c715a-ab17-430a-a226-58ffccdf9b66" style="">
+                        <input type="checkbox" class="custom-control-input" id="check_516c715a-ab17-430a-a226-58ffccdf9b66" name="check_list[]" value="516c715a-ab17-430a-a226-58ffccdf9b66" >
                         <label class="custom-control-label" for="check_516c715a-ab17-430a-a226-58ffccdf9b66">BIRTH CERTIFICATE</label>
 
                     </div>
@@ -76,13 +76,13 @@
 
 
                     <div>
-                        <input onchange="updateCheck('516c715a-ab17-430a-a226-58ffccdf9b66')" type="file" name="files[516c715a-ab17-430a-a226-58ffccdf9b66]" id="file_516c715a-ab17-430a-a226-58ffccdf9b66" style="">
+                        <input onchange="updateCheck('516c715a-ab17-430a-a226-58ffccdf9b66')" type="file" name="files[516c715a-ab17-430a-a226-58ffccdf9b66]" id="file_516c715a-ab17-430a-a226-58ffccdf9b66" >
                     </div>
 
                 </li>
                 <li class="list-group-item">
                     <div class="custom-control custom-checkbox" style="float: left; margin-right:10px">
-                        <input type="checkbox" class="custom-control-input" id="check_5251ebb4-1604-47c0-8b23-047fd2054f09" name="check_list[]" value="5251ebb4-1604-47c0-8b23-047fd2054f09" style="">
+                        <input type="checkbox" class="custom-control-input" id="check_5251ebb4-1604-47c0-8b23-047fd2054f09" name="check_list[]" value="5251ebb4-1604-47c0-8b23-047fd2054f09" >
                         <label class="custom-control-label" for="check_5251ebb4-1604-47c0-8b23-047fd2054f09">WORK EXPERIENCE</label>
 
                     </div>
@@ -90,13 +90,13 @@
 
 
                     <div>
-                        <input onchange="updateCheck('5251ebb4-1604-47c0-8b23-047fd2054f09')" type="file" name="files[5251ebb4-1604-47c0-8b23-047fd2054f09]" id="file_5251ebb4-1604-47c0-8b23-047fd2054f09" style="">
+                        <input onchange="updateCheck('5251ebb4-1604-47c0-8b23-047fd2054f09')" type="file" name="files[5251ebb4-1604-47c0-8b23-047fd2054f09]" id="file_5251ebb4-1604-47c0-8b23-047fd2054f09" >
                     </div>
 
                 </li>
                 <li class="list-group-item">
                     <div class="custom-control custom-checkbox" style="float: left; margin-right:10px">
-                        <input type="checkbox" class="custom-control-input" id="check_7600ba5f-12cf-40d9-8499-917baa807bdf" name="check_list[]" value="7600ba5f-12cf-40d9-8499-917baa807bdf" style="">
+                        <input type="checkbox" class="custom-control-input" id="check_7600ba5f-12cf-40d9-8499-917baa807bdf" name="check_list[]" value="7600ba5f-12cf-40d9-8499-917baa807bdf" >
                         <label class="custom-control-label" for="check_7600ba5f-12cf-40d9-8499-917baa807bdf">GS CHARACTER CERTIFICATE</label>
 
                     </div>
@@ -104,13 +104,13 @@
 
 
                     <div>
-                        <input onchange="updateCheck('7600ba5f-12cf-40d9-8499-917baa807bdf')" type="file" name="files[7600ba5f-12cf-40d9-8499-917baa807bdf]" id="file_7600ba5f-12cf-40d9-8499-917baa807bdf" style="">
+                        <input onchange="updateCheck('7600ba5f-12cf-40d9-8499-917baa807bdf')" type="file" name="files[7600ba5f-12cf-40d9-8499-917baa807bdf]" id="file_7600ba5f-12cf-40d9-8499-917baa807bdf" >
                     </div>
 
                 </li>
                 <li class="list-group-item">
                     <div class="custom-control custom-checkbox" style="float: left; margin-right:10px">
-                        <input type="checkbox" class="custom-control-input" id="check_b12c361c-2fc8-4c93-80c8-a38148cb9785" name="check_list[]" value="b12c361c-2fc8-4c93-80c8-a38148cb9785" style="">
+                        <input type="checkbox" class="custom-control-input" id="check_b12c361c-2fc8-4c93-80c8-a38148cb9785" name="check_list[]" value="b12c361c-2fc8-4c93-80c8-a38148cb9785" >
                         <label class="custom-control-label" for="check_b12c361c-2fc8-4c93-80c8-a38148cb9785">CURRICULUM VITAE</label>
 
                     </div>
@@ -118,13 +118,13 @@
 
 
                     <div>
-                        <input onchange="updateCheck('b12c361c-2fc8-4c93-80c8-a38148cb9785')" type="file" name="files[b12c361c-2fc8-4c93-80c8-a38148cb9785]" id="file_b12c361c-2fc8-4c93-80c8-a38148cb9785" style="">
+                        <input onchange="updateCheck('b12c361c-2fc8-4c93-80c8-a38148cb9785')" type="file" name="files[b12c361c-2fc8-4c93-80c8-a38148cb9785]" id="file_b12c361c-2fc8-4c93-80c8-a38148cb9785" >
                     </div>
 
                 </li>
                 <li class="list-group-item">
                     <div class="custom-control custom-checkbox" style="float: left; margin-right:10px">
-                        <input type="checkbox" class="custom-control-input" id="check_ca326c15-7402-4b59-9467-29e1a98e7621" name="check_list[]" value="ca326c15-7402-4b59-9467-29e1a98e7621" style="">
+                        <input type="checkbox" class="custom-control-input" id="check_ca326c15-7402-4b59-9467-29e1a98e7621" name="check_list[]" value="ca326c15-7402-4b59-9467-29e1a98e7621" >
                         <label class="custom-control-label" for="check_ca326c15-7402-4b59-9467-29e1a98e7621">VACCINE CERTIFICATE</label>
 
                     </div>
@@ -132,13 +132,13 @@
 
 
                     <div>
-                        <input onchange="updateCheck('ca326c15-7402-4b59-9467-29e1a98e7621')" type="file" name="files[ca326c15-7402-4b59-9467-29e1a98e7621]" id="file_ca326c15-7402-4b59-9467-29e1a98e7621" style="">
+                        <input onchange="updateCheck('ca326c15-7402-4b59-9467-29e1a98e7621')" type="file" name="files[ca326c15-7402-4b59-9467-29e1a98e7621]" id="file_ca326c15-7402-4b59-9467-29e1a98e7621" >
                     </div>
 
                 </li>
                 <li class="list-group-item">
                     <div class="custom-control custom-checkbox" style="float: left; margin-right:10px">
-                        <input type="checkbox" class="custom-control-input" id="check_e7f6ffa9-ef59-4939-909a-973b2c132c5b" name="check_list[]" value="e7f6ffa9-ef59-4939-909a-973b2c132c5b" style="">
+                        <input type="checkbox" class="custom-control-input" id="check_e7f6ffa9-ef59-4939-909a-973b2c132c5b" name="check_list[]" value="e7f6ffa9-ef59-4939-909a-973b2c132c5b" >
                         <label class="custom-control-label" for="check_e7f6ffa9-ef59-4939-909a-973b2c132c5b">NIC</label>
 
                     </div>
@@ -146,7 +146,7 @@
 
 
                     <div>
-                        <input onchange="updateCheck('e7f6ffa9-ef59-4939-909a-973b2c132c5b')" type="file" name="files[e7f6ffa9-ef59-4939-909a-973b2c132c5b]" id="file_e7f6ffa9-ef59-4939-909a-973b2c132c5b" style="">
+                        <input onchange="updateCheck('e7f6ffa9-ef59-4939-909a-973b2c132c5b')" type="file" name="files[e7f6ffa9-ef59-4939-909a-973b2c132c5b]" id="file_e7f6ffa9-ef59-4939-909a-973b2c132c5b" >
                     </div>
 
                 </li>
