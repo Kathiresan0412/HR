@@ -43,11 +43,17 @@ class EmployeeController extends Controller
                     'u.name as created_by',
                     'e.img',
                     'e.status',
+                    'emp_qualification.qualifications'
                 )
                 ->leftJoin('companies as c', 'c.id', '=', 'e.company')
                 ->leftJoin('positions as p', 'p.id', '=', 'e.position')
                 ->leftJoin('departments as d', 'd.id', '=', 'e.department')
-                ->leftJoin('users as u', 'u.id', '=', 'e.created_by');
+                ->leftJoin('users as u', 'u.id', '=', 'e.created_by')
+                ->leftJoin(DB::raw("(SELECT eq.employee AS employee, GROUP_CONCAT(q.name) AS qualifications 
+                FROM employee_qualifications AS eq 
+                LEFT JOIN qualifications AS q ON q.id = eq.qualification 
+                GROUP BY eq.employee) 
+                as emp_qualification"), 'e.id', '=', 'employee');
 
 
             $search = $request->search;

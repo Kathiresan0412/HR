@@ -17,7 +17,7 @@ public function edit(){
     return view('Documents.edit');
 }
 public function websave(){
-    
+    return view('Documents.save');
     
 }
 public function webupdate(){
