@@ -1,10 +1,14 @@
+<<<<<<< HEAD
+<div class="mb-3">
+<form action="empdocs-save">
+=======
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Employee Documents</title>
     <script src="https://nchhr.apptimus.lk/js/app.js" defer></script>
 
 <!-- Fonts -->
@@ -32,8 +36,6 @@
 <body>
     <div class="card-body">
         <div class="checklist-controls" style="display: flex">
-            <button style="margin-left: auto" onclick="toggleCheckList()" type="button" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i> Edit
-            </button>
         </div>
         <form action="https://nchhr.apptimus.lk/new-employee/a9658b20-a90c-45f2-8967-7c0dd34a719a/checklist" method="POST" enctype="multipart/form-data" class="form-checklist">
             <input type="hidden" name="_token" value="rnjaQfbFoMmZdDXhTFLppvJlRQUUIjmYvVhjVv3B" style="display: inline-block;">
@@ -44,9 +46,6 @@
                         <label class="custom-control-label" for="check_25a2428e-6ec4-49c7-9d8e-235833c95101">O/LEVEL &amp; A/LEVEL RESULTS SHEETS</label>
 
                     </div>
-
-
-
                     <div>
                         <input onchange="updateCheck('25a2428e-6ec4-49c7-9d8e-235833c95101')" type="file" name="files[25a2428e-6ec4-49c7-9d8e-235833c95101]" id="file_25a2428e-6ec4-49c7-9d8e-235833c95101" >
                     </div>
@@ -58,9 +57,6 @@
                         <label class="custom-control-label" for="check_2b8b3441-6e4b-47cf-b8f4-24b64946ad3c">BANK OF CEYLON BOOK</label>
 
                     </div>
-
-
-
                     <div>
                         <input onchange="updateCheck('2b8b3441-6e4b-47cf-b8f4-24b64946ad3c')" type="file" name="files[2b8b3441-6e4b-47cf-b8f4-24b64946ad3c]" id="file_2b8b3441-6e4b-47cf-b8f4-24b64946ad3c" >
                     </div>
@@ -72,8 +68,6 @@
                         <label class="custom-control-label" for="check_516c715a-ab17-430a-a226-58ffccdf9b66">BIRTH CERTIFICATE</label>
 
                     </div>
-
-
 
                     <div>
                         <input onchange="updateCheck('516c715a-ab17-430a-a226-58ffccdf9b66')" type="file" name="files[516c715a-ab17-430a-a226-58ffccdf9b66]" id="file_516c715a-ab17-430a-a226-58ffccdf9b66" >
@@ -101,8 +95,6 @@
 
                     </div>
 
-
-
                     <div>
                         <input onchange="updateCheck('7600ba5f-12cf-40d9-8499-917baa807bdf')" type="file" name="files[7600ba5f-12cf-40d9-8499-917baa807bdf]" id="file_7600ba5f-12cf-40d9-8499-917baa807bdf" >
                     </div>
@@ -115,8 +107,6 @@
 
                     </div>
 
-
-
                     <div>
                         <input onchange="updateCheck('b12c361c-2fc8-4c93-80c8-a38148cb9785')" type="file" name="files[b12c361c-2fc8-4c93-80c8-a38148cb9785]" id="file_b12c361c-2fc8-4c93-80c8-a38148cb9785" >
                     </div>
@@ -128,8 +118,6 @@
                         <label class="custom-control-label" for="check_ca326c15-7402-4b59-9467-29e1a98e7621">VACCINE CERTIFICATE</label>
 
                     </div>
-
-
 
                     <div>
                         <input onchange="updateCheck('ca326c15-7402-4b59-9467-29e1a98e7621')" type="file" name="files[ca326c15-7402-4b59-9467-29e1a98e7621]" id="file_ca326c15-7402-4b59-9467-29e1a98e7621" >
@@ -162,6 +150,7 @@
 </html>
 
 <!-- <div class="mb-3">
+>>>>>>> a0df7ad669357eb48c5acbef9b1723fa62341d77
 <label for="image_1" class="form-label">Image 1 <strong style="color:red">*</strong></label>
 <input type="file" class="form-control @error('image_1') is-invalid @enderror" name="image_1" id="image_1" accept="image/*" />
 @error('image_1')
@@ -182,5 +171,11 @@
 
        Storage::disk('local')->put('public/Projects'.'/'.$fileName, $img, 'public');
         $project->image_1 = $fileName;
+<<<<<<< HEAD
+     ?>   
+    </form>
+</div>
+=======
        
 </div> -->
+>>>>>>> a0df7ad669357eb48c5acbef9b1723fa62341d77

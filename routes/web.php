@@ -16,13 +16,11 @@ use App\Http\Controllers\EmployeeDocumentController;
 Route::get('/', function () {
     return view('Documents.index');
 });
-Route::get('/xxx', function () {
-    return view('Documents.index');
-});
 
 
 Route::get ('/employee-documents', [EmployeeDocumentController::class, 'index']);
-Route::get ('/employee-documents/{id}', [EmployeeDocumentController::class, 'edit']);
-Route::POST('/employee-documents', [EmployeeDocumentController::class, 'websave']);
+Route::get('/employee-documents', [EmployeeDocumentController::class, 'create'])->name('create_value');
+Route::post('/employee-documents', [EmployeeDocumentController::class, 'websave'])->name('save');
+Route::get ('/employee-documents/{id}', [EmployeeDocumentController::class, 'edit'])->name('edit');;
 Route::put ('/employee-documents/{id}', [EmployeeDocumentController::class, 'webupdate']);
 Route::delete ('/employee-documents/{id}', [EmployeeDocumentController::class, 'webdelete']);
