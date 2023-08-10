@@ -9,7 +9,8 @@ use App\Models\EmployeeQualification;
 use Illuminate\Support\Facades\DB;
 
 class EmployeeController extends Controller
-{    public function getAll(Request $request)
+{
+    public function getAll(Request $request)
     {
         try {
             $employees = DB::table('employees as e')
@@ -42,21 +43,11 @@ class EmployeeController extends Controller
                     'u.name as created_by',
                     'e.img',
                     'e.status',
-                    'emp_qualification.qualifications'
                 )
                 ->leftJoin('companies as c', 'c.id', '=', 'e.company')
                 ->leftJoin('positions as p', 'p.id', '=', 'e.position')
                 ->leftJoin('departments as d', 'd.id', '=', 'e.department')
-<<<<<<< HEAD
                 ->leftJoin('users as u', 'u.id', '=', 'e.created_by');
-=======
-                ->leftJoin('users as u', 'u.id', '=', 'e.created_by')
-                ->leftJoin(DB::raw("(SELECT eq.employee AS employee, GROUP_CONCAT(q.name) AS qualifications 
-                FROM employee_qualifications AS eq 
-                LEFT JOIN qualifications AS q ON q.id = eq.qualification 
-                GROUP BY eq.employee) 
-                as emp_qualification"), 'e.id', '=', 'employee');
->>>>>>> 9979c5bbbd198c5df5802b0991a60d21847cb28b
 
             $search = $request->search;
 
@@ -104,12 +95,8 @@ class EmployeeController extends Controller
             ], 500);
         }
 
-<<<<<<< HEAD
-    }    public function getOne($id)
-=======
     }
     public function getOne($id)
->>>>>>> 9979c5bbbd198c5df5802b0991a60d21847cb28b
     {
         try {
             $employee = DB::table('employees as e')
@@ -141,21 +128,14 @@ class EmployeeController extends Controller
                     'e.locker_number',
                     'u.name as created_by',
                     'e.img',
-                    'e.status',
-                    'emp_qualification.qualifications'
+                    'e.status'
                 )
                 ->leftJoin('companies as c', 'c.id', '=', 'e.company')
                 ->leftJoin('positions as p', 'p.id', '=', 'e.position')
                 ->leftJoin('departments as d', 'd.id', '=', 'e.department')
                 ->leftJoin('users as u', 'u.id', '=', 'e.created_by')
-                ->leftJoin(DB::raw("(SELECT eq.employee AS employee, GROUP_CONCAT(q.name) AS qualifications 
-                    FROM employee_qualifications AS eq 
-                    LEFT JOIN qualifications AS q ON q.id = eq.qualification 
-                    GROUP BY eq.employee) 
-                    as emp_qualification"), 'e.id', '=', 'employee')
                 ->where('e.id', $id)
                 ->first();
-<<<<<<< HEAD
             $employeeQualification = EmployeeQualification::leftJoin('qualifications as qu', 'qu.id', '=', 'employee_qualifications.qualification')
                 ->where('employee', $id)
                 ->get();
@@ -163,21 +143,11 @@ class EmployeeController extends Controller
             foreach ($employeeQualification as $employeeqalificatio) {
                 array_push($employeeQualifications, $employeeqalificatio->name);
             }
-=======
-
-            // $employeeQualification = EmployeeQualification::leftJoin('qualifications as qu', 'qu.id', '=', 'employee_qualifications.qualification')
-            //     ->where('employee', $id)
-            //     ->get();
-            // $employeeQualifications = [];
-            // foreach ($employeeQualification as $employeeqalificatio) {
-            //     array_push($employeeQualifications, $employeeqalificatio->name);
-            // }
->>>>>>> 9979c5bbbd198c5df5802b0991a60d21847cb28b
 
             return response()->json([
                 "message" => "Employee Data",
-                "data" => $employee
-                //"EmployeeQualifications" => $employeeQualifications
+                "data" => $employee,
+                "EmployeeQualifications" => $employeeQualifications
             ], 200);
         } catch (\Throwable $e) {
             return response()->json([

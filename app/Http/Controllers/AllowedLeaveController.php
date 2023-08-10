@@ -16,7 +16,7 @@ class AllowedLeaveController extends Controller
             $allowedleaves = DB::table('allowed_leaves as l')
                 ->select('l.id', 'p.name as position', 't.name as type', 'l.days', 'l.term')
                 ->leftJoin('positions as p', 'p.id', '=', 'l.position')
-                ->leftJoin('leave_types as t', 't.id', '=', 'l.type'); 
+                ->leftJoin('leave_types as t', 't.id', '=', 'l.type');
             $search = $request->search;
             if (!is_null($search)) {
                 $allowedleaves = $allowedleaves
