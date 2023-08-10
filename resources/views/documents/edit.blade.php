@@ -32,8 +32,7 @@
 <body>
     <div class="card-body">
         <div class="checklist-controls" style="display: flex">
-            <button style="margin-left: auto" onclick="toggleCheckList()" type="button" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i> Edit
-            </button>
+           
         </div>
         <form action="https://nchhr.apptimus.lk/new-employee/a9658b20-a90c-45f2-8967-7c0dd34a719a/checklist" method="POST" enctype="multipart/form-data" class="form-checklist">
             <input type="hidden" name="_token" value="rnjaQfbFoMmZdDXhTFLppvJlRQUUIjmYvVhjVv3B" style="display: inline-block;">

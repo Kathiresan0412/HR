@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Employee Documents</title>
     <script src="https://nchhr.apptimus.lk/js/app.js" defer></script>
 
     <!-- Fonts -->
@@ -32,19 +32,34 @@
     <div class="card border-box border-primary mt-2 shadow-sm">
         <div class="card-body">
             <div class="d-flex justify-content-between align-items-center">
-                <h3 class="card-title ">Vaccinations</h3>
+                <h3 class="card-title ">Employee Documents</h3>
                 <button type="button" class="btn btn-md btn-link" data-toggle="modal"
-                    data-target="#vaccines-information"><i class="fas fa-plus"></i>
-                    Add</button>
+                    data-target="#vaccines-information"><a href="{{route('create_value')}}"></a><i class="fas fa-plus"></i>Add</button>
             </div>
             <table class="table">
                 <thead class="thead">
                     <tr>
-                        <th scope="col">Doses</th>
-                        <th scope="col">Vaccine</th>
-                        <th scope="col">Date</th>
-                        <th scope="col">Note</th>
+                        <th scope="col">O/LEVEL & A/LEVEL RESULTS SHEETS</th>
+                        <th scope="col">BANK BOOK</th>
+                        <th scope="col">BIRTH CERTIFICATE</th>
+                        <th scope="col">WORK EXPERIENCE</th>
+                        <th scope="col">GS CHARACTER CERTIFICATE</th>
+                        <th scope="col">CURRICULUM VITAE</th>
+                        <th scope="col">NIC</th>
+                        <th scope="col">Action</th>
                     </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                    <button style="margin-left: auto" onclick="toggleCheckList()" type="button" class="btn btn-sm btn-primary"><a href="{{route('edit')}}"></a><i class="fas fa-edit"></i> Edit </button>
+                    </td>   
+                </tr>
                 </thead>
                 <tbody class="tbody">
                 </tbody>

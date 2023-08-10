@@ -12,6 +12,10 @@ public function index(){
    // return 12;
     return view('Documents.index');
 }
+public function create(){
+    // return 12;
+     return view('Documents.save');
+ }
 public function edit(){
    
     return view('Documents.edit');
