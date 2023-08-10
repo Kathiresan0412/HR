@@ -43,11 +43,17 @@ class EmployeeController extends Controller
                     'u.name as created_by',
                     'e.img',
                     'e.status',
+                    'emp_qualification.qualifications'
                 )
                 ->leftJoin('companies as c', 'c.id', '=', 'e.company')
                 ->leftJoin('positions as p', 'p.id', '=', 'e.position')
                 ->leftJoin('departments as d', 'd.id', '=', 'e.department')
-                ->leftJoin('users as u', 'u.id', '=', 'e.created_by');
+                ->leftJoin('users as u', 'u.id', '=', 'e.created_by')
+                ->leftJoin(DB::raw("(SELECT eq.employee AS employee, GROUP_CONCAT(q.name) AS qualifications 
+                FROM employee_qualifications AS eq 
+                LEFT JOIN qualifications AS q ON q.id = eq.qualification 
+                GROUP BY eq.employee) 
+                as emp_qualification"), 'e.id', '=', 'employee');
 
             $search = $request->search;
 
@@ -61,6 +67,7 @@ class EmployeeController extends Controller
                     ->orWhere('e.address', 'LIKE', '%' . $search . '%')
                     ->orWhere('e.nic', 'LIKE', '%' . $search . '%');
             }
+            //filter----------------------------------------------
             $filterParameters = [
                 'type' => 'p.type',
                 'dob_date' => 'e.dob_date',
@@ -71,6 +78,7 @@ class EmployeeController extends Controller
                 'department' => 'e.department',
                 'hire_date' => 'e.hire_date',
                 'reg_hiredate' => 'e.reg_hiredate'
+
             ];
 
             foreach ($filterParameters as $parameter => $column) {
@@ -79,6 +87,7 @@ class EmployeeController extends Controller
                     $employees->where($column, '=', $value);
                 }
             }
+            //filter----------------------------------------------
 
             $employees = $employees->orderBy('e.created_at', 'desc')
                 ->get();
@@ -128,26 +137,33 @@ class EmployeeController extends Controller
                     'e.locker_number',
                     'u.name as created_by',
                     'e.img',
-                    'e.status'
+                    'e.status',
+                    'emp_qualification.qualifications'
                 )
                 ->leftJoin('companies as c', 'c.id', '=', 'e.company')
                 ->leftJoin('positions as p', 'p.id', '=', 'e.position')
                 ->leftJoin('departments as d', 'd.id', '=', 'e.department')
                 ->leftJoin('users as u', 'u.id', '=', 'e.created_by')
+                ->leftJoin(DB::raw("(SELECT eq.employee AS employee, GROUP_CONCAT(q.name) AS qualifications 
+                    FROM employee_qualifications AS eq 
+                    LEFT JOIN qualifications AS q ON q.id = eq.qualification 
+                    GROUP BY eq.employee) 
+                    as emp_qualification"), 'e.id', '=', 'employee')
                 ->where('e.id', $id)
                 ->first();
-            $employeeQualification = EmployeeQualification::leftJoin('qualifications as qu', 'qu.id', '=', 'employee_qualifications.qualification')
-                ->where('employee', $id)
-                ->get();
-            $employeeQualifications = [];
-            foreach ($employeeQualification as $employeeqalificatio) {
-                array_push($employeeQualifications, $employeeqalificatio->name);
-            }
+
+            // $employeeQualification = EmployeeQualification::leftJoin('qualifications as qu', 'qu.id', '=', 'employee_qualifications.qualification')
+            //     ->where('employee', $id)
+            //     ->get();
+            // $employeeQualifications = [];
+            // foreach ($employeeQualification as $employeeqalificatio) {
+            //     array_push($employeeQualifications, $employeeqalificatio->name);
+            // }
 
             return response()->json([
                 "message" => "Employee Data",
-                "data" => $employee,
-                "EmployeeQualifications" => $employeeQualifications
+                "data" => $employee
+                //"EmployeeQualifications" => $employeeQualifications
             ], 200);
         } catch (\Throwable $e) {
             return response()->json([
@@ -233,7 +249,6 @@ class EmployeeController extends Controller
             }
 
             DB::commit();
-
             return response()->json([
                 "msg" => "Employee Data Saved",
                 "data" => $employee,
@@ -338,6 +353,7 @@ class EmployeeController extends Controller
             ], 500);
         }
     }
+
     public function delete($id)
     {
         try {
