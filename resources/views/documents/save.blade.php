@@ -1,4 +1,5 @@
 <div class="mb-3">
+<form action="empdocs-save">
 <label for="image_1" class="form-label">Image 1 <strong style="color:red">*</strong></label>
 <input type="file" class="form-control @error('image_1') is-invalid @enderror" name="image_1" id="image_1" accept="image/*" />
 @error('image_1')
@@ -20,4 +21,5 @@
        Storage::disk('local')->put('public/Projects'.'/'.$fileName, $img, 'public');
         $project->image_1 = $fileName;
      ?>   
+    </form>
 </div>

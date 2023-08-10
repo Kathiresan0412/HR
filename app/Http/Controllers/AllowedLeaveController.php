@@ -15,23 +15,9 @@ class AllowedLeaveController extends Controller
             $allowedleaves = DB::table('allowed_leaves as l')
                 ->select('l.id', 'p.name as position', 't.name as type', 'l.days', 'l.term')
                 ->leftJoin('positions as p', 'p.id', '=', 'l.position')
-<<<<<<< HEAD
-                ->leftJoin('leave_types as t', 't.id', '=', 'l.type');
-                $filterParameters = [
-                    'term' => 'l.term', 
-                    'position' => 'l.position',    
-                    'type' => 'l.type',    
-                ];
-                foreach ($filterParameters as $parameter => $column) {
-                    $value = $request->input($parameter);
-                    if (isset($value) && $value !== '') {
-                        $allowedleaves->where($column, '=', $value);
-                    }
-                }    
-=======
                 ->leftJoin('leave_types as t', 't.id', '=', 'l.type'); 
->>>>>>> 0e7c10c8bc33a4156d041a06d2e1379e35427264
-            $search = $request->search;
+
+                $search = $request->search;
             if (!is_null($search)) {
                 $allowedleaves = $allowedleaves
                     ->where('l.id', 'LIKE', '%' . $search . '%')
