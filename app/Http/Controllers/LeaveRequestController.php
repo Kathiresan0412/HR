@@ -13,21 +13,15 @@ class LeaveRequestController extends Controller
     {
         try {
             $leaveRequests = DB::table('leave_requests as l')
-                ->select('l.id', 'e.bio_code as bio_code', 'e.first_name as employee', 'a.name as type', 'l.request_on', 'l.days', 'l.reason', 'l.status', 'u.name as approved_by')
+                ->select('l.id', 'e.bio_code as bio_code', 'e.first_name as employee', 'a.name as type', 'l.request_on', 'l.days', 'l.reason', 'l.status', 'u.name as approved_by', 'req_dates.leave_Request_Dates')
                 ->leftJoin('employees as e', 'e.id', '=', 'l.employee')
                 ->leftJoin('leave_types as a', 'a.id', '=', 'l.type')
-                ->leftJoin('users as u', 'u.id', '=', 'l.approved_by');
-               
-            $leaveRequestDates = DB::table('leave_request_dates as ld')
-            ->select('ld.date')
-            ->where ('ld.leave_request_id','l.id')
-            ->get();
-
-            $leaveRequestDate = [];
-            foreach ($leaveRequestDates as $leaveDate) {
-                array_push($leaveRequestDate, $leaveDate->date);
-
-            }
+                ->leftJoin('users as u', 'u.id', '=', 'l.approved_by')
+                ->leftJoin(DB::raw("(SELECT rd.leave_request_id AS dates, GROUP_CONCAT(rd.date) AS leave_Request_Dates 
+                FROM leave_request_dates AS rd 
+                LEFT JOIN leave_Requests AS lr ON lr.id = rd.leave_request_id
+                GROUP BY rd.leave_request_id) 
+                as req_dates"), 'l.id', '=', 'dates');
 
             $search = $request->search;
 
@@ -57,8 +51,7 @@ class LeaveRequestController extends Controller
 
             return response()->json([
                 "message" => "All Leave Request Data",
-                "data" => $leaveRequests,$leaveRequestDates,
-                "data leave request dates" => $leaveRequestDate
+                "data" => $leaveRequests
             ], 200);
         } catch (\Throwable $e) {
             return response()->json([
@@ -69,33 +62,24 @@ class LeaveRequestController extends Controller
 
     }
     public function getOne($id)
-
-    
     {
         try {
             $leaveRequest = DB::table('leave_requests as l')
-                ->select('l.id', 'e.bio_code as bio_code', 'e.first_name as employee', 'a.name as type', 'l.request_on', 'l.days', 'l.reason', 'l.status', 'u.name as approved_by')
+                ->select('l.id', 'e.bio_code as bio_code', 'e.first_name as employee', 'a.name as type', 'l.request_on', 'l.days', 'l.reason', 'l.status', 'u.name as approved_by', 'req_dates.leave_Request_Dates')
                 ->leftJoin('employees as e', 'e.id', '=', 'l.employee')
                 ->leftJoin('leave_types as a', 'a.id', '=', 'l.type')
                 ->leftJoin('users as u', 'u.id', '=', 'l.approved_by')
+                ->leftJoin(DB::raw("(SELECT rd.leave_request_id AS dates, GROUP_CONCAT(rd.date) AS leave_Request_Dates 
+                    FROM leave_request_dates AS rd 
+                    LEFT JOIN leave_Requests AS lr ON lr.id = rd.leave_request_id
+                    GROUP BY rd.leave_request_id) 
+                    as req_dates"), 'l.id', '=', 'dates')
                 ->where('l.id', $id)
                 ->first();
-            
-                $leaveRequestDates = DB::table('leave_request_dates as ld')
-                ->select('ld.date')
-                ->where ('ld.leave_request_id',$id)
-                ->get();
-    
-                $leaveRequestDate = [];
-                foreach ($leaveRequestDates as $leaveDate) {
-                    array_push($leaveRequestDate, $leaveDate->date);
-    
-                }
 
             return response()->json([
                 "Message" => "Leave Request Data",
-                "Data" => $leaveRequest,
-                "Data leave request dates" => $leaveRequestDate
+                "Data" => $leaveRequest
             ], 200);
         } catch (\Throwable $e) {
             return response()->json([
@@ -103,7 +87,6 @@ class LeaveRequestController extends Controller
                 "Error" => $e->getMessage()
             ], 500);
         }
-
     }
     public function save(Request $request)
     {
@@ -131,8 +114,8 @@ class LeaveRequestController extends Controller
             $leaveRequest->save();
 
             $dates = $request->dates;
-            foreach($dates as $date){
-                $LRD=new LeaveRequestDate();
+            foreach ($dates as $date) {
+                $LRD = new LeaveRequestDate();
                 $LRD->leave_request_id = $leaveRequest->id;
                 $LRD->date = $date;
                 $LRD->save();
@@ -178,8 +161,8 @@ class LeaveRequestController extends Controller
             $leaveRequest->save();
 
             $dates = $request->dates;
-            foreach($dates as $date){
-                $LRD=new LeaveRequestDate();
+            foreach ($dates as $date) {
+                $LRD = new LeaveRequestDate();
                 $LRD->leave_request_id = $leaveRequest->id;
                 $LRD->date = $date;
                 $LRD->save();

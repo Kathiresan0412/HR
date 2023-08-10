@@ -4,36 +4,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<<<<<<< HEAD
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    
-</head>
-
-<body>
-    @if($message = Session::get('success'))
-        <div><p>{{$message}}</p></div>
-    @endif
-    @if($message = Session::get('error'))
-        <div><p>{{$message}}</p></div>
-    @endif
-
-    <table border="1px">
-        <thead>
-        <tr>
-        <th>attachments</th>
-        </thead>
-        <tbody>
-            @foreach ($companies as $company)
-            <tr>
-                <td>{{$empdocs->attachments}}</td>
-            </tr>
-            @endforeach
-        </tbody>
-    </table>
-
-</body>
-=======
     <title>Employee Documents</title>
     <script src="https://nchhr.apptimus.lk/js/app.js" defer></script>
 
@@ -63,33 +33,40 @@
         <div class="card-body">
             <div class="d-flex justify-content-between align-items-center">
                 <h3 class="card-title ">Employee Documents</h3>
-                <button type="button" class="btn btn-md btn-link" data-toggle="modal"
-                    data-target="#vaccines-information"><a href="{{route('create_value')}}"></a><i class="fas fa-plus"></i>Add</button>
+                <a href="{{route('create_documents')}}" class="btn btn-md btn-link" 
+                    data-target="#Employee-Documents"><i class="fas fa-plus"></i> ADD</a>
             </div>
             <table class="table">
                 <thead class="thead">
                     <tr>
+                    <th scope="col">EMPLOYEE</th>
                         <th scope="col">O/LEVEL & A/LEVEL RESULTS SHEETS</th>
                         <th scope="col">BANK BOOK</th>
-                        <th scope="col">BIRTH CERTIFICATE</th>
                         <th scope="col">WORK EXPERIENCE</th>
                         <th scope="col">GS CHARACTER CERTIFICATE</th>
-                        <th scope="col">CURRICULUM VITAE</th>
                         <th scope="col">NIC</th>
                         <th scope="col">Action</th>
                     </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td>
-                    <button style="margin-left: auto" onclick="toggleCheckList()" type="button" class="btn btn-sm btn-primary"><a href="{{route('edit')}}"></a><i class="fas fa-edit"></i> Edit </button>
-                    </td>   
-                </tr>
+                    @foreach($documents as $documents)
+  <tr>
+   <td>{{$documents->id}}</td>
+    <td>{{$documents->employee}}</td>
+    <td>{{$documents->ol_level_al_level_resheets}}</td>
+    <td>{{$documents->goverment_bank_book}}</td>
+    <td>{{$documents->work_experince}}</td>
+    <td>{{$documents->gs_charactet_certificate}}</td>
+    <td>{{$documents->nic}}</td>
+    <td>
+    <a href="{{route('edit_documents',$documents->id)}}">UPDATE</a>
+    <form action="{{route('delete_documents',$documents->id)}}" method="post">
+      @csrf
+      @method('DELETE')
+    <button type="submit">Delete</button>
+</form>
+    </td>
+  </tr>
+  
+  @endforeach
                 </thead>
                 <tbody class="tbody">
                 </tbody>
@@ -98,5 +75,4 @@
     </div>
 </body>
 
->>>>>>> a0df7ad669357eb48c5acbef9b1723fa62341d77
 </html>

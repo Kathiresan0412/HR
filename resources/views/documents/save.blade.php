@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-<div class="mb-3">
-<form action="empdocs-save">
-=======
 <!DOCTYPE html>
 <html lang="en">
 
@@ -112,18 +108,7 @@
                     </div>
 
                 </li>
-                <li class="list-group-item">
-                    <div class="custom-control custom-checkbox" style="float: left; margin-right:10px">
-                        <input type="checkbox" class="custom-control-input" id="check_ca326c15-7402-4b59-9467-29e1a98e7621" name="check_list[]" value="ca326c15-7402-4b59-9467-29e1a98e7621" >
-                        <label class="custom-control-label" for="check_ca326c15-7402-4b59-9467-29e1a98e7621">VACCINE CERTIFICATE</label>
-
-                    </div>
-
-                    <div>
-                        <input onchange="updateCheck('ca326c15-7402-4b59-9467-29e1a98e7621')" type="file" name="files[ca326c15-7402-4b59-9467-29e1a98e7621]" id="file_ca326c15-7402-4b59-9467-29e1a98e7621" >
-                    </div>
-
-                </li>
+             
                 <li class="list-group-item">
                     <div class="custom-control custom-checkbox" style="float: left; margin-right:10px">
                         <input type="checkbox" class="custom-control-input" id="check_e7f6ffa9-ef59-4939-909a-973b2c132c5b" name="check_list[]" value="e7f6ffa9-ef59-4939-909a-973b2c132c5b" >
@@ -148,34 +133,3 @@
 </body>
 
 </html>
-
-<!-- <div class="mb-3">
->>>>>>> a0df7ad669357eb48c5acbef9b1723fa62341d77
-<label for="image_1" class="form-label">Image 1 <strong style="color:red">*</strong></label>
-<input type="file" class="form-control @error('image_1') is-invalid @enderror" name="image_1" id="image_1" accept="image/*" />
-@error('image_1')
-<span class="error invalid-feedback mb-2" role="alert">
-    <strong>{{ $message }}</strong>
-
-    
-    if ($request->hasFile('image_1')) {
-        $image = $request->file('image_1');
-        $fileName = time() . '.' . $image->getClientOriginalExtension();
-        
-
-        $img = Image::make($image->getRealPath());
-        $img->resize(1500, null, function ($constraint) {
-            $constraint->aspectRatio();                 
-        });
-        $img->stream();
-
-       Storage::disk('local')->put('public/Projects'.'/'.$fileName, $img, 'public');
-        $project->image_1 = $fileName;
-<<<<<<< HEAD
-     ?>   
-    </form>
-</div>
-=======
-       
-</div> -->
->>>>>>> a0df7ad669357eb48c5acbef9b1723fa62341d77

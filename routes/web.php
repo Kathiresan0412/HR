@@ -14,13 +14,13 @@ use App\Http\Controllers\EmployeeDocumentController;
 */
 
 Route::get('/', function () {
-    return view('Documents.index');
+    return view('Welcome');
 });
 
 
 Route::get ('/employee-documents', [EmployeeDocumentController::class, 'index']);
-Route::get('/employee-documents', [EmployeeDocumentController::class, 'create'])->name('create_value');
-Route::post('/employee-documents', [EmployeeDocumentController::class, 'websave'])->name('save');
-Route::get ('/employee-documents/{id}', [EmployeeDocumentController::class, 'edit'])->name('edit');;
-Route::put ('/employee-documents/{id}', [EmployeeDocumentController::class, 'webupdate']);
-Route::delete ('/employee-documents/{id}', [EmployeeDocumentController::class, 'webdelete']);
+Route::get('/employee-documents/create', [EmployeeDocumentController::class, 'create'])->name('create_documents');
+Route::post('/employee-documents', [EmployeeDocumentController::class, 'websave'])->name('store_documents');
+Route::get ('/employee-documents/{id}', [EmployeeDocumentController::class, 'edit'])->name('edit_documents');
+Route::put ('/employee-documents/{id}', [EmployeeDocumentController::class, 'webupdate'])->name('update_documents');;
+Route::delete ('/employee-documents/{id}', [EmployeeDocumentController::class, 'webdelete'])->name('delete_documents');;
