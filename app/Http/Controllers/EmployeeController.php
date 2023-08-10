@@ -9,8 +9,7 @@ use App\Models\EmployeeQualification;
 use Illuminate\Support\Facades\DB;
 
 class EmployeeController extends Controller
-{
-    public function getAll(Request $request)
+{    public function getAll(Request $request)
     {
         try {
             $employees = DB::table('employees as e')
@@ -49,7 +48,6 @@ class EmployeeController extends Controller
                 ->leftJoin('departments as d', 'd.id', '=', 'e.department')
                 ->leftJoin('users as u', 'u.id', '=', 'e.created_by');
 
-
             $search = $request->search;
 
             if (!is_null($search)) {
@@ -62,7 +60,6 @@ class EmployeeController extends Controller
                     ->orWhere('e.address', 'LIKE', '%' . $search . '%')
                     ->orWhere('e.nic', 'LIKE', '%' . $search . '%');
             }
-            //filter----------------------------------------------
             $filterParameters = [
                 'type' => 'p.type',
                 'dob_date' => 'e.dob_date',
@@ -73,7 +70,6 @@ class EmployeeController extends Controller
                 'department' => 'e.department',
                 'hire_date' => 'e.hire_date',
                 'reg_hiredate' => 'e.reg_hiredate'
-
             ];
 
             foreach ($filterParameters as $parameter => $column) {
@@ -82,7 +78,6 @@ class EmployeeController extends Controller
                     $employees->where($column, '=', $value);
                 }
             }
-            //filter----------------------------------------------
 
             $employees = $employees->orderBy('e.created_at', 'desc')
                 ->get();
@@ -99,9 +94,7 @@ class EmployeeController extends Controller
             ], 500);
         }
 
-    }
-
-    public function getOne($id)
+    }    public function getOne($id)
     {
         try {
             $employee = DB::table('employees as e')
@@ -147,7 +140,6 @@ class EmployeeController extends Controller
             $employeeQualifications = [];
             foreach ($employeeQualification as $employeeqalificatio) {
                 array_push($employeeQualifications, $employeeqalificatio->name);
-
             }
 
             return response()->json([
@@ -239,6 +231,7 @@ class EmployeeController extends Controller
             }
 
             DB::commit();
+
             return response()->json([
                 "msg" => "Employee Data Saved",
                 "data" => $employee,
@@ -251,7 +244,6 @@ class EmployeeController extends Controller
             ], 500);
         }
     }
-
     public function update(Request $request, $id)
     {
         DB::beginTransaction();
@@ -344,7 +336,6 @@ class EmployeeController extends Controller
             ], 500);
         }
     }
-
     public function delete($id)
     {
         try {
