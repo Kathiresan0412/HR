@@ -16,9 +16,6 @@ use App\Http\Controllers\EmployeeDocumentController;
 Route::get('/', function () {
     return view('Documents.index');
 });
-Route::get('/xxx', function () {
-    return view('Documents.index');
-});
 
 
 Route::get ('/employee-documents', [EmployeeDocumentController::class, 'index']);
