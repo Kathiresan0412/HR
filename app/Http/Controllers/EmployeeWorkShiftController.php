@@ -12,8 +12,20 @@ class EmployeeWorkShiftController extends Controller
     {
         try {
             $employeeWorkShifts = DB::table('employee_work_shifts as ews')
-                ->select('ews.id', 'e.first_name as employee', 'ews.title', 'ews.date', 'ews.is_off_hour', 'ews.is_off_day')
-                ->leftJoin('employees as e', 'e.id', '=', 'ews.employee');
+                ->select(
+                    'ews.id',
+                    'e.first_name as employee',
+                    'ews.title',
+                    'ews.date',
+                    'ews.is_off_hour',
+                    'ews.is_off_day',
+                    DB::raw("CONCAT('[', GROUP_CONCAT(JSON_OBJECT('from', wsd.from, 'to', wsd.to)), ']') as work_shift_schedule")
+                )
+                ->leftJoin('employees as e', 'e.id', '=', 'ews.employee')
+                ->leftJoin('work_shift_details as wsd', 'ews.id', '=', 'wsd.work_shift_id')
+                ->groupBy('ews.id', 'e.first_name', 'ews.title', 'ews.date', 'ews.is_off_hour', 'ews.is_off_day');
+
+            $employeeWorkShifts->get();
 
             $search = $request->search;
             if (!is_null($search)) {
@@ -51,33 +63,43 @@ class EmployeeWorkShiftController extends Controller
     public function getOne($id)
     {
         try {
-            $wmployeeWorkShift = DB::table('employee_work_shifts as ews')
-                ->select('ews.id', 'e.first_name as employee', 'ews.title', 'ews.date', 'ews.is_off_hour', 'ews.is_off_day')
+            $employeeWorkShift = DB::table('employee_work_shifts as ews')
+                ->select(
+                    'ews.id',
+                    'e.first_name as employee',
+                    'ews.title',
+                    'ews.date',
+                    'ews.is_off_hour',
+                    'ews.is_off_day',
+                    DB::raw("CONCAT('[', GROUP_CONCAT(JSON_OBJECT('from', wsd.from, 'to', wsd.to)), ']') as work_shift_schedule")
+                )
                 ->leftJoin('employees as e', 'e.id', '=', 'ews.employee')
+                ->leftJoin('work_shift_details as wsd', 'ews.id', '=', 'wsd.work_shift_id')
+                ->groupBy('ews.id', 'e.first_name', 'ews.title', 'ews.date', 'ews.is_off_hour', 'ews.is_off_day')
                 ->where('ews.id', $id)
                 ->first();
+            // Getting Multiple values as array
+            // $WorkShifts = DB::table('work_shift_details as wsd')
+            //     ->select('wsd.id', 'wsd.work_shift_id', 'wsd.from', 'wsd.to')
+            //     ->where('wsd.work_shift_id', $id)
+            //     ->get();
 
-            $WorkShifts = DB::table('work_shift_details as wsd')
-                ->select('wsd.id', 'wsd.work_shift_id', 'wsd.from', 'wsd.to')
-                ->where('wsd.work_shift_id', $id)
-                ->get();
-
-            $WorkShiftFrom = [];
-            foreach ($WorkShifts as $WorkShift) {
-                array_push($WorkShiftFrom, $WorkShift->from);
-            }
-            $WorkShiftTo = [];
-            foreach ($WorkShifts as $WorkShift) {
-                array_push($WorkShiftTo, $WorkShift->to);
-            }
-            $combinedWorkShifts = array_map(function ($from, $to) {
-                return ['from' => $from, 'to' => $to];
-            }, $WorkShiftFrom, $WorkShiftTo);
+            // $WorkShiftFrom = [];
+            // foreach ($WorkShifts as $WorkShift) {
+            //     array_push($WorkShiftFrom, $WorkShift->from);
+            // }
+            // $WorkShiftTo = [];
+            // foreach ($WorkShifts as $WorkShift) {
+            //     array_push($WorkShiftTo, $WorkShift->to);
+            // }
+            // $combinedWorkShifts = array_map(function ($from, $to) {
+            //     return ['from' => $from, 'to' => $to];
+            // }, $WorkShiftFrom, $WorkShiftTo);
 
             return response()->json([
                 "message" => "Work Shift Data",
-                "data" => $wmployeeWorkShift,
-                "data work shift" => $combinedWorkShifts
+                "data" => $employeeWorkShift
+                //"data work shift" => $combinedWorkShifts
             ], 200);
         } catch (\Throwable $e) {
             return response()->json([
