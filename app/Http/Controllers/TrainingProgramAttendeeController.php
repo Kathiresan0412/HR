@@ -1,16 +1,13 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use DB;
 use App\Models\TrainingProgramAttendee;
 use Illuminate\Http\Request;
 
 class TrainingProgramAttendeeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function getAll(request $request)
     {
         //
     }
@@ -18,7 +15,7 @@ class TrainingProgramAttendeeController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function getOne()
     {
         //
     }
@@ -26,7 +23,7 @@ class TrainingProgramAttendeeController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function save(Request $request)
     {
         //
     }
@@ -34,7 +31,7 @@ class TrainingProgramAttendeeController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(TrainingProgramAttendee $trainingProgramAttendee)
+    public function update( )
     {
         //
     }
@@ -42,24 +39,9 @@ class TrainingProgramAttendeeController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(TrainingProgramAttendee $trainingProgramAttendee)
+    public function delete()
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, TrainingProgramAttendee $trainingProgramAttendee)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(TrainingProgramAttendee $trainingProgramAttendee)
-    {
-        //
-    }
 }
