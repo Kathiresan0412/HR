@@ -8,9 +8,6 @@ use Illuminate\Support\Facades\DB;
 
 class TrainingProgramController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function getAll(Request $request)
     {
         try {

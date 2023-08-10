@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Validation\Rule;
 
 use App\Models\AllowedLeave;
@@ -15,7 +16,7 @@ class AllowedLeaveController extends Controller
             $allowedleaves = DB::table('allowed_leaves as l')
                 ->select('l.id', 'p.name as position', 't.name as type', 'l.days', 'l.term')
                 ->leftJoin('positions as p', 'p.id', '=', 'l.position')
-                ->leftJoin('leave_types as t', 't.id', '=', 'l.type'); 
+                ->leftJoin('leave_types as t', 't.id', '=', 'l.type');
             $search = $request->search;
             if (!is_null($search)) {
                 $allowedleaves = $allowedleaves
@@ -23,20 +24,20 @@ class AllowedLeaveController extends Controller
                     ->orWhere('l.position', 'LIKE', '%' . $search . '%')
                     ->orWhere('l.type', 'LIKE', '%' . $search . '%')
                     ->orWhere('l.days', 'LIKE', '%' . $search . '%')
-                    ->orWhere('l.term', 'LIKE', '%' . $search . '%');         
+                    ->orWhere('l.term', 'LIKE', '%' . $search . '%');
             }
-            
+
             $filterParameters = [
-                'term' => 'l.term', 
-                'position' => 'l.position',    
-                'type' => 'l.type',    
+                'term' => 'l.term',
+                'position' => 'l.position',
+                'type' => 'l.type',
             ];
             foreach ($filterParameters as $parameter => $column) {
                 $value = $request->input($parameter);
                 if (isset($value) && $value !== '') {
                     $allowedleaves->where($column, '=', $value);
                 }
-            }   
+            }
             $allowedleaves = $allowedleaves->orderBy('l.created_at', 'desc')->get();
             return response()->json([
                 "message" => "All Allowed Leave Data",
@@ -63,7 +64,7 @@ class AllowedLeaveController extends Controller
                 "message" => "Allowed Leave Data",
                 "data" => $allowedleave,
             ], 200);
-            } catch (\Throwable $e) {
+        } catch (\Throwable $e) {
             return response()->json([
                 "message" => "oops something went wrong",
                 "error" => $e->getMessage(),
@@ -92,7 +93,7 @@ class AllowedLeaveController extends Controller
                 "message" => "Allowed Leaves Data Saved",
                 "data" => $allowedleave,
             ], 200);
-            } catch (\Throwable $e) {
+        } catch (\Throwable $e) {
             DB::rollback();
             return response()->json([
                 "message" => "oops something went wrong",
@@ -118,7 +119,7 @@ class AllowedLeaveController extends Controller
             $allowedleave->save();
 
             DB::commit();
-            
+
             return response()->json([
                 "message" => "Allowed Leave Data Updated",
                 "data" => $allowedleave,
@@ -140,7 +141,7 @@ class AllowedLeaveController extends Controller
             return response()->json([
                 "message" => "Allowed leave data deleted",
             ], 200);
-            } catch (\Throwable $e) {
+        } catch (\Throwable $e) {
             return response()->json([
                 "message" => "Ooops Something went wrong please try again",
                 "error" => $e->getMessage(),

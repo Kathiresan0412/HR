@@ -33,7 +33,6 @@ class EmployeeBenefitController extends Controller
                 'coverage_details' => 'eb.coverage_details',
                 'attendees' => 'eb.attendees',
                 'benefit_type' => 'eb.benefit_type',
-
             ];
 
             foreach ($filterParameters as $parameter => $column) {
