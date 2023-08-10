@@ -8,43 +8,64 @@ use Illuminate\Support\Facades\DB;
 
 class EmployeeDocumentController extends Controller
 {
-public function index(){
-   // return 12;
-   $documents = DB::table('employee_documents as d')
-                ->select('d.id', 'emp.first_name as employee','d.ol_level_al_level_resheets', 'd.goverment_bank_book', 'd.work_experince', 'd.gs_charactet_certificate', 'd.nic')
-                ->leftJoin('employees as emp', 'd.employee', '=', 'emp.id');
-                 $documents = $documents->orderBy('d.created_at')->get();
-    return view('Documents.index',compact('documents'));
-}
-public function create(){
-    // return 12;
-     return view('Documents.save');
- }
-public function edit(){
-   
-    return view('Documents.edit');
-}
-public function websave(){
-    return view('Documents.save');
-    
-}
-public function webupdate(){
-   
-  
-}
-public function webdelete(){
-    
-   
-}
+    public function index()
+    {
+        // return 12;
+        $documents = DB::table('employee_documents as d')
+            ->select('d.id', 'emp.first_name as employee', 'd.ol_level_al_level_resheets', 'd.goverment_bank_book', 'd.work_experince', 'd.gs_charactet_certificate', 'd.nic')
+            ->leftJoin('employees as emp', 'd.employee', '=', 'emp.id');
+        $documents = $documents->orderBy('d.created_at')->get();
+        return view('documents.index', compact('documents'));
+
+
+
+
+    }
+    public function create()
+    {
+        // return 12;
+        return view('Documents.save');
+    }
+    public function edit()
+    {
+
+        return view('Documents.edit');
+    }
+    public function websave(Request $request)
+    {
+        $employeeDocument = new EmployeeDocument();
+        $employeeDocument->employee = $request->employee;
+
+        $image = $request->file('ol_level_al_level_resheets');
+        $image2 = $request->file('goverment_bank_book');
+        $image3 = $request->file('work_experince');
+        $image4 = $request->file('gs_charactet_certificate');
+        $image5 = $request->file('nic');
+
+        $imageName = time() . '.' . $image->getClientOriginalExtension();
+        $image->storeAs('images', $imageName, 'public');
+
+
+    }
+    public function webupdate()
+    {
+
+
+    }
+    public function webdelete()
+    {
+
+
+    }
     public function getAll(Request $request)
     {
         try {
             $documents = DB::table('employee_documents as d')
-                ->select('d.id', 'emp.first_name as employee','d.ol_level_al_level_resheets', 'd.goverment_bank_book', 'd.work_experince', 'd.gs_charactet_certificate', 'd.nic')
+                ->select('d.id', 'emp.first_name as employee', 'd.ol_level_al_level_resheets', 'd.goverment_bank_book', 'd.work_experince', 'd.gs_charactet_certificate', 'd.nic')
                 ->leftJoin('employees as emp', 'd.employee', '=', 'emp.id');
 
             $documents = $documents->orderBy('d.created_at')->get();
-    
+
             return response()->json([
                 "message" => "All Employee documents Data",
                 "data" => $documents,
@@ -63,11 +84,11 @@ public function webdelete(){
         try {
             $request->validate([
                 'employee' => 'required',
-               'ol_level_al_level_resheets'=>'required',
-               'goverment_bank_book'=>'required',
-               'work_experince'=>'required',
-               'gs_charactet_certificate'=>'required',
-               'nic'=>'required'
+                'ol_level_al_level_resheets' => 'required',
+                'goverment_bank_book' => 'required',
+                'work_experince' => 'required',
+                'gs_charactet_certificate' => 'required',
+                'nic' => 'required'
             ]);
 
             $documents = new EmployeeDocument();
@@ -78,9 +99,9 @@ public function webdelete(){
             $documents->gs_charactet_certificate = $request->gs_charactet_certificate;
             $documents->nic = $request->nic;
             $documents->save();
-    
+
             DB::commit();
-    
+
             return response()->json([
                 "message" => "Saved Employee Documents Data",
                 "data" => $documents,
@@ -98,11 +119,11 @@ public function webdelete(){
     {
         try {
             $document = DB::table('employee_documents as d')
-            ->select('d.id', 'emp.first_name as employee','d.ol_level_al_level_resheets', 'd.goverment_bank_book', 'd.work_experince', 'd.gs_charactet_certificate', 'd.nic')
-            ->leftJoin('employees as emp', 'd.employee', '=', 'emp.id')
-            ->where('d.id', $id)
-            ->first();
-    
+                ->select('d.id', 'emp.first_name as employee', 'd.ol_level_al_level_resheets', 'd.goverment_bank_book', 'd.work_experince', 'd.gs_charactet_certificate', 'd.nic')
+                ->leftJoin('employees as emp', 'd.employee', '=', 'emp.id')
+                ->where('d.id', $id)
+                ->first();
+
             return response()->json([
                 "message" => "employee documents Data",
                 "data" => $document,
@@ -121,38 +142,38 @@ public function webdelete(){
     public function update(Request $request, $id)
     {
         DB::beginTransaction();
-    try {
-        $request->validate([
-            'employee' => 'required',
-           'ol_level_al_level_resheets'=>'required',
-           'goverment_bank_book'=>'required',
-           'work_experince'=>'required',
-           'gs_charactet_certificate'=>'required',
-           'nic'=>'required'
-        ]);
+        try {
+            $request->validate([
+                'employee' => 'required',
+                'ol_level_al_level_resheets' => 'required',
+                'goverment_bank_book' => 'required',
+                'work_experince' => 'required',
+                'gs_charactet_certificate' => 'required',
+                'nic' => 'required'
+            ]);
 
-        $document = EmployeeDocument::find($id);
-        $document->employee = $request->employee;
-        $document->ol_level_al_level_resheets = $request->ol_level_al_level_resheets;
-        $document->goverment_bank_book = $request->goverment_bank_book;
-        $document->work_experince = $request->work_experince;
-        $document->gs_charactet_certificate = $request->gs_charactet_certificate;
-        $document->nic = $request->nic;
-        $document->save();
+            $document = EmployeeDocument::find($id);
+            $document->employee = $request->employee;
+            $document->ol_level_al_level_resheets = $request->ol_level_al_level_resheets;
+            $document->goverment_bank_book = $request->goverment_bank_book;
+            $document->work_experince = $request->work_experince;
+            $document->gs_charactet_certificate = $request->gs_charactet_certificate;
+            $document->nic = $request->nic;
+            $document->save();
 
-        DB::commit();
+            DB::commit();
 
-        return response()->json([
-            "message" => "Employee Documents Data Updated",
-            "data" => $document,
-        ], 200);
-    } catch (\Throwable $e) {
-        DB::rollback();
-        return response()->json([
-            "message" => "oops something went wrong",
-            "error" => $e->getMessage(),
-        ], 500);
-    }
+            return response()->json([
+                "message" => "Employee Documents Data Updated",
+                "data" => $document,
+            ], 200);
+        } catch (\Throwable $e) {
+            DB::rollback();
+            return response()->json([
+                "message" => "oops something went wrong",
+                "error" => $e->getMessage(),
+            ], 500);
+        }
     }
 
     /**
@@ -175,4 +196,3 @@ public function webdelete(){
         }
     }
 }
-
