@@ -108,21 +108,23 @@
                 <input style="margin-left: auto;" class="btn btn-info" type="submit" value="Submit">
             </div>
         </form>
-        @if ($employee_documents->count() > 0)
-        <h2 class="mt-5">Uploaded Images</h2>
-        <div class="row mt-2">
-            @foreach ($employee_documents as $image)
-                <div class="col-md-4 mb-3">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <img src="{{ asset('storage/images/' . $image->filename) }}" class="card-img-top"
-                                    alt="Uploaded Image" style="height: 50px; width: auto;">
+        @if ($profiles->count() > 0)
+            <h2 class="mt-5">Uploaded Images</h2>
+            <div class="row mt-2">
+                @foreach ($profiles as $image)
+                    <div class="col-md-4 mb-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <img src="{{ asset('storage/images/' . $image->filename) }}" class="card-img-top"
+                                        alt="Uploaded Image" style="height: 50px; width: auto;">
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            @endforeach
+                @endforeach
+            </div>
+        @endif
     </div>
 </body>
 
