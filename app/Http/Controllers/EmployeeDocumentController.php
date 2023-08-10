@@ -10,7 +10,11 @@ class EmployeeDocumentController extends Controller
 {
 public function index(){
    // return 12;
-    return view('Documents.index');
+   $documents = DB::table('employee_documents as d')
+                ->select('d.id', 'emp.first_name as employee','d.ol_level_al_level_resheets', 'd.goverment_bank_book', 'd.work_experince', 'd.gs_charactet_certificate', 'd.nic')
+                ->leftJoin('employees as emp', 'd.employee', '=', 'emp.id');
+                 $documents = $documents->orderBy('d.created_at')->get();
+    return view('Documents.index',compact('documents'));
 }
 public function create(){
     // return 12;
