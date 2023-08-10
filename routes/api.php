@@ -35,12 +35,6 @@ use App\Http\Controllers\OTSController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
-|
-|
-|
-|
-|
-|
 |--------------------------------------------------------------------------
 |
 | Here is where you can register API routes for your application. These
@@ -88,7 +82,7 @@ Route::POST('/companies', [CompanyController::class, 'save']);
 Route::put ('/companies/{id}', [CompanyController::class, 'update']);
 Route::delete ('/companies/{id}', [CompanyController::class, 'delete']);
 
-//Checked by saji //Cross Checked by sangeetha
+//Checked by saji //Cross Checked by 
 Route::get ('/employees', [EmployeeController::class, 'getAll']);
 Route::get ('/employees/{id}', [EmployeeController::class, 'getOne']);
 Route::POST('/employees', [EmployeeController::class, 'save']);
@@ -218,21 +212,21 @@ Route::post('/ots', [OTSController::class, 'save']);
 Route::put('/ots/{id}', [OTSController::class, 'update']);
 Route::delete('/ots/{id}', [OTSController::class, 'delete']);
 
-//Checked by saji //Cross Checked by sangeetha
+//Checked by saji //Cross Checked by 
 Route::get('/employee-benefits', [EmployeeBenefitController::class, 'getAll']);
 Route::get('/employee-benefits/{id}', [EmployeeBenefitController::class, 'getOne']);
 Route::post('/employee-benefits', [EmployeeBenefitController::class, 'save']);
 Route::put('/employee-benefits/{id}', [EmployeeBenefitController::class, 'update']);
 Route::delete('/employee-benefits/{id}', [EmployeeBenefitController::class, 'delete']);
 
-//Checked by saji //Cross Checked by sangeetha
+//Checked by saji //Cross Checked by 
 Route::get('/employee-feedbacks', [EmployeeFeedbackController::class, 'getAll']);
 Route::get('/employee-feedbacks/{id}', [EmployeeFeedbackController::class, 'getOne']);
 Route::post('/employee-feedbacks', [EmployeeFeedbackController::class, 'save']);
 Route::put('/employee-feedbacks/{id}', [EmployeeFeedbackController::class, 'update']);
 Route::delete('/employee-feedbacks/{id}', [EmployeeFeedbackController::class, 'delete']);
 
-//Checked by saji //Cross Checked by sangeetha
+//Checked by saji //Cross Checked by 
 Route::get('/employee-healths', [EmployeeHealthController::class, 'getAll']);
 Route::get('/employee-healths/{id}', [EmployeeHealthController::class, 'getOne']);
 Route::post('/employee-healths', [EmployeeHealthController::class, 'save']);
